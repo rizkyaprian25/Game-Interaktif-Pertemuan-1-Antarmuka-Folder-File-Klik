@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Detektif Digital: Rapikan Markas Data</title>
+    <style>
+        :root {
+            --bg-color: #f0f8ff;
+            --primary: #4361ee;
+            --primary-hover: #3a0ca3;
+            --secondary: #f72585;
+            --success: #4cc9f0;
+            --warning: #fca311;
+            --danger: #e63946;
+            --text-dark: #14213d;
+            --text-light: #ffffff;
+            --box-bg: #ffffff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-size: 24px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none; /* Prevent text selection while clicking around */
+        }
+
+        .screen {
+            display: none;
+            width: 100vw;
+            min-height: 100vh;
+            padding: 40px;
+            background-color: var(--bg-color);
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        h1, h2, h3 { text-align: center; margin-bottom: 20px; color: var(--primary); }
+        h1 { font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { font-size: 2.5rem; }
+        
+        button {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-light);
+            background-color: var(--primary);
+            box-shadow: 0 6px 0 var(--primary-hover);
+            transition: all 0.1s;
+        }
+
+        button:active { transform: translateY(6px); box-shadow: none; }
+        button.btn-danger { background-color: var(--danger); box-shadow: 0 6px 0 #9b2226; }
+        button.btn-secondary { background-color: var(--secondary); box-shadow: 0 6px 0 #7209b7; }
+        button.btn-success { background-color: var(--success); box-shadow: 0 6px 0 #0077b6; }
+        
+        input[type="text"] {
+            font-size: 1.5rem;
+            padding: 15px;
+            border: 4px solid var(--primary);
+            border-radius: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .panel {
+            background: var(--box-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            width: 100%;
+            max-width: 1200px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Dashboard & Time Setting Styles */
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .time-setting-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid #e2e8f0;
+            margin: 20px 0 30px 0;
+            text-align: center;
+        }
+
+        .time-presets {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0 15px 0;
+        }
+
+        .preset-btn {
+            font-size: 1.15rem;
+            padding: 12px 20px;
+            margin: 0;
+            border-radius: 12px;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            border: 2px solid #cbd5e1;
+            box-shadow: 0 4px 0 #94a3b8;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: bold;
+        }
+
+        .preset-btn:hover {
+            background-color: #e2e8f0;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .preset-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary-hover);
+            box-shadow: 0 4px 0 var(--primary-hover);
+        }
+
+        .custom-time-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px dashed #94a3b8;
+        }
+
+        .time-input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-input-group input[type="number"] {
+            width: 90px;
+            font-size: 1.4rem;
+            padding: 8px 12px;
+            border: 3px solid var(--primary);
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--text-dark);
+            outline: none;
+            background: #ffffff;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary-hover);
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 15px;
+            border: 2px solid #c7d2fe;
+        }
+
+        .btn-start-game {
+            font-size: 2.2rem;
+            padding: 22px 60px;
+            background: #10b981;
+            box-shadow: 0 8px 0 #059669;
+            border-radius: 20px;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-start-game:hover {
+            background: #059669;
+            transform: translateY(-3px);
+            box-shadow: 0 11px 0 #047857;
+        }
+
+        .btn-start-game:active {
+            transform: translateY(8px);
+            box-shadow: none;
+        }
+
+        /* Game Styles */
+        .game-header {
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+            padding: 15px 40px; background: var(--primary); color: white; border-radius: 15px; margin-bottom: 20px;
+        }
+        .player-name { font-size: 2rem; font-weight: bold; }
+        .timer-container { display: flex; align-items: center; gap: 15px; }
+        .timer { font-size: 2.5rem; font-weight: bold; background: white; color: var(--primary); padding: 5px 20px; border-radius: 15px; text-align: center; min-width: 120px; }
+        .timer.warning { color: var(--danger); animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        .audience-box { background: var(--warning); padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; border: 4px dashed #000; }
+        .challenge-title { font-size: 1.8rem; margin-bottom: 20px; color: var(--text-dark); text-align: center; }
+
+        /* --- VIRTUAL FILE EXPLORER --- */
+        .explorer-window {
+            width: 100%;
+            max-width: 900px;
+            height: 400px;
+            background: #ffffff;
+            border: 4px solid #ced4da;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            padding: 15px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+            overflow-y: auto;
+        }
+
+        .explorer-item {
+            width: 120px;
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 10px;
+            padding: 10px 5px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .explorer-item:hover { background-color: #e5f3ff; border-color: #d9ebf9; }
+        .explorer-item.selected { background-color: #cce8ff; border-color: #99d1ff; }
+
+        .explorer-item .icon { font-size: 4rem; line-height: 1; pointer-events: none; }
+        .explorer-item .name { font-size: 1.1rem; text-align: center; word-wrap: break-word; margin-top: 8px; line-height: 1.2; pointer-events: none; }
+        
+        .explorer-item input[type="text"] {
+            width: 100px; font-size: 1rem; padding: 4px; margin-top: 8px;
+            text-align: center; border: 2px solid var(--primary); outline: none;
+        }
+
+        /* --- CONTEXT MENU --- */
+        .context-menu {
+            position: absolute;
+            background: #f8f9fa;
+            border: 2px solid #adb5bd;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            min-width: 200px;
+            border-radius: 5px;
+            padding: 5px 0;
+        }
+
+        .context-menu-item {
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .context-menu-item:hover { background-color: var(--primary); color: white; }
+        .context-menu-item.disabled { color: #adb5bd; cursor: not-allowed; }
+        .context-menu-item.disabled:hover { background-color: transparent; color: #adb5bd; }
+        .context-menu-divider { height: 1px; background-color: #dee2e6; margin: 5px 0; }
+
+        /* Feedback Overlay */
+        .feedback-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.95);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            border-radius: 10px; z-index: 10;
+        }
+        .feedback-overlay.show { display: flex; }
+        .feedback-icon { font-size: 8rem; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .feedback-correct { color: var(--success); }
+        .feedback-wrong { color: var(--danger); }
+        .feedback-text { font-size: 2.5rem; font-weight: bold; margin-top: 20px; text-align: center; }
+
+        @keyframes popIn { 0% { transform: scale(0.1); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .explorer-window { height: 350px; }
+            .explorer-item { width: 90px; height: 110px; }
+            .explorer-item .icon { font-size: 3rem; }
+            .explorer-item .name { font-size: 1rem; }
+            h1 { font-size: 2rem; }
+            .game-header { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN: DASHBOARD -->
+    <div id="screen-dashboard" class="screen active">
+        <h1>🕵️ Misi Detektif Digital: Rapikan Markas Data 📁</h1>
+        <div class="panel dashboard-container">
+            <p style="font-size: 1.3rem; margin-bottom: 20px; text-align: center; color: #4b5563;">
+                Simulasi interaktif antarmuka Windows Explorer: Kelola file, buat folder baru, rename, cut, copy, & delete!
+            </p>
+
+            <!-- Card Pengaturan Waktu Permainan -->
+            <div class="time-setting-card">
+                <h3 style="margin-bottom: 5px; font-size: 1.6rem; color: var(--primary);">⏱️ Atur Durasi Waktu Game</h3>
+                <p style="font-size: 1.1rem; color: #64748b; margin-bottom: 10px;">Pilih durasi cepat atau sesuaikan menit & detik sendiri:</p>
+                
+                <div class="time-presets">
+                    <button type="button" class="preset-btn" onclick="setTimePreset(60, this)">⚡ 1 Menit</button>
+                    <button type="button" class="preset-btn active" onclick="setTimePreset(120, this)">⏱️ 2 Menit (Standar)</button>
+                    <button type="button" class="preset-btn" onclick="setTimePreset(180, this)">⏳ 3 Menit</button>
+                    <button type="button" class="preset-btn" onclick="setTimePreset(300, this)">🕒 5 Menit</button>
+                </div>
+
+                <div class="custom-time-box">
+                    <span style="font-weight: bold; font-size: 1.15rem; color: #334155;">Custom Waktu:</span>
+                    <div class="time-input-group">
+                        <input type="number" id="input-custom-minutes" min="0" max="30" value="2" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()">
+                        <span style="font-size: 1.15rem; font-weight: 500;">Menit</span>
+                    </div>
+                    <div class="time-input-group">
+                        <input type="number" id="input-custom-seconds" min="0" max="59" step="5" value="0" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()">
+                        <span style="font-size: 1.15rem; font-weight: 500;">Detik</span>
+                    </div>
+                </div>
+
+                <div class="time-badge" id="selected-time-summary">
+                    ⏱️ Durasi Game: 2 Menit 0 Detik (120 Detik)
+                </div>
+            </div>
+
+            <!-- Tombol Mulai Langsung -->
+            <button class="btn-start-game" onclick="startGame()">
+                <span>▶️</span> MULAI GAME SEKARANG
+            </button>
+
+            <div style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; justify-content: center;">
+                <button class="btn-secondary" onclick="showScreen('screen-scoreboard')" style="font-size: 1.15rem; padding: 12px 25px;">📊 Riwayat Skor</button>
+                <button onclick="showScreen('screen-guide')" style="font-size: 1.15rem; padding: 12px 25px;">📖 Panduan Permainan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: GAME -->
+    <div id="screen-game" class="screen">
+        <div class="game-header">
+            <div class="player-name">🕵️ Misi Detektif Digital</div>
+            <div class="timer-container">
+                <div>⏱️ Sisa Waktu:</div>
+                <div class="timer" id="timer-display">02:00</div>
+            </div>
+        </div>
+
+        <div class="audience-box">
+            🤔 <strong>TONTON & TEBAK:</strong> <span id="audience-question">Perhatikan layar, menurutmu apa langkah selanjutnya?</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div id="challenge-title" class="challenge-title">Instruksi muncul di sini...</div>
+            
+            <!-- VIRTUAL EXPLORER -->
+            <div style="position: relative; width: 100%; max-width: 900px;">
+                <div class="explorer-window" id="explorer-window">
+                    <!-- Files will be injected here -->
+                </div>
+                
+                <!-- Feedback Overlay Inside Explorer -->
+                <div id="feedback-overlay" class="feedback-overlay">
+                    <div id="feedback-icon" class="feedback-icon">✅</div>
+                    <div id="feedback-text" class="feedback-text">Kerja Bagus!</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+            <button class="btn-danger" onclick="endTurn(true)">⏹️ Selesaikan / Akhiri</button>
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">Tantangan: <span id="challenge-counter">1/10</span></div>
+        </div>
+    </div>
+
+    <!-- SCREEN: RESULT -->
+    <div id="screen-result" class="screen">
+        <div class="panel">
+            <h1>Misi Selesai! 🎉</h1>
+            <div style="font-size: 2.2rem; margin: 25px 0; text-align: center;">
+                Skor Akhir: <strong style="color: var(--success); font-size: 3.8rem; display: block; margin-top: 10px;" id="result-score">10 / 10</strong>
+            </div>
+            <div style="font-size: 1.35rem; margin-bottom: 35px; color: #4b5563; text-align: center; background: #f8fafc; padding: 15px 30px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                ⏱️ Waktu Tersisa: <strong id="result-time-left" style="color: var(--primary);">01:15</strong> &nbsp;|&nbsp; Waktu Terpakai: <strong id="result-time-used" style="color: var(--secondary);">00:45</strong>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                <button class="btn-success" style="font-size: 1.5rem; padding: 15px 35px;" onclick="startGame()">🔄 Main Lagi</button>
+                <button class="btn-secondary" style="font-size: 1.3rem; padding: 15px 30px;" onclick="showScreen('screen-dashboard')">⚙️ Atur Waktu & Beranda</button>
+                <button onclick="showScreen('screen-scoreboard')" style="font-size: 1.3rem; padding: 15px 30px;">📊 Riwayat Skor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: SCOREBOARD -->
+    <div id="screen-scoreboard" class="screen">
+        <div class="panel" style="overflow-y: auto;">
+            <h1>📊 Riwayat Skor Permainan</h1>
+            <div style="width: 100%; overflow-x: auto; margin-top: 20px;">
+                <table id="score-table" style="width: 100%; border-collapse: collapse; font-size: 1.2rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">No</th>
+                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Sesi</th>
+                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Skor</th>
+                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Durasi Terpilih</th>
+                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Sisa Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="score-table-body"></tbody>
+                </table>
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-success" onclick="startGame()">▶️ Main Sekarang</button>
+                <button onclick="showScreen('screen-dashboard')">🏠 Kembali ke Dasbor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: GUIDE -->
+    <div id="screen-guide" class="screen">
+        <div class="panel" style="overflow-y: auto; text-align: left; font-size: 1.2rem;">
+            <h1 style="text-align: center;">📖 Panduan Fasilitasi Guru</h1>
+            <h3>Simulasi OS Windows Realistis</h3>
+            <p>Game ini sekarang mensimulasikan lingkungan File Explorer yang realistis. Siswa WAJIB menggunakan <strong>Klik Kanan (Right-Click)</strong> menggunakan Mouse/Touchpad untuk memunculkan menu perintah seperti di OS Windows.</p>
+            <ul style="margin-left: 40px; margin-top: 10px;">
+                <li><strong>Klik Kanan pada File:</strong> Muncul opsi Cut, Copy, Rename, Delete.</li>
+                <li><strong>Klik Kanan pada Folder:</strong> Muncul opsi Paste (jika ada file di-cut), dsb.</li>
+                <li><strong>Klik Kanan pada Ruang Kosong (Warna Putih):</strong> Muncul opsi New Folder, Paste.</li>
+                <li><strong>Untuk Rename/New Folder:</strong> Label akan berubah menjadi kotak ketik. Siswa harus mengetik nama dan menekan tombol <strong>Enter</strong> di keyboard.</li>
+            </ul>
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="showScreen('screen-dashboard')">🏠 Mengerti, Kembali</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Context Menu (Moved to Body) -->
+    <div id="custom-context-menu" class="context-menu">
+        <div class="context-menu-item" id="menu-new-folder" onclick="handleMenu('new-folder')">📁 New Folder</div>
+        <div class="context-menu-divider" id="menu-div-1"></div>
+        <div class="context-menu-item" id="menu-cut" onclick="handleMenu('cut')">✂️ Cut</div>
+        <div class="context-menu-item" id="menu-copy" onclick="handleMenu('copy')">📄 Copy</div>
+        <div class="context-menu-item" id="menu-paste" onclick="handleMenu('paste')">📋 Paste</div>
+        <div class="context-menu-divider" id="menu-div-2"></div>
+        <div class="context-menu-item" id="menu-rename" onclick="handleMenu('rename')">📝 Rename</div>
+        <div class="context-menu-item" id="menu-delete" onclick="handleMenu('delete')" style="color: var(--danger);">🗑️ Delete</div>
+    </div>
+
+    <script>
+        // --- State Management ---
+        let gameDuration = 120; // Default 2 minutes (120 seconds)
+        let roundCount = 0;
+        let scores = [];
+        let currentPlayer = { name: "Detektif Data" };
+        let currentChallengeIndex = 0;
+        let currentChallenges = [];
+        let score = 0;
+        let timerInterval = null;
+        let timeLeft = 120;
+
+        // --- Custom Time Controls ---
+        function setTimePreset(seconds, btnElement) {
+            gameDuration = seconds;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const minInput = document.getElementById('input-custom-minutes');
+            const secInput = document.getElementById('input-custom-seconds');
+            if (minInput) minInput.value = mins;
+            if (secInput) secInput.value = secs;
+            
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            
+            updateSelectedTimeSummary();
+        }
+
+        function onCustomTimeChange() {
+            const minInput = document.getElementById('input-custom-minutes');
+            const secInput = document.getElementById('input-custom-seconds');
+            let mins = parseInt(minInput ? minInput.value : 2);
+            let secs = parseInt(secInput ? secInput.value : 0);
+            
+            if (isNaN(mins) || mins < 0) mins = 0;
+            if (isNaN(secs) || secs < 0) secs = 0;
+            if (secs >= 60) secs = 59;
+            
+            let total = (mins * 60) + secs;
+            if (total < 10) total = 10; // Minimal 10 detik
+            
+            gameDuration = total;
+            if (minInput) minInput.value = Math.floor(total / 60);
+            if (secInput) secInput.value = total % 60;
+
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            const presetButtons = Array.from(document.querySelectorAll('.preset-btn'));
+            const matchingPreset = presetButtons.find(b => {
+                const clickAttr = b.getAttribute('onclick');
+                return clickAttr && clickAttr.includes(`setTimePreset(${total},`);
+            });
+            if (matchingPreset) matchingPreset.classList.add('active');
+
+            updateSelectedTimeSummary();
+        }
+
+        function updateSelectedTimeSummary() {
+            const summaryElem = document.getElementById('selected-time-summary');
+            if (!summaryElem) return;
+            const mins = Math.floor(gameDuration / 60);
+            const secs = gameDuration % 60;
+            let parts = [];
+            if (mins > 0) parts.push(`${mins} Menit`);
+            if (secs > 0 || mins === 0) parts.push(`${secs} Detik`);
+            summaryElem.innerText = `⏱️ Durasi Game: ${parts.join(' ')} (${gameDuration} Detik)`;
+        }
+
+        // --- Core Application Functions ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(screenId);
+            if (target) target.classList.add('active');
+            if (screenId === 'screen-scoreboard') renderScoreboard();
+        }
+
+        // --- Explorer State ---
+        let explorerFiles = [];
+        let clipboard = null; // { action: 'cut'|'copy', id: number }
+        let selectedFileId = null;
+        let contextTargetId = null; // ID of file right-clicked, or null for window
+        let idCounter = 1;
+        let currentActiveChallenge = null; // Pointer to current challenge data
+
+        // --- Challenge Bank (Realistic OS Simulation) ---
+        const challengeBank = {
+            createFolder: [
+                { type: 'createFolder', q: 'Klik kanan area kosong ➔ New Folder ➔ Beri nama "Tugas TIK" ➔ Tekan Enter!', expectedName: 'Tugas TIK', initialFiles: [{name: 'Bahan.txt', isFolder: false}] },
+                { type: 'createFolder', q: 'Buat folder baru untuk menyimpan foto! Beri nama "Foto Liburan".', expectedName: 'Foto Liburan', initialFiles: [{name: 'Lagu.mp3', isFolder: false}] },
+                { type: 'createFolder', q: 'Rapikan desktop! Buat folder baru dengan nama "Pelajaran".', expectedName: 'Pelajaran', initialFiles: [{name: 'Jadwal.pdf', isFolder: false}] },
+                { type: 'createFolder', q: 'Bikin folder baru bernama "Game PC" di ruang kosong.', expectedName: 'Game PC', initialFiles: [{name: 'Steam.exe', isFolder: false}] },
+                { type: 'createFolder', q: 'Kita butuh tempat untuk video. Buat folder bernama "Video".', expectedName: 'Video', initialFiles: [{name: 'Vlog.mp4', isFolder: false}] }
+            ],
+            renameFile: [
+                { type: 'renameFile', q: 'Ubah nama "Draft.doc" menjadi "Laporan Akhir". (Klik kanan ➔ Rename)', targetFile: 'Draft.doc', expectedName: 'Laporan Akhir', initialFiles: [{name: 'Draft.doc', isFolder: false}, {name: 'Data', isFolder: true}] },
+                { type: 'renameFile', q: 'Folder "Tugas1" kurang jelas. Ubah namanya menjadi "Tugas TIK"!', targetFile: 'Tugas1', expectedName: 'Tugas TIK', initialFiles: [{name: 'Tugas1', isFolder: true}] },
+                { type: 'renameFile', q: 'Ganti nama file "kucing.jpg" menjadi "Hewan Peliharaan".', targetFile: 'kucing.jpg', expectedName: 'Hewan Peliharaan', initialFiles: [{name: 'kucing.jpg', isFolder: false}] },
+                { type: 'renameFile', q: 'File "lama.xls" harus diupdate. Rename menjadi "Data Baru".', targetFile: 'lama.xls', expectedName: 'Data Baru', initialFiles: [{name: 'lama.xls', isFolder: false}] },
+                { type: 'renameFile', q: 'Ubah nama folder "Rahasia" menjadi "Privasi".', targetFile: 'Rahasia', expectedName: 'Privasi', initialFiles: [{name: 'Rahasia', isFolder: true}] }
+            ],
+            moveFile: [
+                { type: 'moveFile', q: 'Pindahkan (Cut & Paste) "Foto.jpg" ke dalam folder "Liburan"!', fileToMove: 'Foto.jpg', targetFolder: 'Liburan', initialFiles: [{name: 'Foto.jpg', isFolder: false}, {name: 'Liburan', isFolder: true}] },
+                { type: 'moveFile', q: 'Rapikan file! Pindahkan "Laporan.pdf" ke folder "Tugas".', fileToMove: 'Laporan.pdf', targetFolder: 'Tugas', initialFiles: [{name: 'Laporan.pdf', isFolder: false}, {name: 'Tugas', isFolder: true}] },
+                { type: 'moveFile', q: 'Geser "Catatan.txt" ke dalam folder "Penting" dengan cara Cut dan Paste.', fileToMove: 'Catatan.txt', targetFolder: 'Penting', initialFiles: [{name: 'Catatan.txt', isFolder: false}, {name: 'Penting', isFolder: true}] },
+                { type: 'moveFile', q: 'Pindahkan "Video.mp4" ke folder "Media" agar rapi.', fileToMove: 'Video.mp4', targetFolder: 'Media', initialFiles: [{name: 'Video.mp4', isFolder: false}, {name: 'Media', isFolder: true}] }
+            ],
+            copyFile: [
+                { type: 'copyFile', q: 'Salin (Copy & Paste) "Jadwal.pdf" ke dalam folder "Backup"!', fileToMove: 'Jadwal.pdf', targetFolder: 'Backup', initialFiles: [{name: 'Jadwal.pdf', isFolder: false}, {name: 'Backup', isFolder: true}] },
+                { type: 'copyFile', q: 'Gandakan file! Copy "Resep.doc" dan Paste ke folder "Keluarga".', fileToMove: 'Resep.doc', targetFolder: 'Keluarga', initialFiles: [{name: 'Resep.doc', isFolder: false}, {name: 'Keluarga', isFolder: true}] },
+                { type: 'copyFile', q: 'Buat salinan "Tugas.docx" ke folder "Flashdisk" menggunakan Copy.', fileToMove: 'Tugas.docx', targetFolder: 'Flashdisk', initialFiles: [{name: 'Tugas.docx', isFolder: false}, {name: 'Flashdisk', isFolder: true}] }
+            ],
+            deleteFile: [
+                { type: 'deleteFile', q: 'Hapus file sampah! Klik kanan "Virus.exe" ➔ Delete.', fileToDelete: 'Virus.exe', initialFiles: [{name: 'Penting.doc', isFolder: false}, {name: 'Virus.exe', isFolder: false}] },
+                { type: 'deleteFile', q: 'Bersihkan ruang! Hapus "Mantan.jpg". Jangan hapus file lain.', fileToDelete: 'Mantan.jpg', initialFiles: [{name: 'Keluarga.jpg', isFolder: false}, {name: 'Mantan.jpg', isFolder: false}] },
+                { type: 'deleteFile', q: 'Ada file rusak. Hapus "Error.log" sekarang juga!', fileToDelete: 'Error.log', initialFiles: [{name: 'Sistem.dll', isFolder: false}, {name: 'Error.log', isFolder: false}] },
+                { type: 'deleteFile', q: 'Hapus folder kosong bernama "Temp" (Klik kanan -> Delete).', fileToDelete: 'Temp', initialFiles: [{name: 'Data', isFolder: true}, {name: 'Temp', isFolder: true}] },
+                { type: 'deleteFile', q: 'Buang file "Spam.txt" ke tempat sampah.', fileToDelete: 'Spam.txt', initialFiles: [{name: 'Tugas.txt', isFolder: false}, {name: 'Spam.txt', isFolder: false}] }
+            ]
+        };
+
+        // --- Game Flow (Langsung Mulai Tanpa Nama) ---
+        function startGame() {
+            roundCount++;
+            setupGame();
+            showScreen('screen-game');
+            startTimer();
+        }
+
+        // Alias for backward compatibility
+        function startRandomTurn() {
+            startGame();
+        }
+
+        function setupGame() {
+            score = 0; currentChallengeIndex = 0; clipboard = null;
+            
+            // Pick 10 challenges (2 unique from each of the 5 categories)
+            currentChallenges = [];
+            const categories = ['createFolder', 'renameFile', 'moveFile', 'copyFile', 'deleteFile'];
+            
+            categories.forEach(category => {
+                // Get 2 unique random items from the category
+                const shuffledCategory = [...challengeBank[category]].sort(() => Math.random() - 0.5);
+                currentChallenges.push(shuffledCategory[0]);
+                currentChallenges.push(shuffledCategory[1]);
+            });
+            
+            // Shuffle
+            currentChallenges = currentChallenges.sort(() => Math.random() - 0.5);
+            
+            loadChallenge();
+        }
+
+        function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function loadChallenge() {
+            if (currentChallengeIndex >= currentChallenges.length) { endTurn(false); return; }
+
+            document.getElementById('challenge-counter').innerText = `${currentChallengeIndex + 1}/${currentChallenges.length}`;
+            currentActiveChallenge = currentChallenges[currentChallengeIndex];
+            document.getElementById('challenge-title').innerText = currentActiveChallenge.q;
+            
+            document.getElementById('audience-question').innerText = getAudienceQuestion(currentActiveChallenge);
+            
+            // Initialize Explorer State
+            idCounter = 1;
+            explorerFiles = currentActiveChallenge.initialFiles.map(f => ({
+                id: idCounter++, name: f.name, isFolder: f.isFolder, isRenaming: false
+            }));
+            clipboard = null;
+            selectedFileId = null;
+            
+            renderExplorer();
+        }
+
+        function getAudienceQuestion(chal) {
+            if (chal.type === 'createFolder') return `Ingat ejaannya! Coba sebutkan huruf per huruf: ${chal.expectedName}`;
+            if (chal.type === 'renameFile') return `Ketik apa ya? Coba tuliskan "${chal.expectedName}" di udara!`;
+            if (chal.type === 'moveFile') return `Ayo tebak, harus pilih CUT atau COPY? (Jawaban: CUT)`;
+            if (chal.type === 'copyFile') return `Ayo tebak, harus pilih CUT atau COPY? (Jawaban: COPY)`;
+            if (chal.type === 'deleteFile') return `Jangan sampai salah klik! Tunjuk file mana yang harus dihapus!`;
+            return "Perhatikan temanmu di depan!";
+        }
+
+        // --- Explorer UI & Context Menu Engine ---
+        function renderExplorer() {
+            const win = document.getElementById('explorer-window');
+            win.innerHTML = '';
+            hideContextMenu();
+
+            explorerFiles.forEach(f => {
+                const item = document.createElement('div');
+                item.className = 'explorer-item' + (selectedFileId === f.id ? ' selected' : '');
+                if (clipboard && clipboard.action === 'cut' && clipboard.id === f.id) {
+                    item.style.opacity = '0.5';
+                }
+
+                item.innerHTML = `<div class="icon">${f.isFolder ? '📁' : '📄'}</div>`;
+                
+                if (f.isRenaming) {
+                    const inp = document.createElement('input');
+                    inp.type = 'text'; inp.value = f.name; inp.id = `rename-inp-${f.id}`;
+                    inp.autocomplete = 'off';
+                    inp.onclick = (e) => e.stopPropagation(); // prevent select
+                    inp.onkeydown = (e) => {
+                        if (e.key === 'Enter') finishRename(f.id, inp.value);
+                    };
+                    inp.onblur = () => finishRename(f.id, inp.value);
+                    item.appendChild(inp);
+                    setTimeout(() => { inp.focus(); inp.select(); }, 50);
+                } else {
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'name';
+                    nameDiv.innerText = f.name;
+                    item.appendChild(nameDiv);
+                }
+
+                // Left click selection
+                item.onmousedown = (e) => {
+                    if (e.button === 0) { // Left click
+                        selectedFileId = f.id;
+                        renderExplorer();
+                        e.stopPropagation();
+                    }
+                };
+
+                // Right click context menu
+                item.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectedFileId = f.id;
+                    contextTargetId = f.id;
+                    showContextMenu(e, true, f.isFolder);
+                };
+
+                win.appendChild(item);
+            });
+
+            // Window empty space click
+            win.onmousedown = (e) => {
+                if (e.target.tagName === 'INPUT') return;
+                if (e.button === 0 && (e.target === win || e.target.id === 'explorer-window')) {
+                    const renamingFile = explorerFiles.find(f => f.isRenaming);
+                    if (renamingFile) {
+                        const inp = document.getElementById(`rename-inp-${renamingFile.id}`);
+                        if (inp) finishRename(renamingFile.id, inp.value);
+                    } else {
+                        selectedFileId = null;
+                        hideContextMenu();
+                        renderExplorer();
+                    }
+                }
+            };
+            
+            win.oncontextmenu = (e) => {
+                if (e.target === win || e.target.id === 'explorer-window') {
+                    e.preventDefault();
+                    contextTargetId = null;
+                    selectedFileId = null;
+                    renderExplorer(); // update selection visuals, clears menu
+                    showContextMenu(e, false, false); // show menu AFTER render
+                }
+            };
+        }
+
+        function showContextMenu(e, onFile, isFolder) {
+            const menu = document.getElementById('custom-context-menu');
+            menu.style.display = 'flex';
+            
+            // Show/Hide appropriate options FIRST so height is correct
+            document.getElementById('menu-new-folder').style.display = onFile ? 'none' : 'flex';
+            document.getElementById('menu-cut').style.display = onFile ? 'flex' : 'none';
+            document.getElementById('menu-copy').style.display = onFile ? 'flex' : 'none';
+            
+            const pasteMenu = document.getElementById('menu-paste');
+            if (onFile) pasteMenu.style.display = isFolder ? 'flex' : 'none';
+            else pasteMenu.style.display = 'flex';
+            
+            if (!clipboard) pasteMenu.classList.add('disabled');
+            else pasteMenu.classList.remove('disabled');
+
+            document.getElementById('menu-rename').style.display = onFile ? 'flex' : 'none';
+            document.getElementById('menu-delete').style.display = onFile ? 'flex' : 'none';
+            
+            document.getElementById('menu-div-1').style.display = onFile ? 'none' : 'flex';
+            document.getElementById('menu-div-2').style.display = onFile ? 'flex' : 'none';
+
+            // Boundary checks
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+            
+            let x = e.pageX;
+            let y = e.pageY;
+            
+            const viewX = e.clientX;
+            const viewY = e.clientY;
+            
+            const menuWidth = menu.offsetWidth || 200;
+            const menuHeight = menu.offsetHeight || 250;
+            
+            if (viewX + menuWidth > winWidth) x = x - menuWidth;
+            if (viewY + menuHeight > winHeight) y = y - menuHeight;
+            
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+        }
+
+        function hideContextMenu() {
+            document.getElementById('custom-context-menu').style.display = 'none';
+        }
+
+        // Close context menu on global click
+        document.addEventListener('mousedown', (e) => {
+            const menu = document.getElementById('custom-context-menu');
+            if (!menu.contains(e.target)) hideContextMenu();
+        });
+
+        // --- OS Action Handlers ---
+        function handleMenu(action) {
+            const menu = document.getElementById('custom-context-menu');
+            if (action === 'paste' && document.getElementById('menu-paste').classList.contains('disabled')) return;
+            hideContextMenu();
+
+            if (action === 'new-folder') {
+                const newId = idCounter++;
+                explorerFiles.push({ id: newId, name: 'New folder', isFolder: true, isRenaming: true });
+                renderExplorer();
+            } 
+            else if (action === 'cut' || action === 'copy') {
+                if (contextTargetId) {
+                    clipboard = { action: action, id: contextTargetId };
+                    renderExplorer();
+                }
+            }
+            else if (action === 'paste') {
+                if (clipboard) {
+                    // Simulating paste. In this game, if we paste into a folder, the file "disappears" into it.
+                    // If pasted on window, it just appears.
+                    const fileToPaste = explorerFiles.find(f => f.id === clipboard.id);
+                    if (fileToPaste) {
+                        if (contextTargetId) {
+                            // Pasted INTO a folder.
+                            const targetFolder = explorerFiles.find(f => f.id === contextTargetId);
+                            if (targetFolder && targetFolder.isFolder) {
+                                const actionUsed = clipboard.action;
+                                // Cut logic: remove from explorer
+                                if (clipboard.action === 'cut') {
+                                    explorerFiles = explorerFiles.filter(f => f.id !== clipboard.id);
+                                }
+                                clipboard = null;
+                                renderExplorer();
+                                checkMoveWinCondition(fileToPaste.name, targetFolder.name, actionUsed);
+                            }
+                        } else {
+                            // Pasted onto window. For simplicity in this game, we don't fully implement real copy if not needed by challenges.
+                            clipboard = null;
+                            renderExplorer();
+                        }
+                    }
+                }
+            }
+            else if (action === 'rename') {
+                if (contextTargetId) {
+                    const f = explorerFiles.find(x => x.id === contextTargetId);
+                    if (f) { f.isRenaming = true; renderExplorer(); }
+                }
+            }
+            else if (action === 'delete') {
+                if (contextTargetId) {
+                    const f = explorerFiles.find(x => x.id === contextTargetId);
+                    explorerFiles = explorerFiles.filter(x => x.id !== contextTargetId);
+                    if (clipboard && clipboard.id === contextTargetId) clipboard = null;
+                    renderExplorer();
+                    checkDeleteWinCondition(f.name);
+                }
+            }
+        }
+
+        function finishRename(id, newName) {
+            const f = explorerFiles.find(x => x.id === id);
+            if (f && f.isRenaming) {
+                f.name = newName.trim() || 'New folder';
+                f.isRenaming = false;
+                renderExplorer();
+                
+                // Check win condition after rename
+                checkRenameOrCreateWinCondition(f.name, f.isFolder);
+            }
+        }
+
+        // --- Challenge Checkers ---
+        function checkRenameOrCreateWinCondition(typedName, isFolder) {
+            const chal = currentActiveChallenge;
+            if (!chal) return;
+            const typedLow = typedName.toLowerCase();
+            const expectLow = chal.expectedName ? chal.expectedName.toLowerCase() : '';
+
+            if (chal.type === 'createFolder' && isFolder) {
+                if (typedLow === expectLow) checkAnswer(true);
+                else checkAnswer(false, `Harusnya bernama: ${chal.expectedName}`);
+            }
+            else if (chal.type === 'renameFile') {
+                // Must rename the correct target file
+                // In a perfect sim we'd track original names, but here checking the final name string matches expected is enough since they can't create random files.
+                if (typedLow === expectLow) checkAnswer(true);
+                else checkAnswer(false, `Ejaan salah. Harusnya: ${chal.expectedName}`);
+            }
+        }
+
+        function checkMoveWinCondition(fileName, folderName, actionUsed) {
+            const chal = currentActiveChallenge;
+            if (chal && (chal.type === 'moveFile' || chal.type === 'copyFile')) {
+                if (fileName === chal.fileToMove && folderName === chal.targetFolder) {
+                    if (chal.type === 'moveFile' && actionUsed !== 'cut') {
+                        checkAnswer(false, 'Harusnya pilih CUT (memindah), bukan COPY!');
+                    }
+                    else if (chal.type === 'copyFile' && actionUsed !== 'copy') {
+                        checkAnswer(false, 'Harusnya pilih COPY (menyalin), bukan CUT!');
+                    }
+                    else {
+                        checkAnswer(true);
+                    }
+                } else {
+                    checkAnswer(false, `Kamu memasukkan ke tempat yang salah!`);
+                }
+            }
+        }
+
+        function checkDeleteWinCondition(deletedFileName) {
+            const chal = currentActiveChallenge;
+            if (chal && chal.type === 'deleteFile') {
+                if (deletedFileName === chal.fileToDelete) {
+                    checkAnswer(true);
+                } else {
+                    checkAnswer(false, `Kamu malah menghapus file penting!`);
+                }
+            }
+        }
+
+
+        // --- Win/Lose Flow ---
+        function checkAnswer(isCorrect, errorHint = '') {
+            // Prevent multiple triggers
+            if (document.getElementById('feedback-overlay').classList.contains('show')) return;
+            
+            if (isCorrect) score++;
+            showFeedback(isCorrect, errorHint);
+            
+            setTimeout(() => {
+                document.getElementById('feedback-overlay').classList.remove('show');
+                currentChallengeIndex++;
+                loadChallenge();
+            }, 2500); // Wait a bit so they can see the result
+        }
+
+        function showFeedback(isCorrect, hint) {
+            const overlay = document.getElementById('feedback-overlay');
+            const icon = document.getElementById('feedback-icon');
+            const text = document.getElementById('feedback-text');
+            
+            overlay.classList.add('show');
+            if (isCorrect) {
+                icon.innerText = '✅'; icon.className = 'feedback-icon feedback-correct';
+                text.innerText = 'Benar Sekali!'; text.className = 'feedback-text feedback-correct';
+                text.innerHTML += `<div style="font-size:1.5rem; margin-top:10px;">Luar biasa!</div>`;
+            } else {
+                icon.innerText = '❌'; icon.className = 'feedback-icon feedback-wrong';
+                text.innerText = 'Ups, Kurang Tepat!'; text.className = 'feedback-text feedback-wrong';
+                text.innerHTML += `<div style="font-size:1.5rem; margin-top:10px;">${hint}</div>`;
+            }
+        }
+
+        // --- Timer Logic ---
+        function startTimer() {
+            timeLeft = gameDuration;
+            updateTimerDisplay();
+            const timerElem = document.getElementById('timer-display');
+            if (timerElem) timerElem.classList.remove('warning');
+            
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 15 && timerElem) timerElem.classList.add('warning');
+                if (timeLeft <= 0) endTurn(true);
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            const timerElem = document.getElementById('timer-display');
+            if (timerElem) {
+                timerElem.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function endTurn(isSkippedOrTimeout = false) {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            const timeUsed = Math.max(0, gameDuration - timeLeft);
+            
+            scores.push({
+                session: `Sesi #${roundCount}`,
+                score: score,
+                total: currentChallenges.length,
+                timeLeft: timeLeft,
+                duration: gameDuration,
+                timeUsed: timeUsed
+            });
+            
+            const minsLeft = Math.floor(Math.max(0, timeLeft) / 60);
+            const secsLeft = Math.max(0, timeLeft) % 60;
+            const strLeft = timeLeft > 0 ? `${minsLeft.toString().padStart(2, '0')}:${secsLeft.toString().padStart(2, '0')}` : '00:00 (Habis)';
+            
+            const minsUsed = Math.floor(timeUsed / 60);
+            const secsUsed = timeUsed % 60;
+            const strUsed = `${minsUsed.toString().padStart(2, '0')}:${secsUsed.toString().padStart(2, '0')}`;
+            
+            const resScore = document.getElementById('result-score');
+            const resTimeLeft = document.getElementById('result-time-left');
+            const resTimeUsed = document.getElementById('result-time-used');
+            
+            if (resScore) resScore.innerText = `${score} / ${currentChallenges.length}`;
+            if (resTimeLeft) resTimeLeft.innerText = strLeft;
+            if (resTimeUsed) resTimeUsed.innerText = strUsed;
+            
+            showScreen('screen-result');
+        }
+
+        // --- Scoreboard ---
+        function renderScoreboard() {
+            const tbody = document.getElementById('score-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            if (scores.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="padding:25px; text-align:center; color:#64748b;">Belum ada riwayat permainan. Klik tombol "Mulai Game" untuk mulai bermain!</td></tr>`;
+                return;
+            }
+
+            scores.forEach((s, index) => {
+                const tr = document.createElement('tr');
+                const timeString = s.timeLeft > 0 ? `${Math.floor(s.timeLeft/60)}m ${s.timeLeft%60}s` : 'Waktu Habis';
+                const durString = `${Math.floor(s.duration/60)}m ${s.duration%60}s`;
+                tr.innerHTML = `<td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${index + 1}</td>
+                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;"><strong>${s.session}</strong></td>
+                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center; color: ${s.score === s.total ? 'var(--success)' : 'inherit'}; font-weight: bold; font-size: 1.3rem;">${s.score} / ${s.total}</td>
+                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${durString}</td>
+                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${timeString}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Init setup
+        updateSelectedTimeSummary();
+
+    </script>
+</body>
+</html>
