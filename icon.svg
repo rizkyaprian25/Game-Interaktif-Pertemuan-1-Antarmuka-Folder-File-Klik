@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4361ee" />
+      <stop offset="100%" stop-color="#3a0ca3" />
+    </linearGradient>
+    <linearGradient id="folderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb703" />
+      <stop offset="100%" stop-color="#fb8500" />
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4cc9f0" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#4361ee" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Rounded App Icon Background -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+  
+  <!-- Back Folder Tab -->
+  <path d="M110 180 L210 180 L245 210 L395 210 Q410 210 410 225 L410 260 L110 260 Z" fill="#fb8500" opacity="0.85" />
+  
+  <!-- Folder Body -->
+  <rect x="95" y="225" width="322" height="185" rx="18" fill="url(#folderGrad)" filter="url(#shadow)" />
+  
+  <!-- File Sheets peeking out -->
+  <rect x="145" y="160" width="130" height="90" rx="8" fill="#ffffff" opacity="0.95" />
+  <line x1="165" y1="185" x2="250" y2="185" stroke="#4361ee" stroke-width="6" stroke-linecap="round"/>
+  <line x1="165" y1="205" x2="230" y2="205" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Magnifying Glass (Detective) -->
+  <g filter="url(#shadow)">
+    <!-- Handle -->
+    <rect x="325" y="325" width="30" height="95" rx="12" transform="rotate(-45 325 325)" fill="#212529" stroke="#f8f9fa" stroke-width="4"/>
+    <!-- Glass Rim -->
+    <circle cx="280" cy="280" r="75" fill="none" stroke="#f8f9fa" stroke-width="18" />
+    <circle cx="280" cy="280" r="75" fill="url(#glassGrad)" />
+    <!-- Reflection highlight -->
+    <path d="M 230 255 A 50 50 0 0 1 290 220" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.8" />
+  </g>
+</svg>
