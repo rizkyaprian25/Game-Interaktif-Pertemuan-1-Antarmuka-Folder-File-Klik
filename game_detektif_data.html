@@ -1102,668 +1102,1759 @@
             }
         }
 
-        // --- 2. Bank Soal Skenario Interaktif (Tepat 50 Soal Tanpa Bocoran Jawaban) ---
+        // --- 2. Bank Soal Skenario Interaktif (Tepat 50 Soal dengan Kata Kunci Jelas) ---
         const ALL_CHALLENGES = [
-            // ==================== KELOMPOK 1: COPY ====================
             {
-                q: "Di laptop ada video liburan. Saya ingin menaruh video itu ke folder 'Liburan', tapi file video aslinya di laptop jangan sampai hilang. Fitur apa yang harus saya gunakan?",
-                visual: { srcIcon: "🎬", srcLabel: "Video.mp4", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Liburan" },
-                audience: "Menurut kalian dari bangku, fitur apa yang harus dipilih?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan baru, aslinya tetap ada" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file, aslinya berpindah" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang ke tempat sampah" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'Copy' (Salin) berfungsi menggandakan file ke tempat baru tanpa menghilangkan file aslinya."
+                        "q": "Saya ingin menyalin file video tugas dari laptop ke dalam flashdisk tanpa menghilangkan file aslinya di laptop. Fitur apa yang harus saya gunakan?",
+                        "visual": {
+                                    "srcIcon": "🎬",
+                                    "srcLabel": "Video.mp4",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Liburan"
+                        },
+                        "audience": "Ada kata \"menyalin\", fitur apa yang harus dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat sekali! \"Copy\" berfungsi menyalin atau menggandakan file ke tempat baru tanpa menghilangkan aslinya."
             },
             {
-                q: "Temanmu ingin minta file lagu tugas kelompok ke flashdisk miliknya. Supaya lagu di laptopmu tidak hilang saat diberikan ke teman, kamu harus memilih...",
-                visual: { srcIcon: "🎵", srcLabel: "Lagu_Tugas.mp3", arrow: "➔ [ ? ]", tgtIcon: "💾", tgtLabel: "Flashdisk" },
-                audience: "Supaya lagunya tidak hilang dari laptop, pilih apa ya?",
-                options: [
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "File di laptop akan ikut hilang" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan lagu ke flashdisk teman" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus lagu" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
-                ],
-                correct: 1,
-                explanation: "Benar! Dengan 'Copy', lagu digandakan ke flashdisk teman dan di laptopmu tetap tersimpan aman."
+                        "q": "Saya ingin menggandakan file lagu tugas kelompok ke flashdisk teman agar lagu tetap ada di laptop saya dan ada di flashdisk teman. Perintah yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "🎵",
+                                    "srcLabel": "Lagu_Tugas.mp3",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💾",
+                                    "tgtLabel": "Flashdisk"
+                        },
+                        "audience": "Ada kata \"menggandakan\", pilihan yang tepat adalah...",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Benar! \"Copy\" berfungsi menggandakan berkas sehingga tersimpan di dua tempat sekaligus."
             },
             {
-                q: "Kamu ingin membuat cadangan file tugas penting di folder lain. Tujuannya agar jika file yang satu terhapus, kamu masih punya cadangannya. Fitur yang dipakai adalah...",
-                visual: { srcIcon: "📄", srcLabel: "Tugas_Penting.docx", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Cadangan" },
-                audience: "Membuat berkas cadangan (backup) itu pakai apa?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan berkas cadangan" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya memindahkan file asli" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang berkas" }
-                ],
-                correct: 0,
-                explanation: "Hebat! Membuat cadangan (backup) dilakukan dengan menduplikasi file lewat perintah 'Copy'."
+                        "q": "Saya ingin menduplikasi file lembar soal latihan agar bisa dikerjakan berulang kali tanpa merusak file aslinya. Fitur yang saya pilih adalah...",
+                        "visual": {
+                                    "srcIcon": "📋",
+                                    "srcLabel": "Soal_Latihan.docx",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📄",
+                                    "tgtLabel": "Salinan_Soal.docx"
+                        },
+                        "audience": "Ada kata \"menduplikasi\", fitur apa yang dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Hebat! Menduplikasi berkas dilakukan dengan memilih perintah \"Copy\"."
             },
             {
-                q: "Ibu ingin meminta salinan foto resep masakan dari komputermu untuk disimpan di HP-nya. Supaya foto di komputermu tidak ikut hilang, gunakan perintah...",
-                visual: { srcIcon: "🍲", srcLabel: "Resep.jpg", arrow: "➔ [ ? ]", tgtIcon: "📱", tgtLabel: "HP Ibu" },
-                audience: "Bagikan foto resep ke HP orang lain tanpa menghilangkan aslinya, pilih apa ya?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama foto" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto dari komputer" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan foto untuk Ibu" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto" }
-                ],
-                correct: 2,
-                explanation: "Tepat! 'Copy' membuat salinan berkas baru untuk Ibu tanpa menghilangkan foto aslimu."
+                        "q": "Ibu meminta saya membuat salinan file resep masakan dari komputer ke HP-nya tanpa menghapus foto aslinya di komputer. Perintah yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "🍲",
+                                    "srcLabel": "Resep.jpg",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📱",
+                                    "tgtLabel": "HP Ibu"
+                        },
+                        "audience": "Ada kata \"membuat salinan file\", pilih apa ya?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 2,
+                        "explanation": "Tepat! Perintah \"Copy\" digunakan untuk membuat salinan file baru tanpa menghapus aslinya."
             },
             {
-                q: "Ada lembar soal latihan yang ingin kamu kerjakan berkali-kali. Supaya file lembar soal aslinya tetap bersih dan tidak rusak, kamu harus menduplikasi file tersebut dengan...",
-                visual: { srcIcon: "📋", srcLabel: "Soal_Latihan.docx", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Salinan_Latihan.docx" },
-                audience: "Supaya lembar soal asli tetap bersih saat dikerjakan berulang, pilih apa ya?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi lembar soal latihan" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus lembar soal" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file asli" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah map" }
-                ],
-                correct: 0,
-                explanation: "Pintar! 'Copy' membuat salinan baru sehingga lembar soal asli tetap utuh dan bersih."
+                        "q": "Saya ingin menyalin dokumen tugas penting ke folder lain sebagai berkas cadangan (backup). Perintah yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Tugas_Penting.docx",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Cadangan"
+                        },
+                        "audience": "Ada kata \"menyalin\", perintah apa yang digunakan?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! Menyalin dokumen cadangan (backup) dilakukan lewat perintah \"Copy\"."
             },
             {
-                q: "Kamu ingin menaruh gambar poster tugas ke dalam dua folder sekaligus: folder 'Tugas TIK' dan folder 'Pameran'. Perintah yang kamu gunakan adalah...",
-                visual: { srcIcon: "🖼️", srcLabel: "Poster.png", arrow: "➔ [ ? ]", tgtIcon: "📁📁", tgtLabel: "2 Folder Sekaligus" },
-                audience: "Menaruh gambar yang sama ke dua folder berbeda pakai apa?",
-                options: [
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya pindah ke 1 tempat saja" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama poster" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Memperbanyak poster ke folder lain" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus poster" }
-                ],
-                correct: 2,
-                explanation: "Benar sekali! Dengan 'Copy', satu gambar bisa kita gandakan ke beberapa folder yang berbeda."
+                        "q": "Saya ingin menggandakan gambar poster tugas ke dalam dua folder berbeda sekaligus. Fitur yang saya gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "🖼️",
+                                    "srcLabel": "Poster.png",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁📁",
+                                    "tgtLabel": "2 Folder"
+                        },
+                        "audience": "Ada kata \"menggandakan\", pilih fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 2,
+                        "explanation": "Benar sekali! Dengan \"Copy\", satu file bisa digandakan ke beberapa folder yang berbeda."
             },
             {
-                q: "Kamu ingin membagikan foto catatan guru di papan tulis ke grup belajar teman sekelasmu tanpa menghapus foto aslinya di HP/laptopmu. Fitur apa yang harus kamu gunakan?",
-                visual: { srcIcon: "📸", srcLabel: "Catatan_Guru.jpg", arrow: "➔ [ ? ]", tgtIcon: "👥", tgtLabel: "Grup Belajar" },
-                audience: "Membagikan foto ke teman tapi di galeri sendiri tetap aman, pilih apa ya?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan baru untuk dibagikan" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "File di galerimu akan ikut hilang" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang foto catatan" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! Dengan 'Copy', kamu membagikan salinan foto sementara foto aslimu tetap tersimpan rapi."
+                        "q": "Sebelum mulai mengedit video rekaman tugas, saya ingin membuat salinan file video aslinya terlebih dahulu agar aman jika terjadi kesalahan. Fitur yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "🎬",
+                                    "srcLabel": "Video_Asli.mp4",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🎞️",
+                                    "tgtLabel": "Salinan_Video.mp4"
+                        },
+                        "audience": "Ada kata \"membuat salinan file\", gunakan apa?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Sangat cerdas! Membuat salinan file dengan \"Copy\" adalah langkah aman sebelum mengedit berkas."
             },
             {
-                q: "Saat membuat slide presentasi tugas, kamu ingin menggunakan gambar logo sekolah yang tersimpan di folder lain tanpa merusak file aslinya. Perintah yang tepat adalah...",
-                visual: { srcIcon: "🏫", srcLabel: "Logo_Sekolah.png", arrow: "➔ [ ? ]", tgtIcon: "📊", tgtLabel: "Slide Presentasi" },
-                audience: "Mengambil gambar untuk dipakai lagi di tempat lain tanpa merusak aslinya, pilih apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus logo sekolah" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan logo ke slide presentasi" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Logo di folder asal akan hilang" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
-                ],
-                correct: 1,
-                explanation: "Hebat! 'Copy' menduplikasi logo sekolah ke dalam presentasimu tanpa memindahkan berkas aslinya."
+                        "q": "Teman sekelas ingin menyalin file materi presentasi dari laptop saya ke flashdisk miliknya tanpa menghilangkan file di laptop saya. Perintah yang dipilih adalah...",
+                        "visual": {
+                                    "srcIcon": "📊",
+                                    "srcLabel": "Presentasi.pptx",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💾",
+                                    "tgtLabel": "Flashdisk Teman"
+                        },
+                        "audience": "Ada kata \"menyalin\", pilih yang mana?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Hebat! Menyalin materi ke flashdisk teman dilakukan dengan perintah \"Copy\"."
             },
             {
-                q: "Kamu ingin mencoba mengedit video rekaman tugas kelompok, tetapi takut hasilnya gagal dan merusak video asli. Langkah pencegahan yang paling tepat adalah...",
-                visual: { srcIcon: "🎬", srcLabel: "Video_Asli.mp4", arrow: "➔ [ ? ]", tgtIcon: "🎞️", tgtLabel: "Salinan_Edit.mp4" },
-                audience: "Supaya video asli tidak rusak saat diedit coba-coba, harus diapakan dulu?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi video untuk bahan uji coba" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama video" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Video tetap hanya ada 1 file" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus video rekaman" }
-                ],
-                correct: 0,
-                explanation: "Pintar! Membuat salinan dengan 'Copy' adalah cara paling aman sebelum melakukan uji coba edit file."
+                        "q": "Saya ingin menduplikasi file logo sekolah untuk dipasang di slide tugas tanpa merusak file logo aslinya. Fitur yang saya gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "🏫",
+                                    "srcLabel": "Logo_Sekolah.png",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📊",
+                                    "tgtLabel": "Slide Presentasi"
+                        },
+                        "audience": "Ada kata \"menduplikasi\", fitur apa yang dipakai?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Mantap! \"Copy\" menduplikasi file logo sehingga file aslinya tetap utuh di tempat lama."
             },
             {
-                q: "Kombinasi tombol pintas (shortcut) pada keyboard komputer yang digunakan untuk menggandakan berkas (Copy) secara cepat adalah...",
-                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Aksi Copy" },
-                audience: "Kombinasi tombol keyboard untuk Copy adalah...",
-                options: [
-                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy (Salin)" },
-                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut (Pindah)" },
-                    { icon: "📋", title: "Ctrl + V", subtitle: "Tombol pintas untuk Paste (Tempel)" },
-                    { icon: "↩️", title: "Ctrl + Z", subtitle: "Tombol pintas untuk Undo (Batal)" }
-                ],
-                correct: 0,
-                explanation: "Luar biasa! 'Ctrl + C' adalah tombol pintas universal di keyboard komputer untuk fungsi Copy."
-            },
-
-            // ==================== KELOMPOK 2: CUT ====================
-            {
-                q: "Ada foto tugas yang letaknya di Desktop. Kamu ingin memindahkannya ke dalam folder 'Tugas' agar layar Desktop bersih dan rapi. Fitur yang dipakai adalah...",
-                visual: { srcIcon: "🖼️", srcLabel: "Foto di Desktop", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Tugas" },
-                audience: "File di desktop mau dirapikan ke folder tugas tanpa sisa di desktop, pilih apa ya?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "File di desktop masih tertinggal" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto agar desktop bersih" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama foto" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
-                ],
-                correct: 1,
-                explanation: "Tepat! 'Cut' (Pindah) digunakan untuk memindahkan file ke tempat baru sehingga tempat lama jadi bersih."
-            },
-            {
-                q: "Memori kamera HP kamu hampir penuh. Kamu ingin memindahkan semua foto ke laptop agar memori HP kosong kembali. Fitur yang paling tepat adalah...",
-                visual: { srcIcon: "📷", srcLabel: "Kamera HP Penuh", arrow: "➔ [ ? ]", tgtIcon: "💻", tgtLabel: "Laptop" },
-                audience: "Supaya memori HP kosong kembali dan tersimpan di laptop, pilih apa?",
-                options: [
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto & mengosongkan HP" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Foto di HP masih tetap penuh" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto tanpa menyimpannya" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" }
-                ],
-                correct: 0,
-                explanation: "Benar sekali! Dengan 'Cut', foto dipindahkan ke laptop dan memori HP menjadi kosong kembali."
+                        "q": "Kombinasi tombol pintas pada keyboard komputer yang digunakan untuk menyalin (Copy) file secara cepat adalah...",
+                        "visual": {
+                                    "srcIcon": "⌨️",
+                                    "srcLabel": "Papan Keyboard",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📄",
+                                    "tgtLabel": "Fitur Copy"
+                        },
+                        "audience": "Shortcut keyboard untuk menyalin (Copy) adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Ctrl + C",
+                                                "subtitle": "Tombol cepat untuk Copy (Menyalin)"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Ctrl + X",
+                                                "subtitle": "Tombol cepat untuk Cut (Memindahkan)"
+                                    },
+                                    {
+                                                "icon": "📋",
+                                                "title": "Ctrl + V",
+                                                "subtitle": "Tombol cepat untuk Paste (Menempelkan)"
+                                    },
+                                    {
+                                                "icon": "↩️",
+                                                "title": "Ctrl + Z",
+                                                "subtitle": "Tombol cepat untuk Undo (Batal)"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Luar biasa! \"Ctrl + C\" adalah kombinasi tombol keyboard tercepat untuk fungsi Copy (Menyalin)."
             },
             {
-                q: "File tugas Matematika tidak sengaja tersimpan di dalam folder Pelajaran IPA. Agar letaknya benar, kamu ingin memindahkan file itu ke folder Matematika. Pilihlah...",
-                visual: { srcIcon: "📐", srcLabel: "Matematika di IPA", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Matematika" },
-                audience: "Salah taruh tugas, mau dialihkan ke folder yang benar pakai apa?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah jadi ada di dua tempat" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama file" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan ke folder Matematika" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas matematika" }
-                ],
-                correct: 2,
-                explanation: "Hebat! 'Cut' memindahkan berkas yang salah tempat masuk ke folder yang semestinya."
+                        "q": "Ada foto tugas di layar Desktop. Saya ingin memindahkan foto tersebut ke dalam folder tugas agar layar Desktop bersih dan rapi. Fitur apa yang saya gunakan?",
+                        "visual": {
+                                    "srcIcon": "🖼️",
+                                    "srcLabel": "Foto di Desktop",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Tugas"
+                        },
+                        "audience": "Ada kata \"memindahkan\", fitur apa yang dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Tepat! \"Cut\" digunakan untuk memindahkan file ke tempat baru sehingga tempat lama jadi bersih."
             },
             {
-                q: "Kamu baru saja mendownload file aplikasi di folder 'Downloads'. Sekarang kamu ingin memindahkannya ke folder 'Aplikasi' agar tidak tercecer. Fitur yang kamu gunakan adalah...",
-                visual: { srcIcon: "📦", srcLabel: "File di Downloads", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Aplikasi" },
-                audience: "File hasil download mau dialihkan ke folder aplikasi, gunakan apa?",
-                options: [
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file ke folder aplikasi" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi file aplikasi" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file" }
-                ],
-                correct: 0,
-                explanation: "Mantap! 'Cut' memindahkan berkas secara total sehingga folder Downloads tetap bersih dan rapi."
+                        "q": "Saya ingin menggeser file tugas Matematika yang salah tersimpan di folder IPA agar berpindah ke folder Matematika. Perintah yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "📐",
+                                    "srcLabel": "Tugas di Folder IPA",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Matematika"
+                        },
+                        "audience": "Ada kata \"menggeser\" agar berpindah, pilih apa?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 2,
+                        "explanation": "Benar! Menggeser atau memindahkan file yang salah letak dilakukan dengan perintah \"Cut\"."
             },
             {
-                q: "Apa perbedaan paling mendasar antara perintah 'Cut' dan 'Copy' saat kita mengelola file di komputer?",
-                visual: { srcIcon: "✂️", srcLabel: "Perintah Cut", arrow: "VS", tgtIcon: "📄", tgtLabel: "Perintah Copy" },
-                audience: "Ayo bedakan: Yang mana yang memindahkan file dari tempat asal?",
-                options: [
-                    { icon: "✂️", title: "Cut memindahkan aslinya, Copy membuat salinan baru", subtitle: "Cut mengosongkan tempat lama" },
-                    { icon: "📄", title: "Cut membuat salinan baru, Copy memindahkan file asli", subtitle: "Pernyataan ini terbalik" },
-                    { icon: "🗑️", title: "Cut menghapus file, Copy membuat folder baru", subtitle: "Pernyataan keliru" },
-                    { icon: "📝", title: "Keduanya sama saja, tidak ada perbedaannya", subtitle: "Tentu ada perbedaannya" }
-                ],
-                correct: 0,
-                explanation: "Sangat cerdas! 'Cut' itu memindahkan berkas asli, sedangkan 'Copy' itu membuat salinan baru."
+                        "q": "Memori HP saya hampir penuh. Saya ingin memindah lokasi file foto-foto dari HP ke laptop agar memori HP kosong kembali. Fitur yang paling tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "📷",
+                                    "srcLabel": "Kamera HP Penuh",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💻",
+                                    "tgtLabel": "Laptop"
+                        },
+                        "audience": "Ada kata \"memindah lokasi file\", fitur apa yang tepat?",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Hebat! Memindah lokasi file secara total dilakukan dengan perintah \"Cut\"."
             },
             {
-                q: "Kamu ingin memindahkan dokumen formulir dari flashdisk ke laptop, dan kamu ingin formulir di flashdisk langsung terhapus setelah pindah. Perintahnya adalah...",
-                visual: { srcIcon: "📄", srcLabel: "Formulir di Flashdisk", arrow: "➔ [ ? ]", tgtIcon: "💻", tgtLabel: "Laptop" },
-                audience: "Pindah total tanpa meninggalkan salinan di flashdisk adalah...",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tanpa disimpan" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan formulir ke laptop" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Formulir di flashdisk masih ada" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama formulir" }
-                ],
-                correct: 1,
-                explanation: "Tepat! 'Cut' memindahkan formulir ke laptop sekaligus mengosongkannya dari flashdisk."
+                        "q": "Saya ingin memindahkan file aplikasi yang baru selesai di-download ke folder \"Aplikasi\" agar tidak berceceran di Downloads. Perintah yang saya gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📦",
+                                    "srcLabel": "File di Downloads",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Aplikasi"
+                        },
+                        "audience": "Ada kata \"memindahkan\", gunakan perintah apa?",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Mantap! \"Cut\" memindahkan file aplikasi ke folder semestinya."
             },
             {
-                q: "Folder 'Downloads' di komputermu sudah penuh sesak. Kamu ingin memindahkan file modul PDF ke dalam folder 'Buku Pelajaran' agar folder Downloads bersih kembali. Pilihlah...",
-                visual: { srcIcon: "📑", srcLabel: "Modul di Downloads", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Buku Pelajaran" },
-                audience: "Supaya folder Downloads bersih, file modul dipindahkan pakai apa?",
-                options: [
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "File di Downloads masih menumpuk" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan modul & mengosongkan Downloads" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama modul" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat map baru" }
-                ],
-                correct: 1,
-                explanation: "Benar sekali! 'Cut' memindahkan modul ke folder tujuan dan membuat folder Downloads bersih kembali."
+                        "q": "Saya ingin memindahkan dokumen formulir dari flashdisk ke laptop, dan dokumen di flashdisk harus langsung hilang setelah pindah. Perintah yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Formulir di Flashdisk",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💻",
+                                    "tgtLabel": "Laptop"
+                        },
+                        "audience": "Ada kata \"memindahkan\" tanpa meninggalkan sisa, pilih apa?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Sangat cerdas! \"Cut\" memindahkan file sekaligus mengosongkan berkas dari media asal."
             },
             {
-                q: "Kombinasi tombol pintas (shortcut) pada keyboard komputer yang digunakan untuk memotong atau memindahkan berkas (Cut) adalah...",
-                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "✂️", tgtLabel: "Aksi Cut" },
-                audience: "Tombol shortcut keyboard untuk perintah Cut adalah...",
-                options: [
-                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy" },
-                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut (Potong/Pindah)" },
-                    { icon: "💾", title: "Ctrl + S", subtitle: "Tombol pintas untuk Save (Simpan)" },
-                    { icon: "🖨️", title: "Ctrl + P", subtitle: "Tombol pintas untuk Print (Cetak)" }
-                ],
-                correct: 1,
-                explanation: "Tepat! Tombol 'Ctrl + X' (gambar menyerupai gunting) adalah shortcut keyboard untuk memotong (Cut) berkas."
+                        "q": "Penyimpanan Local Disk (C:) laptop saya penuh. Saya ingin memindah lokasi file video ke Flashdisk (E:) agar kapasitas laptop kembali lega. Perintah yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "💽",
+                                    "srcLabel": "Disk C: Penuh",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💾",
+                                    "tgtLabel": "Flashdisk E:"
+                        },
+                        "audience": "Ada kata \"memindah lokasi file\", pilih yang mana?",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat! \"Cut\" memindahkan file ke flashdisk dan membuat penyimpanan laptop menjadi lega."
             },
             {
-                q: "Penyimpanan Local Disk (C:) di laptop hampir penuh berwarna merah. Kamu ingin memindahkan semua video ke Flashdisk (E:) agar kapasitas laptop kembali lega. Perintah yang paling tepat adalah...",
-                visual: { srcIcon: "💽", srcLabel: "Disk C: Penuh Merah", arrow: "➔ [ ? ]", tgtIcon: "💾", tgtLabel: "Flashdisk E:" },
-                audience: "Supaya kapasitas laptop lega dan tidak penuh merah lagi, file dipindah dengan...",
-                options: [
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan video & melegakan laptop" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Disk C laptop tetap penuh sesak" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama video" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru di C" }
-                ],
-                correct: 0,
-                explanation: "Mantap! Menggunakan 'Cut' memindahkan berkas secara total sehingga memori laptop menjadi lega kembali."
+                        "q": "File tugas tidak sengaja tersimpan di folder adik. Saya ingin menggeser file itu ke folder pribadi saya dan menghilangkannya dari folder adik. Fitur yang saya gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Tugas di Folder Adik",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Pribadi"
+                        },
+                        "audience": "Ada kata \"menggeser\" ke folder pribadi, pilih apa ya?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 2,
+                        "explanation": "Benar! Menggeser file dari folder adik ke foldermu sendiri dilakukan dengan fitur \"Cut\"."
             },
             {
-                q: "File tugas kelompok tidak sengaja tersimpan di folder akun adikmu. Kamu ingin memindahkannya ke foldermu sendiri dan menghilangkannya dari folder adik. Fitur yang kamu gunakan adalah...",
-                visual: { srcIcon: "📄", srcLabel: "Tugas di Folder Adik", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Pribadimu" },
-                audience: "Keluarkan file dari folder adik dan masukkan ke foldermu, pilih apa ya?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas tanpa disimpan" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama file tugas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan tugas ke foldermu" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Tugas di folder adik masih tertinggal" }
-                ],
-                correct: 2,
-                explanation: "Sangat cerdas! 'Cut' memindahkan file tugas ke tempat yang semestinya tanpa meninggalkan berkas di folder adik."
-            },
-
-            // ==================== KELOMPOK 3: NEW FOLDER ====================
-            {
-                q: "Layar komputer penuh dengan puluhan file yang berserakan. Supaya rapi dan terkelompok berdasarkan mata pelajaran, kamu harus membuat...",
-                visual: { srcIcon: "📄📄", srcLabel: "File Berserakan", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Wadah Rapi" },
-                audience: "Wadah untuk mengelompokkan file-file disebut apa?",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat map wadah untuk merapikan file" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus semua file penting" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong file" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'New Folder' berfungsi membuat wadah map baru untuk mengelompokkan file-file agar rapi."
-            },
-            {
-                q: "Kamu ingin menyiapkan tempat khusus untuk mengumpulkan foto-foto kegiatan kemah sekolah agar tidak bercampur dengan foto lain. Fitur yang harus kamu gunakan adalah...",
-                visual: { srcIcon: "📸", srcLabel: "Kumpulan Foto Kemah", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tempat Khusus" },
-                audience: "Membuat wadah baru untuk kumpulan foto itu fitur apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah penyimpanan baru" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin foto" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto" }
-                ],
-                correct: 1,
-                explanation: "Benar! 'New Folder' menciptakan wadah baru untuk menyimpan foto-foto khusus kegiatan kemah."
+                        "q": "Perintah di komputer yang digunakan untuk memindahkan file dari tempat asal ke tempat tujuan baru sehingga tempat asal menjadi kosong adalah...",
+                        "visual": {
+                                    "srcIcon": "✂️",
+                                    "srcLabel": "Tempat Asal",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Tempat Baru"
+                        },
+                        "audience": "Perintah untuk memindahkan file secara total adalah...",
+                        "options": [
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! Memindahkan berkas ke tempat baru secara total adalah fungsi utama dari \"Cut\"."
             },
             {
-                q: "Di dalam folder 'Pelajaran SMP', kamu ingin membuat tempat penyimpanan baru khusus untuk materi tugas Informatika. Tombol apa yang kamu klik?",
-                visual: { srcIcon: "📁", srcLabel: "Pelajaran SMP", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tugas Informatika" },
-                audience: "Bikin tempat penyimpanan baru di dalam folder pakai tombol apa?",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah baru di dalam folder" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" }
-                ],
-                correct: 0,
-                explanation: "Keren! 'New Folder' digunakan untuk membuat wadah penyimpanan baru (sub-folder) di dalam folder."
+                        "q": "Saya ingin memindah lokasi file modul PDF dari folder Downloads ke folder Buku Pelajaran agar lebih tertata rapi. Fitur yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "📑",
+                                    "srcLabel": "Modul di Downloads",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Buku Pelajaran"
+                        },
+                        "audience": "Ada kata \"memindah lokasi file\", fitur apa yang dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Hebat! Fitur \"Cut\" memindahkan file ke folder yang benar agar komputer rapi."
             },
             {
-                q: "Simbol bergambar map berwarna kuning di komputer yang berfungsi sebagai tempat menaruh banyak file disebut...",
-                visual: { srcIcon: "❓", srcLabel: "Simbol Map Kuning", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Nama Objek?" },
-                audience: "Simbol map berkas kuning di komputer itu apa ya namanya?",
-                options: [
-                    { icon: "📁", title: "Folder (New Folder)", subtitle: "Wadah penyimpanan berkas" },
-                    { icon: "📄", title: "File Dokumen", subtitle: "Catatan tulisan teks" },
-                    { icon: "🗑️", title: "Recycle Bin", subtitle: "Tempat sampah komputer" },
-                    { icon: "✂️", title: "Cut Tool", subtitle: "Alat pemotong" }
-                ],
-                correct: 0,
-                explanation: "Tepat! Ikon map berkas kuning adalah 'Folder', wadah untuk menata dan menyimpan berbagai file."
+                        "q": "Kombinasi tombol pintas pada keyboard komputer yang digunakan untuk memotong atau memindahkan (Cut) file adalah...",
+                        "visual": {
+                                    "srcIcon": "⌨️",
+                                    "srcLabel": "Papan Keyboard",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "✂️",
+                                    "tgtLabel": "Fitur Cut"
+                        },
+                        "audience": "Shortcut keyboard untuk memindahkan (Cut) adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📄",
+                                                "title": "Ctrl + C",
+                                                "subtitle": "Tombol cepat untuk Copy"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Ctrl + X",
+                                                "subtitle": "Tombol cepat untuk Cut (Memindahkan)"
+                                    },
+                                    {
+                                                "icon": "💾",
+                                                "title": "Ctrl + S",
+                                                "subtitle": "Tombol cepat untuk Save"
+                                    },
+                                    {
+                                                "icon": "🖨️",
+                                                "title": "Ctrl + P",
+                                                "subtitle": "Tombol cepat untuk Print"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Tepat! Tombol \"Ctrl + X\" adalah tombol pintas keyboard untuk perintah Cut (Memindahkan)."
             },
             {
-                q: "Guru menyuruh setiap siswa membuat tempat penyimpanan baru dengan nama 'Projek_Informatika'. Fitur yang digunakan untuk membuat tempat tersebut adalah...",
-                visual: { srcIcon: "🖱️", srcLabel: "Ruang Kosong", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Projek_Informatika" },
-                audience: "Fitur untuk membuat tempat penampungan file baru bernama apa?",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah projek baru" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengganti nama berkas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus berkas" }
-                ],
-                correct: 0,
-                explanation: "Mantap! Untuk membuat wadah penampung file baru, kita memilih fitur 'New Folder'."
+                        "q": "Banyak file tugas berserakan di layar komputer. Supaya rapi dan terkelompok, saya harus membuat folder baru menggunakan fitur...",
+                        "visual": {
+                                    "srcIcon": "📄📄",
+                                    "srcLabel": "File Berserakan",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Wadah Rapi"
+                        },
+                        "audience": "Ada kata \"membuat folder\", fitur apa yang harus dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat sekali! Fitur \"New Folder\" berfungsi membuat folder baru untuk merapikan file."
             },
             {
-                q: "Agar file musik, file video, dan file tugas tidak bercampur aduk di komputer, langkah awal yang paling baik adalah membuat beberapa...",
-                visual: { srcIcon: "📚", srcLabel: "Banyak Jenis File", arrow: "➔ [ ? ]", tgtIcon: "📁📁📁", tgtLabel: "Wadah Terpisah" },
-                audience: "Langkah pertama mengelompokkan banyak file adalah membuat beberapa...",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat map wadah terpisah" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus semua file berharga" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama satu file" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong tanpa wadah" }
-                ],
-                correct: 0,
-                explanation: "Hebat! Membuat 'New Folder' untuk setiap kategori adalah cara terbaik menata data di komputer."
+                        "q": "Saya ingin membuat folder khusus untuk mengumpulkan foto-foto kegiatan kemah sekolah agar tidak bercampur dengan foto lain. Fitur yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📸",
+                                    "srcLabel": "Kumpulan Foto Kemah",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Tempat Khusus"
+                        },
+                        "audience": "Ada kata \"membuat folder\", pilih tombol apa?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Benar! \"New Folder\" membuat wadah penyimpanan baru khusus foto kemah sekolah."
             },
             {
-                q: "Untuk menyambut semester baru, kamu ingin membuat tempat penyimpanan terpisah agar file tugas semester 1 dan semester 2 tidak tercampur aduk. Fitur yang kamu gunakan adalah...",
-                visual: { srcIcon: "📁", srcLabel: "Semester 1", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Semester 2" },
-                audience: "Bikin tempat baru untuk memisahkan tugas semester 1 dan 2, apa ya?",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah baru untuk semester 2" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama semester 1" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus data semester 1" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong berkas" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'New Folder' membuat wadah map baru agar tugas tiap semester tersimpan rapi dan teratur."
+                        "q": "Di dalam folder \"Pelajaran SMP\", saya ingin membuat folder baru khusus untuk materi tugas Informatika. Tombol apa yang harus saya klik?",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Pelajaran SMP",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Informatika"
+                        },
+                        "audience": "Ada kata \"membuat folder\", tombol yang diklik adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Keren! Klik \"New Folder\" untuk membuat sub-folder baru di dalam folder."
             },
             {
-                q: "Di flashdisk ada ratusan foto kegiatan study tour. Supaya mudah ditemukan, kamu ingin membuat wadah-wadah bernama 'Hari_1', 'Hari_2', dan 'Hari_3'. Perintah apa yang kamu gunakan?",
-                visual: { srcIcon: "📸", srcLabel: "Ratusan Foto", arrow: "➔ [ ? ]", tgtIcon: "📁📁📁", tgtLabel: "Hari 1, 2, 3" },
-                audience: "Membuat wadah-wadah untuk membagi foto study tour tiap hari, pilih apa?",
-                options: [
-                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah penampung tiap hari" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya memindahkan satu foto" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi foto" }
-                ],
-                correct: 0,
-                explanation: "Hebat! 'New Folder' mempermudah pengelompokan dokumentasi foto berdasarkan hari kegiatan."
+                        "q": "Simbol berbentuk map berwarna kuning di komputer yang berfungsi sebagai tempat membuat folder untuk menyimpan banyak file dinamakan...",
+                        "visual": {
+                                    "srcIcon": "❓",
+                                    "srcLabel": "Simbol Map Kuning",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Nama Objek?"
+                        },
+                        "audience": "Simbol map kuning untuk menyimpan banyak file dinamakan...",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "File Dokumen",
+                                                "subtitle": "Catatan tulisan teks"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat! Ikon map berkas kuning adalah \"Folder\", wadah untuk menata dan menyimpan berbagai file."
             },
             {
-                q: "Kombinasi tombol cepat di keyboard laptop Windows untuk membuat folder baru (New Folder) secara instan adalah...",
-                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Baru" },
-                audience: "Tombol keyboard rahasia untuk membuat New Folder instan adalah...",
-                options: [
-                    { icon: "📁", title: "Ctrl + Shift + N", subtitle: "Tombol cepat membuat folder baru" },
-                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy" },
-                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut" },
-                    { icon: "🖨️", title: "Ctrl + P", subtitle: "Tombol pintas untuk Print" }
-                ],
-                correct: 0,
-                explanation: "Pintar! 'Ctrl + Shift + N' adalah shortcut keyboard paling cepat untuk membuat New Folder di Windows."
+                        "q": "Guru meminta setiap siswa membuat folder baru dengan nama \"Projek_Informatika\". Fitur yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "🖱️",
+                                    "srcLabel": "Ruang Kosong",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Projek_Informatika"
+                        },
+                        "audience": "Ada kata \"membuat folder\", fitur apa yang digunakan?",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Mantap! Untuk membuat wadah penampung file baru, kita memilih fitur \"New Folder\"."
             },
             {
-                q: "Apa manfaat utama dari membuat folder-folder di dalam media penyimpanan komputer?",
-                visual: { srcIcon: "📁", srcLabel: "Struktur Folder", arrow: "➔ [ ? ]", tgtIcon: "✨", tgtLabel: "Manfaat Komputer" },
-                audience: "Menurut kalian, fungsi utama membuat folder adalah...",
-                options: [
-                    { icon: "📁", title: "Merapikan dan mengelompokkan berkas", subtitle: "Agar data terstruktur dan mudah dicari" },
-                    { icon: "🗑️", title: "Menghapus virus secara otomatis", subtitle: "Bukan fungsi dari folder" },
-                    { icon: "🌐", title: "Mempercepat koneksi internet", subtitle: "Folder tidak berhubungan dengan internet" },
-                    { icon: "🔋", title: "Menghemat daya baterai laptop", subtitle: "Folder tidak berpengaruh pada baterai" }
-                ],
-                correct: 0,
-                explanation: "Luar biasa! Manfaat utama folder adalah mengelompokkan file secara rapi agar mudah ditemukan saat dibutuhkan."
-            },
-
-            // ==================== KELOMPOK 4: RENAME ====================
-            {
-                q: "File tugasmu dari kamera namanya masih 'IMG_0024.jpg'. Guru meminta kamu menggantinya menjadi 'Tugas_TIK_Andi.jpg'. Fitur apa yang kamu gunakan?",
-                visual: { srcIcon: "🖼️", srcLabel: "IMG_0024.jpg", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas_TIK_Andi.jpg" },
-                audience: "Mengubah nama file tanpa menghapus isinya pakai fitur apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file sesuai petunjuk" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus file foto tugas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'Rename' digunakan untuk mengubah nama file tanpa merusak isi filenya."
-            },
-            {
-                q: "Sebuah folder tugas bernama 'Tugas1' ingin kamu ganti namanya menjadi 'Tugas_Selesai' agar lebih jelas. Fitur yang digunakan adalah...",
-                visual: { srcIcon: "📁", srcLabel: "Tugas1", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tugas_Selesai" },
-                audience: "Mengubah nama folder sama seperti mengubah nama file, yaitu...",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama folder" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru lagi" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin folder" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder" }
-                ],
-                correct: 0,
-                explanation: "Benar! 'Rename' juga bisa digunakan pada folder untuk memperjelas nama folder tersebut."
+                        "q": "Agar file musik, file video, dan file tugas terpisah rapi, langkah awal yang tepat adalah membuat folder untuk masing-masing jenis file menggunakan fitur...",
+                        "visual": {
+                                    "srcIcon": "📚",
+                                    "srcLabel": "Banyak Jenis File",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁📁📁",
+                                    "tgtLabel": "Wadah Terpisah"
+                        },
+                        "audience": "Ada kata \"membuat folder\", fitur yang dipilih adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Hebat! Membuat folder terpisah adalah cara terbaik mengelompokkan data di komputer."
             },
             {
-                q: "Kamu salah mengetik nama file tugas makalahmu ('Maklah_TIK.docx'). Supaya ejaannya benar menjadi 'Makalah_TIK.docx', kamu harus memilih...",
-                visual: { srcIcon: "📄", srcLabel: "Maklah_TIK.docx", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Makalah_TIK.docx" },
-                audience: "Memperbaiki ejaan judul file tugas menggunakan fitur apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Memperbaiki ejaan nama file" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan makalah" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus makalah" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
-                ],
-                correct: 0,
-                explanation: "Pintar! 'Rename' berfungsi memperbaiki susunan huruf atau ejaan nama file yang salah."
+                        "q": "Menjelang semester baru, saya ingin membuat folder khusus \"Semester 2\" agar tugas baru tidak bercampur dengan tugas semester 1. Perintah yang dipilih adalah...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Semester 1",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Semester 2"
+                        },
+                        "audience": "Ada kata \"membuat folder\", pilih perintah apa?",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! Fitur \"New Folder\" membuat wadah map baru untuk tahun ajaran semester 2."
             },
             {
-                q: "Rekaman suaramu di komputer masih bernama 'Voice001.mp3'. Kamu ingin menggantinya menjadi 'Wawancara_Guru.mp3'. Perintah yang kamu klik adalah...",
-                visual: { srcIcon: "🎙️", srcLabel: "Voice001.mp3", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Wawancara_Guru.mp3" },
-                audience: "Mengubah nama rekaman audio yang belum jelas pakai apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Memberi judul rekaman yang jelas" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi rekaman" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus rekaman" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan rekaman" }
-                ],
-                correct: 0,
-                explanation: "Keren! 'Rename' mengganti nama rekaman audio agar mudah dicari di kemudian hari."
+                        "q": "Di flashdisk, saya ingin membuat folder bernama \"Hari_1\" dan \"Hari_2\" untuk memisahkan dokumentasi kegiatan. Fitur yang saya gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📸",
+                                    "srcLabel": "Foto Dokumentasi",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁📁",
+                                    "tgtLabel": "Hari 1 & Hari 2"
+                        },
+                        "audience": "Ada kata \"membuat folder\", gunakan fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Luar biasa! Fitur \"New Folder\" mempermudah pengelompokan dokumentasi berdasarkan hari."
             },
             {
-                q: "Sebuah folder tugas bernama 'Belum_Revisi' sudah selesai kamu periksa. Sekarang kamu ingin mengganti namanya menjadi 'Sudah_Revisi'. Fitur yang tepat adalah...",
-                visual: { srcIcon: "📁", srcLabel: "Belum_Revisi", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Sudah_Revisi" },
-                audience: "Mengubah tulisan nama folder tugas pakai fitur apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama folder tugas" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong folder" }
-                ],
-                correct: 0,
-                explanation: "Luar biasa! 'Rename' memperbarui nama folder sesuai status tugas yang sudah selesai."
+                        "q": "Kombinasi tombol pintas di keyboard laptop Windows untuk membuat folder (New Folder) baru secara cepat adalah...",
+                        "visual": {
+                                    "srcIcon": "⌨️",
+                                    "srcLabel": "Papan Keyboard",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Folder Baru"
+                        },
+                        "audience": "Shortcut keyboard untuk membuat folder baru adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "Ctrl + Shift + N",
+                                                "subtitle": "Tombol cepat membuat folder baru"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Ctrl + C",
+                                                "subtitle": "Tombol cepat untuk Copy"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Ctrl + X",
+                                                "subtitle": "Tombol cepat untuk Cut"
+                                    },
+                                    {
+                                                "icon": "🖨️",
+                                                "title": "Ctrl + P",
+                                                "subtitle": "Tombol cepat untuk Print"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Benar! \"Ctrl + Shift + N\" adalah shortcut keyboard untuk membuat folder baru secara instan di Windows."
             },
             {
-                q: "Jika kamu hanya ingin mengubah tulisan nama pada file atau folder tanpa menghapus isi di dalamnya, kamu harus menggunakan fitur...",
-                visual: { srcIcon: "📄", srcLabel: "Nama Lama", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Nama Baru" },
-                audience: "Ganti nama tanpa merusak isi file adalah...",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah tulisan nama" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghilangkan berkas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi berkas" }
-                ],
-                correct: 0,
-                explanation: "Tepat! 'Rename' hanya mengganti label nama file/folder, isi berkas di dalamnya tetap aman."
+                        "q": "Tujuan utama siswa membuat folder di dalam komputer adalah...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Struktur Folder",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "✨",
+                                    "tgtLabel": "Tujuan Utama"
+                        },
+                        "audience": "Tujuan membuat folder menurut kalian apa?",
+                        "options": [
+                                    {
+                                                "icon": "📁",
+                                                "title": "Merapikan dan mengelompokkan file",
+                                                "subtitle": "Agar data terstruktur dan mudah dicari"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Menghapus file secara otomatis",
+                                                "subtitle": "Bukan tujuan dari membuat folder"
+                                    },
+                                    {
+                                                "icon": "🌐",
+                                                "title": "Mempercepat koneksi internet",
+                                                "subtitle": "Folder tidak berkaitan dengan internet"
+                                    },
+                                    {
+                                                "icon": "🔋",
+                                                "title": "Menghemat baterai laptop",
+                                                "subtitle": "Folder tidak mempengaruhi baterai"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Sangat tepat! Membuat folder bertujuan merapikan dan mengelompokkan file agar mudah dicari."
             },
             {
-                q: "Kamu baru saja mengetik dokumen tugas dengan nama bawaan 'Untitled.docx'. Guru meminta agar nama berkas diganti dengan 'Tugas1_NamaSiswa.docx'. Perintah apa yang kamu gunakan?",
-                visual: { srcIcon: "📄", srcLabel: "Untitled.docx", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas1_NamaSiswa.docx" },
-                audience: "Mengubah nama file dari 'Untitled' menjadi nama tugas yang benar, pakai apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama dokumen menjadi jelas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan dokumen" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus dokumen tugas" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah map" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'Rename' memberi identitas nama yang jelas pada dokumen yang baru dibuat."
+                        "q": "File tugas dari kamera masih bernama \"IMG_0024.jpg\". Guru meminta saya mengubah nama file itu menjadi \"Tugas_Andi.jpg\". Fitur apa yang saya gunakan?",
+                        "visual": {
+                                    "srcIcon": "🖼️",
+                                    "srcLabel": "IMG_0024.jpg",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Tugas_Andi.jpg"
+                        },
+                        "audience": "Ada kata \"mengubah nama\", fitur apa yang digunakan?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat sekali! \"Rename\" digunakan untuk mengubah nama file tanpa merusak isi filenya."
             },
             {
-                q: "Tombol fungsi pada baris atas keyboard (F1 sampai F12) yang paling cepat untuk mengganti nama (Rename) file yang dipilih adalah...",
-                visual: { srcIcon: "⌨️", srcLabel: "Tombol F1-F12", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Aksi Rename" },
-                audience: "Tombol fungsi F di keyboard yang dipakai untuk Rename cepat adalah...",
-                options: [
-                    { icon: "📝", title: "F2", subtitle: "Tombol cepat Rename file di Windows" },
-                    { icon: "🔄", title: "F5", subtitle: "Tombol untuk Refresh layar" },
-                    { icon: "❓", title: "F1", subtitle: "Tombol untuk menu Bantuan (Help)" },
-                    { icon: "💾", title: "F12", subtitle: "Tombol untuk Save As" }
-                ],
-                correct: 0,
-                explanation: "Benar! Tombol 'F2' pada keyboard adalah shortcut tercepat untuk mengubah nama (Rename) file atau folder."
+                        "q": "Sebuah folder tugas bernama \"Tugas1\" ingin saya ubah namanya menjadi \"Tugas_Selesai\" agar lebih jelas. Fitur yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Tugas1",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Tugas_Selesai"
+                        },
+                        "audience": "Ada kata \"ubah namanya\", fitur yang tepat adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Benar! \"Rename\" juga bisa digunakan pada folder untuk memperjelas nama folder tersebut."
             },
             {
-                q: "Setelah hasil ulangan dinilai oleh guru, kamu ingin menambahkan kata '_Nilai_100' pada nama file tugasmu. Fitur yang digunakan adalah...",
-                visual: { srcIcon: "📄", srcLabel: "Tugas_Informatika", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas_Informatika_Nilai_100" },
-                audience: "Menambahkan kata baru pada nama file tugas, gunakan apa?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Menambahkan tulisan pada nama file" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi file tugas" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus file tugas" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong file tugas" }
-                ],
-                correct: 0,
-                explanation: "Hebat! 'Rename' dapat digunakan untuk memperbarui atau menambahkan informasi pada nama file yang sudah ada."
+                        "q": "Ada salah ketik pada judul file makalah saya (\"Maklah_TIK.docx\"). Saya ingin mengubah nama file itu menjadi \"Makalah_TIK.docx\". Perintah yang dipilih adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Maklah_TIK.docx",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Makalah_TIK.docx"
+                        },
+                        "audience": "Ada kata \"mengubah nama\", pilih yang mana?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! \"Rename\" berfungsi memperbaiki susunan huruf atau ejaan judul file yang salah."
             },
             {
-                q: "Ada foto piagam penghargaan yang namanya masih berupa angka acak 'IMG_982341.jpg'. Agar mudah dicari saat mendaftar lomba, fitur apa yang kamu gunakan?",
-                visual: { srcIcon: "🖼️", srcLabel: "IMG_982341.jpg", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Piagam_Lomba_Sains.jpg" },
-                audience: "Mengubah angka acak foto piagam menjadi nama yang mudah dicari, pakai apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto piagam berharga" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah judul foto menjadi jelas" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto" }
-                ],
-                correct: 1,
-                explanation: "Mantap! 'Rename' mengganti kode nomor acak kamera menjadi nama yang mudah dikenali."
-            },
-
-            // ==================== KELOMPOK 5: DELETE ====================
-            {
-                q: "Ada file virus berbahaya atau file rusak yang sudah tidak bisa dibuka dan membuat memori laptop penuh. Perintah untuk membuangnya adalah...",
-                visual: { srcIcon: "🦠", srcLabel: "Virus_Rusak.exe", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Bagaimana cara menyingkirkan file virus yang berbahaya ini?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang file ke tempat sampah" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah memperbanyak virus" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
-                ],
-                correct: 0,
-                explanation: "Pintar! Perintah 'Delete' berfungsi membuang file yang tidak diperlukan atau berbahaya ke tempat sampah."
-            },
-            {
-                q: "Kamu menemukan file duplikat yang rusak ('Data_Error.log') dan tidak bisa dibuka lagi. Fitur untuk menyingkirkannya adalah...",
-                visual: { srcIcon: "⚠️", srcLabel: "Data_Error.log", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "File error yang rusak disingkirkan pakai perintah apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menyingkirkan file yang rusak" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file error" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file error" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
-                ],
-                correct: 0,
-                explanation: "Benar! 'Delete' menyingkirkan file rusak agar tidak memenuhi ruang penyimpanan laptop."
+                        "q": "Rekaman suara di komputer masih bernama \"Voice001.mp3\". Saya ingin mengubah nama rekaman itu menjadi \"Wawancara_Guru.mp3\". Perintah yang saya klik adalah...",
+                        "visual": {
+                                    "srcIcon": "🎙️",
+                                    "srcLabel": "Voice001.mp3",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Wawancara_Guru.mp3"
+                        },
+                        "audience": "Ada kata \"mengubah nama\", gunakan apa?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Keren! \"Rename\" memberi judul rekaman audio yang jelas agar mudah dicari."
             },
             {
-                q: "Ada folder kosong yang tidak terpakai dan membuat tampilan layarmu berantakan. Perintah untuk membuangnya adalah...",
-                visual: { srcIcon: "📁", srcLabel: "Folder Kosong Tak Terpakai", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Folder kosong tak terpakai dibuang pakai apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder kosong" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
-                    { icon: "📁", title: "New Folder", subtitle: "Bikin folder baru lagi" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin folder" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! Folder yang tidak terpakai dapat disingkirkan menggunakan perintah 'Delete'."
+                        "q": "Folder tugas \"Belum_Revisi\" sudah selesai saya periksa. Sekarang saya ingin mengubah nama folder tersebut menjadi \"Sudah_Revisi\". Fitur yang tepat adalah...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Belum_Revisi",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📁",
+                                    "tgtLabel": "Sudah_Revisi"
+                        },
+                        "audience": "Ada kata \"mengubah nama folder\", pilih fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Luar biasa! \"Rename\" memperbarui nama folder sesuai dengan status tugas yang telah selesai."
             },
             {
-                q: "Ada file catatan tugas tahun lalu yang sudah tidak berguna dan ingin kamu bersihkan dari komputer. Gunakan fitur...",
-                visual: { srcIcon: "📄", srcLabel: "Catatan_Lama.txt", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Membersihkan berkas lama yang sudah tidak dipakai pakai apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang berkas ke tempat sampah" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi berkas" }
-                ],
-                correct: 0,
-                explanation: "Mantap! 'Delete' memindahkan file yang tidak diperlukan ke tempat sampah (Recycle Bin)."
+                        "q": "Jika kita hanya ingin mengubah nama pada file atau folder tanpa menghapus isi di dalamnya, fitur yang harus kita gunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Nama Lama",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📄",
+                                    "tgtLabel": "Nama Baru"
+                        },
+                        "audience": "Ada kata \"mengubah nama\", fitur apa itu?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat! \"Rename\" hanya mengganti label nama file/folder, isi berkas di dalamnya tetap aman."
             },
             {
-                q: "Ketika kita memilih perintah 'Delete' pada file di komputer, ke manakah file tersebut akan dibuang sementara waktu?",
-                visual: { srcIcon: "📄", srcLabel: "File Dihapus", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Wadah Penampung" },
-                audience: "Tempat penampungan file terhapus di Windows namanya apa?",
-                options: [
-                    { icon: "🗑️", title: "Recycle Bin (Tempat Sampah)", subtitle: "Wadah penampung berkas terhapus sementara" },
-                    { icon: "📁", title: "Folder Dokumen", subtitle: "Wadah dokumen aktif" },
-                    { icon: "🖥️", title: "Desktop", subtitle: "Layar beranda komputer" },
-                    { icon: "💾", title: "Flashdisk", subtitle: "Media simpan portabel" }
-                ],
-                correct: 0,
-                explanation: "Hebat! File yang ditekan 'Delete' masuk ke Recycle Bin sementara waktu dan bisa dipulihkan jika dibutuhkan."
+                        "q": "Dokumen tugas baru masih bernama bawaan \"Untitled.docx\". Guru meminta saya mengubah nama dokumen menjadi \"Tugas_Informatika.docx\". Fitur yang saya klik adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Untitled.docx",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Tugas_Informatika.docx"
+                        },
+                        "audience": "Ada kata \"mengubah nama dokumen\", klik yang mana?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Hebat! Fitur \"Rename\" memberi nama yang jelas dan sesuai petunjuk guru."
             },
             {
-                q: "Kamu ingin membersihkan laptop dari file-file instalasi aplikasi lama yang sudah selesai dipasang. Perintah yang kamu gunakan adalah...",
-                visual: { srcIcon: "⚙️", srcLabel: "Setup_Lama.exe", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Membersihkan laptop dari file bekas instalasi pakai fitur apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membersihkan file bekas instalasi" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin file instalasi" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengganti nama berkas" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
-                ],
-                correct: 0,
-                explanation: "Sangat cerdas! 'Delete' membersihkan komputer dari file instalasi bekas yang tidak lagi dibutuhkan."
+                        "q": "Tombol fungsi pada baris atas keyboard (F1 sampai F12) yang paling cepat untuk mengubah nama (Rename) file yang dipilih adalah...",
+                        "visual": {
+                                    "srcIcon": "⌨️",
+                                    "srcLabel": "Tombol F1-F12",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Aksi Rename"
+                        },
+                        "audience": "Tombol F untuk mengubah nama (Rename) adalah...",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "F2",
+                                                "subtitle": "Tombol cepat Rename file di Windows"
+                                    },
+                                    {
+                                                "icon": "🔄",
+                                                "title": "F5",
+                                                "subtitle": "Tombol untuk Refresh layar"
+                                    },
+                                    {
+                                                "icon": "❓",
+                                                "title": "F1",
+                                                "subtitle": "Tombol untuk Bantuan (Help)"
+                                    },
+                                    {
+                                                "icon": "💾",
+                                                "title": "F12",
+                                                "subtitle": "Tombol untuk Save As"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Benar! Tombol \"F2\" di keyboard laptop adalah tombol pintas tercepat untuk fungsi Rename."
             },
             {
-                q: "Ada file foto selfie yang buram dan matanya tertutup saat difoto bersama teman. Karena tidak bagus dan memakan ruang memori, perintah untuk menyingkirkannya adalah...",
-                visual: { srcIcon: "📷", srcLabel: "Foto_Buram.jpg", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Foto buram yang jelek mau disingkirkan dari laptop, gunakan apa?",
-                options: [
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang foto buram yang tidak dipakai" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah menggandakan foto buram" },
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama foto" },
-                    { icon: "📁", title: "New Folder", subtitle: "Membuat map baru" }
-                ],
-                correct: 0,
-                explanation: "Tepat sekali! 'Delete' membuang foto-foto buram atau gagal agar memori laptop tidak cepat penuh."
+                        "q": "Setelah tugas dinilai guru, saya ingin mengubah nama file tersebut dengan menambahkan kata \"_Nilai_100\". Fitur yang digunakan adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Tugas_Informatika",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Tugas_Nilai_100"
+                        },
+                        "audience": "Ada kata \"mengubah nama file\", gunakan fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Mantap! \"Rename\" digunakan untuk memperbarui atau menambahkan informasi pada nama file."
             },
             {
-                q: "Kombinasi tombol keyboard di Windows yang digunakan untuk menghapus file secara permanen tanpa masuk ke Recycle Bin terlebih dahulu adalah...",
-                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "💥", tgtLabel: "Hapus Permanen" },
-                audience: "Tombol keyboard untuk menghapus file secara langsung dan permanen adalah...",
-                options: [
-                    { icon: "🗑️", title: "Shift + Delete", subtitle: "Menghapus langsung tanpa ke tempat sampah" },
-                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol untuk Copy" },
-                    { icon: "🔄", title: "Ctrl + Z", subtitle: "Tombol untuk Undo" },
-                    { icon: "💾", title: "Ctrl + S", subtitle: "Tombol untuk Save" }
-                ],
-                correct: 0,
-                explanation: "Pintar! Tombol 'Shift + Delete' menghapus berkas secara permanen tanpa menyimpannya di Recycle Bin."
+                        "q": "File foto piagam lomba masih berupa angka acak \"IMG_982341.jpg\". Saya ingin mengubah nama foto tersebut agar mudah dicari saat mendaftar lomba. Fitur yang saya pilih adalah...",
+                        "visual": {
+                                    "srcIcon": "🖼️",
+                                    "srcLabel": "IMG_982341.jpg",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📝",
+                                    "tgtLabel": "Piagam_Lomba.jpg"
+                        },
+                        "audience": "Ada kata \"mengubah nama\", pilih opsi apa?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    }
+                        ],
+                        "correct": 1,
+                        "explanation": "Sangat cerdas! \"Rename\" mengganti angka acak kamera menjadi judul piagam yang jelas."
             },
             {
-                q: "Kamu membuat beberapa folder latihan saat mencoba-coba di kelas, dan kini folder-folder tersebut sudah kosong dan tidak dibutuhkan lagi. Kamu sebaiknya memilih...",
-                visual: { srcIcon: "📁", srcLabel: "Folder_Latihan_Kosong", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
-                audience: "Menyingkirkan folder uji coba yang sudah kosong dan tidak terpakai, apa ya?",
-                options: [
-                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama folder" },
-                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan folder kosong" },
-                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang folder kosong agar rapi" },
-                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi folder kosong" }
-                ],
-                correct: 2,
-                explanation: "Benar! 'Delete' membersihkan folder-folder kosong tak terpakai agar tampilan komputermu tetap rapi."
+                        "q": "Ada file virus berbahaya atau file rusak yang sudah tidak bisa dibuka di laptop. Perintah untuk menghapus file tersebut ke tempat sampah adalah...",
+                        "visual": {
+                                    "srcIcon": "🦠",
+                                    "srcLabel": "Virus_Rusak.exe",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", perintah apa yang dipilih?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! Perintah \"Delete\" berfungsi menghapus file berbahaya atau rusak ke tempat sampah."
             },
             {
-                q: "Jika kamu tidak sengaja menekan tombol 'Delete' pada file tugas penting dan masuk ke Recycle Bin, cara mengembalikannya ke tempat semula adalah...",
-                visual: { srcIcon: "🗑️", srcLabel: "Di Recycle Bin", arrow: "➔ [ ? ]", tgtIcon: "📂", tgtLabel: "Kembali Semula" },
-                audience: "Mengembalikan file yang terlanjur terhapus ke Recycle Bin caranya bagaimana?",
-                options: [
-                    { icon: "♻️", title: "Buka Recycle Bin lalu klik 'Restore'", subtitle: "Memulihkan berkas ke posisi semula" },
-                    { icon: "📁", title: "Membuat New Folder baru", subtitle: "Tidak memulihkan file yang terhapus" },
-                    { icon: "📝", title: "Menekan tombol Rename", subtitle: "Tidak bisa mengembalikan file" },
-                    { icon: "✂️", title: "Mematikan laptop secara paksa", subtitle: "Malah berisiko merusak laptop" }
-                ],
-                correct: 0,
-                explanation: "Luar biasa! Fitur 'Restore' di Recycle Bin berfungsi mengembalikan file yang tak sengaja terhapus ke lokasi awalnya."
+                        "q": "Ada file duplikat yang rusak (\"Data_Error.log\") dan membuat memori penuh. Fitur untuk menghapus file rusak tersebut adalah...",
+                        "visual": {
+                                    "srcIcon": "⚠️",
+                                    "srcLabel": "Data_Error.log",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", pilih fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat! Fitur \"Delete\" menghapus file rusak agar tidak memenuhi ruang penyimpanan."
+            },
+            {
+                        "q": "Ada folder kosong yang tidak terpakai dan membuat tampilan layar berantakan. Perintah untuk menghapus folder kosong tersebut adalah...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Folder Kosong",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", perintah yang tepat adalah...",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Benar! Folder yang kosong dan tidak berguna dapat disingkirkan dengan perintah \"Delete\"."
+            },
+            {
+                        "q": "File catatan tugas tahun lalu sudah tidak berguna lagi dan ingin saya bersihkan dari komputer. Perintah untuk menghapus file tersebut adalah...",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "Catatan_Lama.txt",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", gunakan perintah apa?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Mantap! \"Delete\" memindahkan file yang tidak diperlukan lagi ke tempat sampah (Recycle Bin)."
+            },
+            {
+                        "q": "Ketika kita menggunakan perintah Delete untuk menghapus file di komputer Windows, ke manakah file tersebut akan dibuang untuk sementara waktu?",
+                        "visual": {
+                                    "srcIcon": "📄",
+                                    "srcLabel": "File Dihapus",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Wadah Sampah"
+                        },
+                        "audience": "Tempat penampungan file yang dihapus di Windows adalah...",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Recycle Bin (Tempat Sampah)",
+                                                "subtitle": "Wadah penampung berkas terhapus sementara"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "Folder Dokumen",
+                                                "subtitle": "Wadah dokumen aktif"
+                                    },
+                                    {
+                                                "icon": "🖥️",
+                                                "title": "Desktop",
+                                                "subtitle": "Layar beranda komputer"
+                                    },
+                                    {
+                                                "icon": "💾",
+                                                "title": "Flashdisk",
+                                                "subtitle": "Media simpan portabel"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Hebat! File yang dihapus masuk ke tempat sampah (Recycle Bin) sementara waktu."
+            },
+            {
+                        "q": "Laptop saya penuh dengan file instalasi aplikasi lama yang sudah selesai dipasang. Perintah yang digunakan untuk menghapus file bekas tersebut adalah...",
+                        "visual": {
+                                    "srcIcon": "⚙️",
+                                    "srcLabel": "Setup_Lama.exe",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", pilih opsi apa?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Sangat cerdas! \"Delete\" membersihkan komputer dari file instalasi bekas yang tak lagi dibutuhkan."
+            },
+            {
+                        "q": "Ada file foto selfie yang buram dan matanya tertutup saat difoto bersama teman. Perintah yang digunakan untuk menghapus foto buram tersebut dari memori laptop adalah...",
+                        "visual": {
+                                    "srcIcon": "📷",
+                                    "srcLabel": "Foto_Buram.jpg",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", perintah apa yang digunakan?",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "New Folder (Membuat Folder)",
+                                                "subtitle": "Membuat map wadah baru untuk merapikan file"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Tepat sekali! \"Delete\" membuang foto-foto buram atau gagal agar memori laptop tidak cepat penuh."
+            },
+            {
+                        "q": "Kombinasi tombol keyboard di Windows yang digunakan untuk menghapus (Delete) file secara permanen tanpa masuk ke Recycle Bin terlebih dahulu adalah...",
+                        "visual": {
+                                    "srcIcon": "⌨️",
+                                    "srcLabel": "Papan Keyboard",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "💥",
+                                    "tgtLabel": "Hapus Permanen"
+                        },
+                        "audience": "Tombol keyboard untuk menghapus permanen adalah...",
+                        "options": [
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Shift + Delete",
+                                                "subtitle": "Menghapus langsung tanpa ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Ctrl + C",
+                                                "subtitle": "Tombol untuk Copy"
+                                    },
+                                    {
+                                                "icon": "🔄",
+                                                "title": "Ctrl + Z",
+                                                "subtitle": "Tombol untuk Undo"
+                                    },
+                                    {
+                                                "icon": "💾",
+                                                "title": "Ctrl + S",
+                                                "subtitle": "Tombol untuk Save"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Pintar! Tombol \"Shift + Delete\" menghapus berkas secara permanen tanpa menyimpannya di Recycle Bin."
+            },
+            {
+                        "q": "Folder latihan yang saya buat saat belajar di kelas kini sudah kosong dan tidak terpakai lagi. Tindakan untuk menghapus folder tersebut adalah memilih...",
+                        "visual": {
+                                    "srcIcon": "📁",
+                                    "srcLabel": "Folder_Latihan_Kosong",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "🗑️",
+                                    "tgtLabel": "Tempat Sampah"
+                        },
+                        "audience": "Ada kata \"menghapus\", pilih fitur apa?",
+                        "options": [
+                                    {
+                                                "icon": "📝",
+                                                "title": "Rename (Mengubah Nama)",
+                                                "subtitle": "Mengubah nama file atau folder"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Cut (Memindahkan / Menggeser)",
+                                                "subtitle": "Memindah lokasi file dari tempat asal"
+                                    },
+                                    {
+                                                "icon": "🗑️",
+                                                "title": "Delete (Menghapus)",
+                                                "subtitle": "Menghapus file atau folder ke tempat sampah"
+                                    },
+                                    {
+                                                "icon": "📄",
+                                                "title": "Copy (Menyalin / Menggandakan)",
+                                                "subtitle": "Membuat salinan file baru, aslinya tetap ada"
+                                    }
+                        ],
+                        "correct": 2,
+                        "explanation": "Benar! \"Delete\" membersihkan folder-folder kosong tak terpakai agar tampilan laptop tetap rapi."
+            },
+            {
+                        "q": "Jika kita tidak sengaja menghapus file tugas penting ke tempat sampah (Recycle Bin), cara untuk mengembalikan file ke posisi semula adalah...",
+                        "visual": {
+                                    "srcIcon": "🗑️",
+                                    "srcLabel": "Di Recycle Bin",
+                                    "arrow": "➔ [ ? ]",
+                                    "tgtIcon": "📂",
+                                    "tgtLabel": "Kembali Semula"
+                        },
+                        "audience": "Cara mengembalikan file yang terlanjur dihapus ke Recycle Bin adalah...",
+                        "options": [
+                                    {
+                                                "icon": "♻️",
+                                                "title": "Buka Recycle Bin lalu klik \"Restore\"",
+                                                "subtitle": "Memulihkan berkas ke posisi semula"
+                                    },
+                                    {
+                                                "icon": "📁",
+                                                "title": "Membuat New Folder baru",
+                                                "subtitle": "Tidak memulihkan file yang terhapus"
+                                    },
+                                    {
+                                                "icon": "📝",
+                                                "title": "Menekan tombol Rename",
+                                                "subtitle": "Tidak bisa mengembalikan file"
+                                    },
+                                    {
+                                                "icon": "✂️",
+                                                "title": "Mematikan laptop secara paksa",
+                                                "subtitle": "Malah berisiko merusak laptop"
+                                    }
+                        ],
+                        "correct": 0,
+                        "explanation": "Luar biasa! Fitur \"Restore\" di Recycle Bin berfungsi mengembalikan file yang tak sengaja terhapus ke lokasi awalnya."
             }
-        ];
+];
 
         // --- 3. State Management Permainan ---
         let gameDuration = 120; // 120 detik default (2 menit)
