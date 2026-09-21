@@ -1,9 +1,10 @@
-const CACHE_NAME = 'detektif-data-pwa-v2';
+const CACHE_NAME = 'detektif-data-pwa-v5';
 const ASSETS_TO_CACHE = [
   './',
   './game_detektif_data.html',
   './index.html',
   './manifest.json',
+  './logo.png',
   './icon.svg',
   './icon-192.png',
   './icon-512.png'

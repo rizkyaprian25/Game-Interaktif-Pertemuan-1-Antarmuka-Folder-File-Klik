@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misi Detektif Digital: Rapikan Markas Data</title>
+    <title>Misi Detektif Digital: Petualangan Klik Data 📁🕵️</title>
     <!-- PWA Settings & Offline Support -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4361ee">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Detektif Data">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
     <style>
         :root {
-            --bg-color: #f0f8ff;
             --primary: #4361ee;
-            --primary-hover: #3a0ca3;
-            --secondary: #f72585;
-            --success: #4cc9f0;
-            --warning: #fca311;
-            --danger: #e63946;
-            --text-dark: #14213d;
-            --text-light: #ffffff;
-            --box-bg: #ffffff;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --primary-hover: #3730a3;
+            --primary-light: #e0e7ff;
+            --secondary: #7209b7;
+            --success: #10b981;
+            --success-dark: #047857;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --danger-dark: #b91c1c;
+            --dark: #0f172a;
+            --slate: #334155;
+            --slate-light: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         * {
@@ -34,571 +39,1487 @@
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            font-size: 24px;
-            line-height: 1.5;
+            font-family: var(--font);
+            background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
+            color: var(--dark);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            user-select: none;
             overflow-x: hidden;
-            user-select: none; /* Prevent text selection while clicking around */
         }
 
         .screen {
             display: none;
             width: 100vw;
             min-height: 100vh;
-            padding: 40px;
-            background-color: var(--bg-color);
+            padding: 24px;
             flex-direction: column;
-            overflow-y: auto;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         .screen.active {
             display: flex;
         }
 
-        h1, h2, h3 { text-align: center; margin-bottom: 20px; color: var(--primary); }
-        h1 { font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        h2 { font-size: 2.5rem; }
-        
-        button {
-            font-size: 1.5rem;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--text-light);
-            background-color: var(--primary);
-            box-shadow: 0 6px 0 var(--primary-hover);
-            transition: all 0.1s;
-        }
-
-        button:active { transform: translateY(6px); box-shadow: none; }
-        button.btn-danger { background-color: var(--danger); box-shadow: 0 6px 0 #9b2226; }
-        button.btn-secondary { background-color: var(--secondary); box-shadow: 0 6px 0 #7209b7; }
-        button.btn-success { background-color: var(--success); box-shadow: 0 6px 0 #0077b6; }
-        
-        input[type="text"] {
-            font-size: 1.5rem;
-            padding: 15px;
-            border: 4px solid var(--primary);
-            border-radius: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .panel {
-            background: var(--box-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            margin: 20px auto;
-            width: 100%;
-            max-width: 1200px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Dashboard & Time Setting Styles */
-        .dashboard-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .time-setting-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            border: 2px solid #e2e8f0;
-            margin: 20px 0 30px 0;
+        /* Jumbo Header & Titles */
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
             text-align: center;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
-        .time-presets {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 20px 0 15px 0;
-        }
-
-        .preset-btn {
-            font-size: 1.15rem;
-            padding: 12px 20px;
-            margin: 0;
-            border-radius: 12px;
-            background-color: #f1f5f9;
-            color: var(--text-dark);
-            border: 2px solid #cbd5e1;
-            box-shadow: 0 4px 0 #94a3b8;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            font-weight: bold;
-        }
-
-        .preset-btn:hover {
-            background-color: #e2e8f0;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .preset-btn.active {
-            background-color: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary-hover);
-            box-shadow: 0 4px 0 var(--primary-hover);
-        }
-
-        .custom-time-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px dashed #94a3b8;
-        }
-
-        .time-input-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .time-input-group input[type="number"] {
-            width: 90px;
-            font-size: 1.4rem;
-            padding: 8px 12px;
-            border: 3px solid var(--primary);
-            border-radius: 10px;
-            text-align: center;
-            font-weight: bold;
-            color: var(--text-dark);
-            outline: none;
-            background: #ffffff;
-        }
-
-        .time-badge {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--primary-hover);
+        .subtitle {
             font-size: 1.25rem;
-            font-weight: bold;
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin-top: 15px;
-            border: 2px solid #c7d2fe;
+            color: var(--slate-light);
+            text-align: center;
+            margin-bottom: 24px;
         }
 
-        .btn-start-game {
-            font-size: 2.2rem;
-            padding: 22px 60px;
-            background: #10b981;
-            box-shadow: 0 8px 0 #059669;
-            border-radius: 20px;
-            color: #ffffff;
-            font-weight: bold;
-            cursor: pointer;
+        /* Container Panel */
+        .panel {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(30, 41, 59, 0.08), 0 4px 12px rgba(30, 41, 59, 0.04);
+            border: 2px solid #e2e8f0;
+            padding: 32px;
+            width: 100%;
+            max-width: 1050px;
+            position: relative;
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: inherit;
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 16px;
             border: none;
+            cursor: pointer;
             transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.15);
         }
 
-        .btn-start-game:hover {
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.06);
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: none !important;
+        }
+
+        .btn-primary { background: var(--primary); box-shadow: 0 5px 0 var(--primary-hover); }
+        .btn-success { background: var(--success); box-shadow: 0 5px 0 var(--success-dark); }
+        .btn-danger { background: var(--danger); box-shadow: 0 5px 0 var(--danger-dark); }
+        .btn-secondary { background: #64748b; box-shadow: 0 5px 0 #475569; }
+
+        /* --- DASHBOARD STYLES --- */
+        .settings-card {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .setting-section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .preset-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .chip-btn {
+            padding: 12px 20px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: white;
+            color: var(--slate);
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 3px 0 #94a3b8;
+        }
+
+        .chip-btn:hover {
+            background: #f1f5f9;
+            border-color: var(--primary);
+        }
+
+        .chip-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-hover);
+            box-shadow: 0 3px 0 var(--primary-hover);
+        }
+
+        .badge-status {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 800;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .btn-play-jumbo {
+            font-size: 2.2rem;
+            padding: 20px 60px;
+            background: #10b981;
+            box-shadow: 0 8px 0 #059669;
+            border-radius: 24px;
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin: 15px auto;
+            transition: all 0.15s ease;
+        }
+
+        .btn-play-jumbo:hover {
             background: #059669;
             transform: translateY(-3px);
             box-shadow: 0 11px 0 #047857;
         }
 
-        .btn-start-game:active {
-            transform: translateY(8px);
+        .btn-play-jumbo:active {
+            transform: translateY(6px);
             box-shadow: none;
         }
 
-        /* Game Styles */
-        .game-header {
-            display: flex; justify-content: space-between; align-items: center; width: 100%;
-            padding: 15px 40px; background: var(--primary); color: white; border-radius: 15px; margin-bottom: 20px;
-        }
-        .player-name { font-size: 2rem; font-weight: bold; }
-        .timer-container { display: flex; align-items: center; gap: 15px; }
-        .timer { font-size: 2.5rem; font-weight: bold; background: white; color: var(--primary); padding: 5px 20px; border-radius: 15px; text-align: center; min-width: 120px; }
-        .timer.warning { color: var(--danger); animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        .audience-box { background: var(--warning); padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; border: 4px dashed #000; }
-        .challenge-title { font-size: 1.8rem; margin-bottom: 20px; color: var(--text-dark); text-align: center; }
-
-        /* --- VIRTUAL FILE EXPLORER --- */
-        .explorer-window {
+        /* --- GAMEPLAY HEADER & HUD --- */
+        .hud-bar {
             width: 100%;
-            max-width: 900px;
-            height: 400px;
+            max-width: 1050px;
             background: #ffffff;
-            border: 4px solid #ced4da;
-            border-radius: 10px;
-            position: relative;
+            border-radius: 20px;
+            padding: 14px 24px;
+            margin-bottom: 16px;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            border: 2px solid #e2e8f0;
             flex-wrap: wrap;
-            align-content: flex-start;
-            padding: 15px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
-            overflow-y: auto;
+            gap: 12px;
         }
 
-        .explorer-item {
-            width: 120px;
-            height: 130px;
+        .hud-item {
             display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .hud-timer {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 18px;
+            border-radius: 14px;
+            letter-spacing: 1px;
+            border: 2px solid #c7d2fe;
+        }
+
+        .hud-timer.warning {
+            color: #ffffff;
+            background: var(--danger);
+            border-color: #991b1b;
+            animation: pulseWarning 0.8s infinite alternate;
+        }
+
+        @keyframes pulseWarning {
+            from { transform: scale(1); }
+            to { transform: scale(1.08); }
+        }
+
+        .streak-pill {
+            background: #fef3c7;
+            color: #b45309;
+            border: 2px solid #fcd34d;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- AUDIENCE BOX FOR PROJECTOR --- */
+        .audience-banner {
+            width: 100%;
+            max-width: 1050px;
+            background: linear-gradient(90deg, #fef08a 0%, #fde047 100%);
+            color: #713f12;
+            padding: 12px 20px;
+            border-radius: 16px;
+            border: 3px dashed #ca8a04;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 4px 10px rgba(202, 138, 4, 0.15);
+        }
+
+        /* --- QUESTION MISSION CARD --- */
+        .mission-box {
+            background: #ffffff;
+            border: 3px solid #cbd5e1;
+            border-radius: 22px;
+            padding: 24px 28px;
+            width: 100%;
+            margin-bottom: 22px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e2e8f0;
+            color: var(--slate);
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.95rem;
+            font-weight: 800;
+            line-height: 1.35;
+            color: #0f172a;
+            margin: 12px 0 18px 0;
+        }
+
+        /* Visual Illustration Mini-Card */
+        .visual-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 14px 24px;
+            margin: 0 auto 10px auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--slate);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
+            max-width: 90%;
+            flex-wrap: wrap;
+        }
+
+        .visual-elem {
+            display: inline-flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            margin: 10px;
-            padding: 10px 5px;
+            gap: 4px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 2px solid #cbd5e1;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+        }
+
+        .visual-elem .icon {
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .visual-elem .label {
+            font-size: 1.05rem;
+            color: #1e293b;
+            font-weight: 800;
+        }
+
+        .visual-arrow {
+            font-size: 2.4rem;
+            color: var(--primary);
+            animation: bounceRight 1.2s infinite alternate;
+        }
+
+        @keyframes bounceRight {
+            from { transform: translateX(-4px); }
+            to { transform: translateX(6px); }
+        }
+
+        /* --- 4 JUMBO CLICK BUTTONS (2x2 GRID) --- */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .btn-option {
+            background: #ffffff;
+            border: 3px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 18px 22px;
             cursor: pointer;
-            border-radius: 8px;
-            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            text-align: left;
+            transition: all 0.12s ease;
+            box-shadow: 0 6px 0 #94a3b8;
+            outline: none;
             position: relative;
         }
 
-        .explorer-item:hover { background-color: #e5f3ff; border-color: #d9ebf9; }
-        .explorer-item.selected { background-color: #cce8ff; border-color: #99d1ff; }
-
-        .explorer-item .icon { font-size: 4rem; line-height: 1; pointer-events: none; }
-        .explorer-item .name { font-size: 1.1rem; text-align: center; word-wrap: break-word; margin-top: 8px; line-height: 1.2; pointer-events: none; }
-        
-        .explorer-item input[type="text"] {
-            width: 100px; font-size: 1rem; padding: 4px; margin-top: 8px;
-            text-align: center; border: 2px solid var(--primary); outline: none;
+        .btn-option:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            background: #f8faff;
+            box-shadow: 0 9px 0 #64748b;
         }
 
-        /* --- CONTEXT MENU --- */
-        .context-menu {
-            position: absolute;
-            background: #f8f9fa;
-            border: 2px solid #adb5bd;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: none;
+        .btn-option:active {
+            transform: translateY(6px);
+            box-shadow: none !important;
+        }
+
+        .option-letter {
+            width: 52px;
+            height: 52px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            flex-shrink: 0;
+            border: 2px solid #c7d2fe;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .option-content {
+            display: flex;
             flex-direction: column;
-            min-width: 200px;
-            border-radius: 5px;
-            padding: 5px 0;
+            gap: 4px;
+            flex-grow: 1;
         }
 
-        .context-menu-item {
-            padding: 12px 20px;
+        .option-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .option-subtitle {
+            font-size: 1.05rem;
+            color: #64748b;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Correct / Wrong States on Buttons */
+        .btn-option.correct {
+            background: #ecfdf5 !important;
+            border-color: var(--success) !important;
+            box-shadow: 0 6px 0 var(--success-dark) !important;
+        }
+        .btn-option.correct .option-letter {
+            background: var(--success);
+            color: white;
+            border-color: var(--success-dark);
+        }
+
+        .btn-option.wrong {
+            background: #fef2f2 !important;
+            border-color: var(--danger) !important;
+            box-shadow: 0 6px 0 var(--danger-dark) !important;
+        }
+        .btn-option.wrong .option-letter {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger-dark);
+        }
+
+        .btn-option.disabled {
+            pointer-events: none;
+            opacity: 0.65;
+        }
+
+        /* --- EDUCATIONAL FEEDBACK POPUP --- */
+        .feedback-banner {
+            display: none;
+            width: 100%;
+            border-radius: 18px;
+            padding: 16px 24px;
+            margin-top: 18px;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideUp 0.25s ease-out forwards;
+            font-size: 1.25rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .feedback-banner.show {
+            display: flex;
+        }
+
+        .feedback-banner.is-correct {
+            background: #d1fae5;
+            border: 3px solid #10b981;
+            color: #065f46;
+        }
+
+        .feedback-banner.is-wrong {
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .feedback-lead {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 800;
+        }
+
+        .feedback-lead .icon {
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .feedback-text {
+            font-size: 1.18rem;
+            line-height: 1.35;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Result Screen */
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .result-trophy {
+            font-size: 6rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            animation: bounceTrophy 1s infinite alternate;
+        }
+
+        @keyframes bounceTrophy {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .result-score-big {
+            font-size: 4.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1.1;
+            margin: 10px 0;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 1.6rem;
+            font-weight: 800;
+            padding: 8px 26px;
+            border-radius: 30px;
+            border: 2px solid #fde68a;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0 30px 0;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .stat-card .desc {
+            font-size: 1.05rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Sound Control Floating */
+        .sound-toggle {
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 8px 14px;
             font-size: 1.2rem;
             cursor: pointer;
-            text-align: left;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
+            font-weight: 700;
+            color: var(--slate);
         }
-        .context-menu-item:hover { background-color: var(--primary); color: white; }
-        .context-menu-item.disabled { color: #adb5bd; cursor: not-allowed; }
-        .context-menu-item.disabled:hover { background-color: transparent; color: #adb5bd; }
-        .context-menu-divider { height: 1px; background-color: #dee2e6; margin: 5px 0; }
-
-        /* Feedback Overlay */
-        .feedback-overlay {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.95);
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            border-radius: 10px; z-index: 10;
+        .sound-toggle:hover {
+            background: #f1f5f9;
         }
-        .feedback-overlay.show { display: flex; }
-        .feedback-icon { font-size: 8rem; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .feedback-correct { color: var(--success); }
-        .feedback-wrong { color: var(--danger); }
-        .feedback-text { font-size: 2.5rem; font-weight: bold; margin-top: 20px; text-align: center; }
 
-        @keyframes popIn { 0% { transform: scale(0.1); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        /* Responsive Breakpoints */
+        @media (max-width: 820px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .question-text {
+                font-size: 1.55rem;
+            }
+            .btn-option {
+                padding: 14px 18px;
+            }
+            .option-icon {
+                font-size: 2.3rem;
+            }
+            .option-title {
+                font-size: 1.35rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .btn-play-jumbo {
+                font-size: 1.6rem;
+                padding: 16px 36px;
+            }
+        }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .explorer-window { height: 350px; }
-            .explorer-item { width: 90px; height: 110px; }
-            .explorer-item .icon { font-size: 3rem; }
-            .explorer-item .name { font-size: 1rem; }
-            h1 { font-size: 2rem; }
-            .game-header { flex-direction: column; gap: 10px; }
+        .game-logo {
+            width: 125px;
+            height: 125px;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(67, 97, 238, 0.35);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            margin-bottom: 14px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: floatLogo 4s ease-in-out infinite alternate;
+            cursor: pointer;
+        }
+        .game-logo:hover {
+            transform: scale(1.08) rotate(2deg);
+        }
+        @keyframes floatLogo {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
         }
     </style>
 </head>
 <body>
 
-    <!-- SCREEN: DASHBOARD -->
+    <!-- ==================== SCREEN 1: DASHBOARD ==================== -->
     <div id="screen-dashboard" class="screen active">
-        <h1>🕵️ Misi Detektif Digital: Rapikan Markas Data 📁</h1>
-        <div class="panel dashboard-container">
-            <p style="font-size: 1.3rem; margin-bottom: 20px; text-align: center; color: #4b5563;">
-                Simulasi interaktif antarmuka Windows Explorer: Kelola file, buat folder baru, rename, cut, copy, & delete!
-            </p>
+        <div style="text-align: center;">
+            <img src="logo.png" alt="Logo Detektif Data" class="game-logo">
+        </div>
+        <h1>🕵️ Misi Detektif Digital: Petualangan Data 📁</h1>
+        <p class="subtitle">Game Interaktif Kelas 7 — Antarmuka GUI, Folder & File (Edisi 1-Klik Cepat)</p>
 
-            <!-- Card Pengaturan Waktu Permainan -->
-            <div class="time-setting-card">
-                <h3 style="margin-bottom: 5px; font-size: 1.6rem; color: var(--primary);">⏱️ Atur Durasi Waktu Game</h3>
-                <p style="font-size: 1.1rem; color: #64748b; margin-bottom: 10px;">Pilih durasi cepat atau sesuaikan menit & detik sendiri:</p>
-                
-                <div class="time-presets">
-                    <button type="button" class="preset-btn" onclick="setTimePreset(60, this)">⚡ 1 Menit</button>
-                    <button type="button" class="preset-btn active" onclick="setTimePreset(120, this)">⏱️ 2 Menit (Standar)</button>
-                    <button type="button" class="preset-btn" onclick="setTimePreset(180, this)">⏳ 3 Menit</button>
-                    <button type="button" class="preset-btn" onclick="setTimePreset(300, this)">🕒 5 Menit</button>
+        <div class="panel" style="max-width: 880px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 1.3rem; color: #334155; line-height: 1.5;">
+                    🎯 <strong>Sangat Mudah & Ramah Pemula!</strong> Cukup baca misi di layar, lalu <strong>klik langsung pilihan jawaban yang benar</strong>. Tidak perlu klik kanan dan tidak perlu mengetik!
+                </p>
+            </div>
+
+            <!-- Pengaturan Durasi Waktu & Custom Waktu -->
+            <div class="settings-card">
+                <div class="setting-section-title">⏱️ Atur Durasi Waktu Permainan</div>
+                <div class="preset-group">
+                    <button type="button" class="chip-btn" onclick="setTimePreset(60, this)">⚡ 1 Menit</button>
+                    <button type="button" class="chip-btn active" onclick="setTimePreset(120, this)">⏱️ 2 Menit</button>
+                    <button type="button" class="chip-btn" onclick="setTimePreset(180, this)">⏳ 3 Menit</button>
+                    <button type="button" class="chip-btn" onclick="setTimePreset(300, this)">🕒 5 Menit</button>
+                    <button type="button" class="chip-btn" onclick="setTimePreset(0, this)">♾️ Mode Santai</button>
                 </div>
 
-                <div class="custom-time-box">
-                    <span style="font-weight: bold; font-size: 1.15rem; color: #334155;">Custom Waktu:</span>
-                    <div class="time-input-group">
-                        <input type="number" id="input-custom-minutes" min="0" max="30" value="2" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()">
-                        <span style="font-size: 1.15rem; font-weight: 500;">Menit</span>
+                <!-- Custom Menit & Detik -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin: 15px 0; flex-wrap: wrap; background: #ffffff; padding: 12px 20px; border-radius: 14px; border: 1px solid #cbd5e1; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <span style="font-weight: 800; font-size: 1.15rem; color: #334155;">Custom Waktu:</span>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <input type="number" id="input-custom-minutes" min="0" max="30" value="2" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()" style="width: 75px; font-size: 1.3rem; padding: 6px 10px; border: 2px solid var(--primary); border-radius: 10px; text-align: center; font-weight: bold;">
+                        <span style="font-size: 1.1rem; font-weight: 700;">Menit</span>
                     </div>
-                    <div class="time-input-group">
-                        <input type="number" id="input-custom-seconds" min="0" max="59" step="5" value="0" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()">
-                        <span style="font-size: 1.15rem; font-weight: 500;">Detik</span>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <input type="number" id="input-custom-seconds" min="0" max="59" step="5" value="0" oninput="onCustomTimeChange()" onchange="onCustomTimeChange()" style="width: 75px; font-size: 1.3rem; padding: 6px 10px; border: 2px solid var(--primary); border-radius: 10px; text-align: center; font-weight: bold;">
+                        <span style="font-size: 1.1rem; font-weight: 700;">Detik</span>
                     </div>
                 </div>
 
-                <div class="time-badge" id="selected-time-summary">
-                    ⏱️ Durasi Game: 2 Menit 0 Detik (120 Detik)
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; flex-wrap: wrap;">
+                    <span style="font-weight: 700; color: #475569;">Pilih Jumlah Soal:</span>
+                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(5, this)">5 Soal</button>
+                    <button type="button" class="chip-btn question-count-btn active" onclick="setQuestionCount(10, this)">10 Soal</button>
+                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(15, this)">15 Soal</button>
+                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(30, this)">Semua (30 Soal)</button>
+                </div>
+
+                <div class="badge-status" id="dashboard-summary-badge">
+                    ⏱️ Waktu: 2 Menit 0 Detik (120 Detik) &nbsp;|&nbsp; 📋 Jumlah: 10 Soal
                 </div>
             </div>
 
-            <!-- Tombol Mulai Langsung -->
-            <button class="btn-start-game" onclick="startGame()">
-                <span>▶️</span> MULAI GAME SEKARANG
-            </button>
-
-            <div style="display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
-                <button id="btn-install-pwa" type="button" onclick="installPWA()" style="font-size: 1.15rem; padding: 12px 22px; background: #0284c7; box-shadow: 0 4px 0 #0369a1; border-radius: 12px;">
-                    📲 Pasang Aplikasi (Bisa Main Offline)
+            <!-- Tombol Mulai Raksasa -->
+            <div style="text-align: center; margin: 25px 0 10px 0;">
+                <button class="btn-play-jumbo" onclick="startGame()">
+                    <span>▶️</span> MULAI PETUALANGAN
                 </button>
-                <button class="btn-secondary" onclick="showScreen('screen-scoreboard')" style="font-size: 1.15rem; padding: 12px 22px;">📊 Riwayat Skor</button>
-                <button onclick="showScreen('screen-guide')" style="font-size: 1.15rem; padding: 12px 22px;">📖 Panduan Permainan</button>
+            </div>
+
+            <!-- Navigasi Bawah -->
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px;">
+                <button id="btn-install-pwa" type="button" class="btn" onclick="installPWA()" style="background: #0284c7; box-shadow: 0 5px 0 #0369a1;">
+                    📲 Pasang Aplikasi (Main Offline)
+                </button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-scoreboard')">
+                    📊 Riwayat Skor Kelas
+                </button>
+                <button class="btn" style="background: #475569; box-shadow: 0 5px 0 #334155;" onclick="showScreen('screen-guide')">
+                    📖 Panduan Guru & Kelas
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PWA INSTALL GUIDE -->
-    <div id="modal-install-guide" class="feedback-overlay" style="background: rgba(0,0,0,0.65); z-index: 9999; display: none;">
-        <div class="panel" style="max-width: 580px; text-align: left; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 35px rgba(0,0,0,0.35);">
-            <h2 style="font-size: 1.9rem; margin-bottom: 12px; color: var(--primary); text-align: center;">📲 Pasang Aplikasi ke Perangkat</h2>
+    <!-- ==================== MODAL PWA INSTALL ==================== -->
+    <div id="modal-install-guide" style="position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 20px;">
+        <div class="panel" style="max-width: 580px; text-align: left;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 12px; color: var(--primary); text-align: center;">📲 Pasang Aplikasi ke Laptop / HP</h2>
             <p style="font-size: 1.15rem; margin-bottom: 15px; color: #334155; text-align: center;">
-                Game ini mendukung teknologi <strong>PWA (Progressive Web App)</strong> sehingga dapat diinstal seperti aplikasi asli dan <strong>bisa dimainkan secara offline tanpa internet</strong>!
+                Game ini mendukung <strong>PWA (Progressive Web App)</strong> sehingga bisa dibuka dan dimainkan secara <strong>offline tanpa koneksi internet</strong>!
             </p>
-            <div style="background: #f8fafc; padding: 18px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 1.1rem; line-height: 1.6; color: #1e293b;">
-                <strong style="color: var(--primary);">Langkah Pemasangan Cepat:</strong>
-                <ul style="margin-left: 25px; margin-top: 10px;">
-                    <li><strong>Google Chrome / Edge (Laptop/PC):</strong> Klik ikon [⊕ Install] di pojok kanan bilah alamat (URL bar), atau klik menu titik tiga [⋮] ➔ <em>"Instal Aplikasi"</em>.</li>
-                    <li><strong>Android (Chrome):</strong> Tekan menu titik tiga [⋮] di pojok atas ➔ pilih <em>"Instal Aplikasi"</em> atau <em>"Tambahkan ke Layar Utama"</em>.</li>
-                    <li><strong>iPhone / iPad (Safari):</strong> Tekan ikon Share [⎙] di bawah layar ➔ pilih <em>"Add to Home Screen"</em> (Tambah ke Layar Utama).</li>
+            <div style="background: #f8fafc; padding: 18px; border-radius: 14px; border: 1px solid #cbd5e1; font-size: 1.1rem; line-height: 1.6;">
+                <strong style="color: var(--primary);">Cara Pasang:</strong>
+                <ul style="margin-left: 25px; margin-top: 8px;">
+                    <li><strong>Google Chrome / Edge (Laptop):</strong> Klik ikon [⊕ Install] di ujung kanan bilah alamat (URL), atau klik menu titik tiga [⋮] ➔ <em>"Instal Detektif Data"</em>.</li>
+                    <li><strong>HP Android:</strong> Klik menu titik tiga [⋮] ➔ <em>"Tambahkan ke Layar Utama" / "Instal Aplikasi"</em>.</li>
                 </ul>
             </div>
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn-success" onclick="closeInstallGuide()" style="font-size: 1.2rem; padding: 10px 35px;">Tutup Panduan</button>
+            <div style="text-align: center; margin-top: 22px;">
+                <button class="btn btn-success" onclick="closeInstallGuide()">Tutup Panduan</button>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN: GAME -->
+    <!-- ==================== MODAL KONFIRMASI AKHIRI PERMAINAN ==================== -->
+    <div id="modal-confirm-exit" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 99999; display: none; justify-content: center; align-items: center; padding: 20px;">
+        <div class="panel" style="max-width: 520px; text-align: center; border: 3px solid var(--danger); border-radius: 24px; padding: 32px; box-shadow: 0 20px 45px rgba(0,0,0,0.35);">
+            <div style="font-size: 3.8rem; margin-bottom: 8px;">⚠️</div>
+            <h2 style="font-size: 2rem; color: var(--danger); margin-bottom: 12px; font-weight: 800;">Akhiri Permainan?</h2>
+            <p style="font-size: 1.25rem; color: #334155; margin-bottom: 25px; line-height: 1.5;">
+                Apakah kamu ingin menyelesaikan permainan sekarang dan langsung melihat skor yang sudah kamu kumpulkan?
+            </p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-danger" onclick="executeEndGame()" style="font-size: 1.25rem; padding: 12px 28px;">
+                    ✅ Ya, Selesaikan
+                </button>
+                <button class="btn btn-secondary" onclick="closeConfirmExit()" style="font-size: 1.25rem; padding: 12px 28px;">
+                    ✖️ Batal, Lanjut Main
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SCREEN 2: GAMEPLAY ==================== -->
     <div id="screen-game" class="screen">
-        <div class="game-header">
-            <div class="player-name">🕵️ Misi Detektif Digital</div>
-            <div class="timer-container">
-                <div>⏱️ Sisa Waktu:</div>
-                <div class="timer" id="timer-display">02:00</div>
+        <!-- Top HUD Bar -->
+        <div class="hud-bar">
+            <div class="hud-item">
+                <span>🎯 Misi:</span>
+                <span id="hud-mission-counter" style="color: var(--primary); font-size: 1.45rem;">1 / 10</span>
+            </div>
+
+            <div class="hud-item">
+                <span id="streak-container" class="streak-pill" style="display: none;">
+                    🔥 <span id="hud-streak-count">0</span>x Combo!
+                </span>
+                <span style="font-size: 1.35rem;">⭐ Skor:</span>
+                <span id="hud-score" style="color: var(--success-dark); font-size: 1.6rem; font-weight: 900;">0</span>
+            </div>
+
+            <div class="hud-item" style="gap: 12px;">
+                <button class="sound-toggle" onclick="toggleSound()" id="sound-btn" title="Nyalakan/Matikan Suara">
+                    🔊 Suara: ON
+                </button>
+                <div class="hud-timer" id="hud-timer">02:00</div>
             </div>
         </div>
 
-        <div class="audience-box">
-            🤔 <strong>TONTON & TEBAK:</strong> <span id="audience-question">Perhatikan layar, menurutmu apa langkah selanjutnya?</span>
+        <!-- Audience Prompt Banner for 38 students watching the projector -->
+        <div class="audience-banner" id="audience-banner">
+            <span>👀 <strong>TONTON & TEBAK DARI BANGKU:</strong></span>
+            <span id="audience-text">Ayo tebak sebelum temanmu di depan menekan tombol!</span>
         </div>
 
-        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <div id="challenge-title" class="challenge-title">Instruksi muncul di sini...</div>
-            
-            <!-- VIRTUAL EXPLORER -->
-            <div style="position: relative; width: 100%; max-width: 900px;">
-                <div class="explorer-window" id="explorer-window">
-                    <!-- Files will be injected here -->
+        <!-- Main Question Container -->
+        <div class="panel" style="max-width: 1050px; padding: 24px;">
+            <div class="mission-box">
+                <div class="category-tag" id="mission-category">📁 MANAJEMEN FILE</div>
+                <div class="question-text" id="mission-question">
+                    Saya ingin menggandakan file video ke dalam folder liburan tanpa menghapus aslinya, fitur apa yang harus saya gunakan?
                 </div>
-                
-                <!-- Feedback Overlay Inside Explorer -->
-                <div id="feedback-overlay" class="feedback-overlay">
-                    <div id="feedback-icon" class="feedback-icon">✅</div>
-                    <div id="feedback-text" class="feedback-text">Kerja Bagus!</div>
+
+                <!-- Mini Visual Illustration -->
+                <div class="visual-card" id="mission-visual">
+                    <div class="visual-elem">
+                        <span class="icon" id="vis-source-icon">🎬</span>
+                        <span class="label" id="vis-source-label">Video.mp4</span>
+                    </div>
+                    <div class="visual-arrow" id="vis-arrow">➔</div>
+                    <div class="visual-elem">
+                        <span class="icon" id="vis-target-icon">📁</span>
+                        <span class="label" id="vis-target-label">Folder Liburan</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
-            <button class="btn-danger" onclick="endTurn(true)">⏹️ Selesaikan / Akhiri</button>
-            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">Tantangan: <span id="challenge-counter">1/10</span></div>
+            <!-- 4 Clickable Jumbo Options (2x2 Grid) -->
+            <div class="options-grid" id="options-grid">
+                <!-- Options injected via JavaScript -->
+            </div>
+
+            <!-- Educational Feedback Banner -->
+            <div class="feedback-banner" id="feedback-banner">
+                <div class="feedback-lead">
+                    <span class="icon" id="fb-icon">✅</span>
+                    <div>
+                        <div style="font-size: 1.45rem; font-weight: 800;" id="fb-title">Hebat Sekali!</div>
+                        <div class="feedback-text" id="fb-text">Penjelasan edukatif muncul di sini.</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="btn-next-instant" onclick="nextChallengeNow()" style="padding: 10px 20px; font-size: 1.1rem;">
+                    Lanjut ➔
+                </button>
+            </div>
+
+            <!-- Bottom Exit Control -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; width: 100%;">
+                <button class="btn btn-danger" onclick="confirmEndGame()" style="font-size: 1.05rem; padding: 10px 20px;">
+                    ⏹️ Akhiri Permainan
+                </button>
+                <div style="font-size: 1.1rem; font-weight: 700; color: #64748b;">
+                    💡 Tips: Klik 1 kali pada tombol pilihan jawaban
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SCREEN: RESULT -->
+    <!-- ==================== SCREEN 3: RESULT ==================== -->
     <div id="screen-result" class="screen">
-        <div class="panel">
-            <h1>Misi Selesai! 🎉</h1>
-            <div style="font-size: 2.2rem; margin: 25px 0; text-align: center;">
-                Skor Akhir: <strong style="color: var(--success); font-size: 3.8rem; display: block; margin-top: 10px;" id="result-score">10 / 10</strong>
+        <div class="panel" style="max-width: 820px; text-align: center;">
+            <div class="result-trophy" id="res-trophy">🏆</div>
+            <h1 style="margin-bottom: 5px;">Permainan Selesai! Luar Biasa!</h1>
+            <div class="result-badge" id="res-badge">Detektif Data Legendaris 🌟</div>
+
+            <div class="result-score-big" id="res-score-display">10 / 10</div>
+            <p style="font-size: 1.25rem; color: #475569; margin-bottom: 15px;" id="res-subtitle">
+                Tantangan telah selesai! Kamu bisa bermain lagi untuk mengasah kemampuanmu.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="value" id="res-accuracy" style="color: var(--success-dark);">100%</div>
+                    <div class="desc">Tingkat Ketepatan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="res-max-streak" style="color: #b45309;">10x 🔥</div>
+                    <div class="desc">Kombo Beruntun</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="res-time-spent" style="color: var(--primary);">01:15</div>
+                    <div class="desc">Waktu Bermain</div>
+                </div>
             </div>
-            <div style="font-size: 1.35rem; margin-bottom: 35px; color: #4b5563; text-align: center; background: #f8fafc; padding: 15px 30px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                ⏱️ Waktu Tersisa: <strong id="result-time-left" style="color: var(--primary);">01:15</strong> &nbsp;|&nbsp; Waktu Terpakai: <strong id="result-time-used" style="color: var(--secondary);">00:45</strong>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-                <button class="btn-success" style="font-size: 1.5rem; padding: 15px 35px;" onclick="startGame()">🔄 Main Lagi</button>
-                <button class="btn-secondary" style="font-size: 1.3rem; padding: 15px 30px;" onclick="showScreen('screen-dashboard')">⚙️ Atur Waktu & Beranda</button>
-                <button onclick="showScreen('screen-scoreboard')" style="font-size: 1.3rem; padding: 15px 30px;">📊 Riwayat Skor</button>
+
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-success" style="font-size: 1.4rem; padding: 16px 36px;" onclick="startGame()">
+                    🔄 Main Lagi
+                </button>
+                <button class="btn btn-secondary" style="font-size: 1.2rem; padding: 14px 28px;" onclick="showScreen('screen-dashboard')">
+                    ⚙️ Menu Dasbor
+                </button>
+                <button class="btn" style="background: #3b82f6; box-shadow: 0 5px 0 #1d4ed8; font-size: 1.2rem; padding: 14px 28px;" onclick="showScreen('screen-scoreboard')">
+                    📊 Lihat Riwayat Skor
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN: SCOREBOARD -->
+    <!-- ==================== SCREEN 4: SCOREBOARD ==================== -->
     <div id="screen-scoreboard" class="screen">
-        <div class="panel" style="overflow-y: auto;">
+        <div class="panel" style="max-width: 950px;">
             <h1>📊 Riwayat Skor Permainan</h1>
-            <div style="width: 100%; overflow-x: auto; margin-top: 20px;">
-                <table id="score-table" style="width: 100%; border-collapse: collapse; font-size: 1.2rem;">
+            <p class="subtitle">Catatan performa setiap sesi permainan</p>
+
+            <div style="width: 100%; overflow-x: auto; margin-top: 15px;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 1.15rem;">
                     <thead>
-                        <tr>
-                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">No</th>
-                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Sesi</th>
-                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Skor</th>
-                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Durasi Terpilih</th>
-                            <th style="padding:12px; border:2px solid #ccc; background:var(--primary); color:white;">Sisa Waktu</th>
+                        <tr style="background: var(--primary); color: white;">
+                            <th style="padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px 0 0 0;">No</th>
+                            <th style="padding: 14px; border: 1px solid #cbd5e1;">Sesi Permainan</th>
+                            <th style="padding: 14px; border: 1px solid #cbd5e1;">Skor Benar</th>
+                            <th style="padding: 14px; border: 1px solid #cbd5e1;">Akurasi</th>
+                            <th style="padding: 14px; border: 1px solid #cbd5e1;">Durasi Terpakai</th>
+                            <th style="padding: 14px; border: 1px solid #cbd5e1; border-radius: 0 12px 0 0;">Predikat</th>
                         </tr>
                     </thead>
-                    <tbody id="score-table-body"></tbody>
+                    <tbody id="score-table-body">
+                        <!-- Scores injected here -->
+                    </tbody>
                 </table>
             </div>
+
             <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
-                <button class="btn-success" onclick="startGame()">▶️ Main Sekarang</button>
-                <button onclick="showScreen('screen-dashboard')">🏠 Kembali ke Dasbor</button>
+                <button class="btn btn-success" onclick="startGame()">▶️ Main Lagi</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-dashboard')">🏠 Kembali ke Dasbor</button>
+                <button class="btn btn-danger" onclick="clearScores()" style="font-size: 1rem; padding: 12px 20px;">🗑️ Reset Riwayat</button>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN: GUIDE -->
+    <!-- ==================== SCREEN 5: GUIDE ==================== -->
     <div id="screen-guide" class="screen">
-        <div class="panel" style="overflow-y: auto; text-align: left; font-size: 1.2rem;">
-            <h1 style="text-align: center;">📖 Panduan Fasilitasi Guru</h1>
-            <h3>Simulasi OS Windows Realistis</h3>
-            <p>Game ini sekarang mensimulasikan lingkungan File Explorer yang realistis. Siswa WAJIB menggunakan <strong>Klik Kanan (Right-Click)</strong> menggunakan Mouse/Touchpad untuk memunculkan menu perintah seperti di OS Windows.</p>
-            <ul style="margin-left: 40px; margin-top: 10px;">
-                <li><strong>Klik Kanan pada File:</strong> Muncul opsi Cut, Copy, Rename, Delete.</li>
-                <li><strong>Klik Kanan pada Folder:</strong> Muncul opsi Paste (jika ada file di-cut), dsb.</li>
-                <li><strong>Klik Kanan pada Ruang Kosong (Warna Putih):</strong> Muncul opsi New Folder, Paste.</li>
-                <li><strong>Untuk Rename/New Folder:</strong> Label akan berubah menjadi kotak ketik. Siswa harus mengetik nama dan menekan tombol <strong>Enter</strong> di keyboard.</li>
-            </ul>
+        <div class="panel" style="max-width: 900px; text-align: left;">
+            <h1 style="text-align: center;">📖 Panduan Guru & Fasilitasi Kelas</h1>
+            <p class="subtitle" style="text-align: center;">Strategi 1 Laptop untuk 39 Siswa (Pertemuan 1 TIK SMP)</p>
+
+            <div style="font-size: 1.18rem; line-height: 1.6; color: #1e293b;">
+                <h3 style="color: var(--primary); margin-top: 15px;">1. Mengapa Format "Tinggal Klik"?</h3>
+                <p>Banyak siswa kelas 7 belum terbiasa dengan mouse/touchpad laptop (sering bingung klik kanan vs klik kiri, atau kesulitan mengetik cepat). Format <strong>1-Klik Kiri pada tombol jumbo</strong> ini memastikan siswa tidak frustrasi, tidak membuang waktu, dan fokus 100% pada pemahaman konsep logika file & folder.</p>
+
+                <h3 style="color: var(--primary); margin-top: 20px;">2. Alur Giliran di Kelas (Hot Seat 2 Menit):</h3>
+                <ul style="margin-left: 30px; margin-top: 8px;">
+                    <li>Guru menyambungkan laptop ke <strong>LCD Proyektor</strong> agar seluruh kelas bisa melihat layar.</li>
+                    <li>Panggil 1 siswa maju (bisa diundi atau giliran absen). Siswa mendapat 1 sesi berisi 5 atau 10 misi cepat (cukup 1,5 - 2 menit).</li>
+                    <li>Siswa di bangku diarahkan membaca banner <strong>"TONTON & TEBAK DARI BANGKU"</strong> dan ikut menebak/mencatat jawabannya di kertas agar tidak bosan/gaduh.</li>
+                    <li>Setelah giliran selesai, skor langsung tercatat dan tombol <strong>"Giliran Siswa Berikutnya"</strong> siap diklik untuk transisi cepat.</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin-top: 20px;">3. Materi yang Diuji dalam Game:</h3>
+                <ul style="margin-left: 30px; margin-top: 8px;">
+                    <li><strong>Copy vs Cut:</strong> Membedakan menggandakan (aslinya tetap ada) vs memindahkan (aslinya berpindah).</li>
+                    <li><strong>Paste:</strong> Langkah wajib setelah menyalin atau memotong file.</li>
+                    <li><strong>New Folder:</strong> Membuat wadah baru untuk mengelompokkan file.</li>
+                    <li><strong>Rename:</strong> Mengubah nama berkas agar rapi dan mudah dikenali.</li>
+                    <li><strong>Delete & Recycle Bin:</strong> Menghapus file sampah dan memulihkannya jika salah hapus (Restore).</li>
+                    <li><strong>Elemen GUI Windows:</strong> Desktop, Taskbar, Kursor, Tombol Minimize [-], Maximize [□], dan Close [X].</li>
+                    <li><strong>Ekstensi File:</strong> Mengenali file Video (.mp4), Musik (.mp3), Gambar (.jpg/.png), Dokumen (.docx), dan PDF.</li>
+                </ul>
+            </div>
+
             <div style="text-align: center; margin-top: 30px;">
-                <button onclick="showScreen('screen-dashboard')">🏠 Mengerti, Kembali</button>
+                <button class="btn btn-primary" onclick="showScreen('screen-dashboard')">🏠 Mengerti, Kembali ke Dasbor</button>
             </div>
         </div>
     </div>
 
-    <!-- Custom Context Menu (Moved to Body) -->
-    <div id="custom-context-menu" class="context-menu">
-        <div class="context-menu-item" id="menu-new-folder" onclick="handleMenu('new-folder')">📁 New Folder</div>
-        <div class="context-menu-divider" id="menu-div-1"></div>
-        <div class="context-menu-item" id="menu-cut" onclick="handleMenu('cut')">✂️ Cut</div>
-        <div class="context-menu-item" id="menu-copy" onclick="handleMenu('copy')">📄 Copy</div>
-        <div class="context-menu-item" id="menu-paste" onclick="handleMenu('paste')">📋 Paste</div>
-        <div class="context-menu-divider" id="menu-div-2"></div>
-        <div class="context-menu-item" id="menu-rename" onclick="handleMenu('rename')">📝 Rename</div>
-        <div class="context-menu-item" id="menu-delete" onclick="handleMenu('delete')" style="color: var(--danger);">🗑️ Delete</div>
-    </div>
-
+    <!-- ==================== LOGIKA & JAVASCRIPT ==================== -->
     <script>
-        // --- State Management ---
-        let gameDuration = 120; // Default 2 minutes (120 seconds)
-        let roundCount = 0;
-        let scores = [];
-        let currentPlayer = { name: "Detektif Data" };
-        let currentChallengeIndex = 0;
-        let currentChallenges = [];
+        // --- 1. Sound Engine (Web Audio API Synthesizer - 100% Offline) ---
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-btn');
+            if (btn) {
+                btn.innerText = soundEnabled ? '🔊 Suara: ON' : '🔇 Suara: OFF';
+            }
+            if (soundEnabled) playSound('click');
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(450, now);
+                    osc.frequency.exponentialRampToValueAtTime(700, now + 0.05);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                }
+                else if (type === 'correct') {
+                    // Cheerful two-tone chime (G5 -> C6)
+                    const osc1 = ctx.createOscillator();
+                    const osc2 = ctx.createOscillator();
+                    const gain = ctx.createGain();
+
+                    osc1.type = 'triangle';
+                    osc2.type = 'sine';
+
+                    osc1.frequency.setValueAtTime(587.33, now); // D5
+                    osc1.frequency.setValueAtTime(880, now + 0.1); // A5
+
+                    osc2.frequency.setValueAtTime(783.99, now); // G5
+                    osc2.frequency.setValueAtTime(1046.50, now + 0.1); // C6
+
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc1.start(now);
+                    osc2.start(now);
+                    osc1.stop(now + 0.4);
+                    osc2.stop(now + 0.4);
+                }
+                else if (type === 'wrong') {
+                    // Gentle buzzer (F3 -> D3)
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.25);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.28);
+                }
+                else if (type === 'streak') {
+                    // Arpeggio fanfare
+                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+                        gain.gain.setValueAtTime(0.2, now + i * 0.08);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + i * 0.08);
+                        osc.stop(now + i * 0.08 + 0.2);
+                    });
+                }
+                else if (type === 'victory') {
+                    // Victory fanfare
+                    [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.12);
+                        gain.gain.setValueAtTime(0.3, now + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.5);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + i * 0.12);
+                        osc.stop(now + i * 0.12 + 0.5);
+                    });
+                }
+            } catch (err) {
+                console.warn('Audio Context Error:', err);
+            }
+        }
+
+        // --- 2. Bank Soal Skenario Interaktif (Tepat 30 Soal Tanpa Bocoran Jawaban) ---
+        const ALL_CHALLENGES = [
+            // ==================== KELOMPOK 1: COPY ====================
+            {
+                q: "Di laptop ada video liburan. Saya ingin menaruh video itu ke folder 'Liburan', tapi file video aslinya di laptop jangan sampai hilang. Fitur apa yang harus saya gunakan?",
+                visual: { srcIcon: "🎬", srcLabel: "Video.mp4", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Liburan" },
+                audience: "Menurut kalian dari bangku, fitur apa yang harus dipilih?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan baru, aslinya tetap ada" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file, aslinya berpindah" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang ke tempat sampah" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'Copy' (Salin) berfungsi menggandakan file ke tempat baru tanpa menghilangkan file aslinya."
+            },
+            {
+                q: "Temanmu ingin minta file lagu tugas kelompok ke flashdisk miliknya. Supaya lagu di laptopmu tidak hilang saat diberikan ke teman, kamu harus memilih...",
+                visual: { srcIcon: "🎵", srcLabel: "Lagu_Tugas.mp3", arrow: "➔ [ ? ]", tgtIcon: "💾", tgtLabel: "Flashdisk" },
+                audience: "Supaya lagunya tidak hilang dari laptop, pilih apa ya?",
+                options: [
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "File di laptop akan ikut hilang" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan lagu ke flashdisk teman" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus lagu" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
+                ],
+                correct: 1,
+                explanation: "Benar! Dengan 'Copy', lagu digandakan ke flashdisk teman dan di laptopmu tetap tersimpan aman."
+            },
+            {
+                q: "Kamu ingin membuat cadangan file tugas penting di folder lain. Tujuannya agar jika file yang satu terhapus, kamu masih punya cadangannya. Fitur yang dipakai adalah...",
+                visual: { srcIcon: "📄", srcLabel: "Tugas_Penting.docx", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Cadangan" },
+                audience: "Membuat berkas cadangan (backup) itu pakai apa?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan berkas cadangan" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya memindahkan file asli" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang berkas" }
+                ],
+                correct: 0,
+                explanation: "Hebat! Membuat cadangan (backup) dilakukan dengan menduplikasi file lewat perintah 'Copy'."
+            },
+            {
+                q: "Ibu ingin meminta salinan foto resep masakan dari komputermu untuk disimpan di HP-nya. Supaya foto di komputermu tidak ikut hilang, gunakan perintah...",
+                visual: { srcIcon: "🍲", srcLabel: "Resep.jpg", arrow: "➔ [ ? ]", tgtIcon: "📱", tgtLabel: "HP Ibu" },
+                audience: "Bagikan foto resep ke HP orang lain tanpa menghilangkan aslinya, pilih apa ya?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama foto" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto dari komputer" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan foto untuk Ibu" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto" }
+                ],
+                correct: 2,
+                explanation: "Tepat! 'Copy' membuat salinan berkas baru untuk Ibu tanpa menghilangkan foto aslimu."
+            },
+            {
+                q: "Ada lembar soal latihan yang ingin kamu kerjakan berkali-kali. Supaya file lembar soal aslinya tetap bersih dan tidak rusak, kamu harus menduplikasi file tersebut dengan...",
+                visual: { srcIcon: "📋", srcLabel: "Soal_Latihan.docx", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Salinan_Latihan.docx" },
+                audience: "Supaya lembar soal asli tetap bersih saat dikerjakan berulang, pilih apa ya?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi lembar soal latihan" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus lembar soal" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file asli" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah map" }
+                ],
+                correct: 0,
+                explanation: "Pintar! 'Copy' membuat salinan baru sehingga lembar soal asli tetap utuh dan bersih."
+            },
+            {
+                q: "Kamu ingin menaruh gambar poster tugas ke dalam dua folder sekaligus: folder 'Tugas TIK' dan folder 'Pameran'. Perintah yang kamu gunakan adalah...",
+                visual: { srcIcon: "🖼️", srcLabel: "Poster.png", arrow: "➔ [ ? ]", tgtIcon: "📁📁", tgtLabel: "2 Folder Sekaligus" },
+                audience: "Menaruh gambar yang sama ke dua folder berbeda pakai apa?",
+                options: [
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya pindah ke 1 tempat saja" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama poster" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Memperbanyak poster ke folder lain" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus poster" }
+                ],
+                correct: 2,
+                explanation: "Benar sekali! Dengan 'Copy', satu gambar bisa kita gandakan ke beberapa folder yang berbeda."
+            },
+
+            // ==================== KELOMPOK 2: CUT ====================
+            {
+                q: "Ada foto tugas yang letaknya di Desktop. Kamu ingin memindahkannya ke dalam folder 'Tugas' agar layar Desktop bersih dan rapi. Fitur yang dipakai adalah...",
+                visual: { srcIcon: "🖼️", srcLabel: "Foto di Desktop", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Tugas" },
+                audience: "File di desktop mau dirapikan ke folder tugas tanpa sisa di desktop, pilih apa ya?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "File di desktop masih tertinggal" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto agar desktop bersih" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama foto" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
+                ],
+                correct: 1,
+                explanation: "Tepat! 'Cut' (Pindah) digunakan untuk memindahkan file ke tempat baru sehingga tempat lama jadi bersih."
+            },
+            {
+                q: "Memori kamera HP kamu hampir penuh. Kamu ingin memindahkan semua foto ke laptop agar memori HP kosong kembali. Fitur yang paling tepat adalah...",
+                visual: { srcIcon: "📷", srcLabel: "Kamera HP Penuh", arrow: "➔ [ ? ]", tgtIcon: "💻", tgtLabel: "Laptop" },
+                audience: "Supaya memori HP kosong kembali dan tersimpan di laptop, pilih apa?",
+                options: [
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto & mengosongkan HP" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Foto di HP masih tetap penuh" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto tanpa menyimpannya" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" }
+                ],
+                correct: 0,
+                explanation: "Benar sekali! Dengan 'Cut', foto dipindahkan ke laptop dan memori HP menjadi kosong kembali."
+            },
+            {
+                q: "File tugas Matematika tidak sengaja tersimpan di dalam folder Pelajaran IPA. Agar letaknya benar, kamu ingin memindahkan file itu ke folder Matematika. Pilihlah...",
+                visual: { srcIcon: "📐", srcLabel: "Matematika di IPA", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Matematika" },
+                audience: "Salah taruh tugas, mau dialihkan ke folder yang benar pakai apa?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah jadi ada di dua tempat" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama file" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan ke folder Matematika" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas matematika" }
+                ],
+                correct: 2,
+                explanation: "Hebat! 'Cut' memindahkan berkas yang salah tempat masuk ke folder yang semestinya."
+            },
+            {
+                q: "Kamu baru saja mendownload file aplikasi di folder 'Downloads'. Sekarang kamu ingin memindahkannya ke folder 'Aplikasi' agar tidak tercecer. Fitur yang kamu gunakan adalah...",
+                visual: { srcIcon: "📦", srcLabel: "File di Downloads", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Aplikasi" },
+                audience: "File hasil download mau dialihkan ke folder aplikasi, gunakan apa?",
+                options: [
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file ke folder aplikasi" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi file aplikasi" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file" }
+                ],
+                correct: 0,
+                explanation: "Mantap! 'Cut' memindahkan berkas secara total sehingga folder Downloads tetap bersih dan rapi."
+            },
+            {
+                q: "Apa perbedaan paling mendasar antara perintah 'Cut' dan 'Copy' saat kita mengelola file di komputer?",
+                visual: { srcIcon: "✂️", srcLabel: "Perintah Cut", arrow: "VS", tgtIcon: "📄", tgtLabel: "Perintah Copy" },
+                audience: "Ayo bedakan: Yang mana yang memindahkan file dari tempat asal?",
+                options: [
+                    { icon: "✂️", title: "Cut memindahkan aslinya, Copy membuat salinan baru", subtitle: "Cut mengosongkan tempat lama" },
+                    { icon: "📄", title: "Cut membuat salinan baru, Copy memindahkan file asli", subtitle: "Pernyataan ini terbalik" },
+                    { icon: "🗑️", title: "Cut menghapus file, Copy membuat folder baru", subtitle: "Pernyataan keliru" },
+                    { icon: "📝", title: "Keduanya sama saja, tidak ada perbedaannya", subtitle: "Tentu ada perbedaannya" }
+                ],
+                correct: 0,
+                explanation: "Sangat cerdas! 'Cut' itu memindahkan berkas asli, sedangkan 'Copy' itu membuat salinan baru."
+            },
+            {
+                q: "Kamu ingin memindahkan dokumen formulir dari flashdisk ke laptop, dan kamu ingin formulir di flashdisk langsung terhapus setelah pindah. Perintahnya adalah...",
+                visual: { srcIcon: "📄", srcLabel: "Formulir di Flashdisk", arrow: "➔ [ ? ]", tgtIcon: "💻", tgtLabel: "Laptop" },
+                audience: "Pindah total tanpa meninggalkan salinan di flashdisk adalah...",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tanpa disimpan" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan formulir ke laptop" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Formulir di flashdisk masih ada" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama formulir" }
+                ],
+                correct: 1,
+                explanation: "Tepat! 'Cut' memindahkan formulir ke laptop sekaligus mengosongkannya dari flashdisk."
+            },
+
+            // ==================== KELOMPOK 3: NEW FOLDER ====================
+            {
+                q: "Layar komputer penuh dengan puluhan file yang berserakan. Supaya rapi dan terkelompok berdasarkan mata pelajaran, kamu harus membuat...",
+                visual: { srcIcon: "📄📄", srcLabel: "File Berserakan", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Wadah Rapi" },
+                audience: "Wadah untuk mengelompokkan file-file disebut apa?",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat map wadah untuk merapikan file" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus semua file penting" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong file" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'New Folder' berfungsi membuat wadah map baru untuk mengelompokkan file-file agar rapi."
+            },
+            {
+                q: "Kamu ingin menyiapkan tempat khusus untuk mengumpulkan foto-foto kegiatan kemah sekolah agar tidak bercampur dengan foto lain. Fitur yang harus kamu gunakan adalah...",
+                visual: { srcIcon: "📸", srcLabel: "Kumpulan Foto Kemah", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tempat Khusus" },
+                audience: "Membuat wadah baru untuk kumpulan foto itu fitur apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah penyimpanan baru" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin foto" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto" }
+                ],
+                correct: 1,
+                explanation: "Benar! 'New Folder' menciptakan wadah baru untuk menyimpan foto-foto khusus kegiatan kemah."
+            },
+            {
+                q: "Di dalam folder 'Pelajaran SMP', kamu ingin membuat tempat penyimpanan baru khusus untuk materi tugas Informatika. Tombol apa yang kamu klik?",
+                visual: { srcIcon: "📁", srcLabel: "Pelajaran SMP", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tugas Informatika" },
+                audience: "Bikin tempat penyimpanan baru di dalam folder pakai tombol apa?",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah baru di dalam folder" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" }
+                ],
+                correct: 0,
+                explanation: "Keren! 'New Folder' digunakan untuk membuat wadah penyimpanan baru (sub-folder) di dalam folder."
+            },
+            {
+                q: "Simbol bergambar map berwarna kuning di komputer yang berfungsi sebagai tempat menaruh banyak file disebut...",
+                visual: { srcIcon: "❓", srcLabel: "Simbol Map Kuning", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Nama Objek?" },
+                audience: "Simbol map berkas kuning di komputer itu apa ya namanya?",
+                options: [
+                    { icon: "📁", title: "Folder (New Folder)", subtitle: "Wadah penyimpanan berkas" },
+                    { icon: "📄", title: "File Dokumen", subtitle: "Catatan tulisan teks" },
+                    { icon: "🗑️", title: "Recycle Bin", subtitle: "Tempat sampah komputer" },
+                    { icon: "✂️", title: "Cut Tool", subtitle: "Alat pemotong" }
+                ],
+                correct: 0,
+                explanation: "Tepat! Ikon map berkas kuning adalah 'Folder', wadah untuk menata dan menyimpan berbagai file."
+            },
+            {
+                q: "Guru menyuruh setiap siswa membuat tempat penyimpanan baru dengan nama 'Projek_Informatika'. Fitur yang digunakan untuk membuat tempat tersebut adalah...",
+                visual: { srcIcon: "🖱️", srcLabel: "Ruang Kosong", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Projek_Informatika" },
+                audience: "Fitur untuk membuat tempat penampungan file baru bernama apa?",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah projek baru" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengganti nama berkas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus berkas" }
+                ],
+                correct: 0,
+                explanation: "Mantap! Untuk membuat wadah penampung file baru, kita memilih fitur 'New Folder'."
+            },
+            {
+                q: "Agar file musik, file video, dan file tugas tidak bercampur aduk di komputer, langkah awal yang paling baik adalah membuat beberapa...",
+                visual: { srcIcon: "📚", srcLabel: "Banyak Jenis File", arrow: "➔ [ ? ]", tgtIcon: "📁📁📁", tgtLabel: "Wadah Terpisah" },
+                audience: "Langkah pertama mengelompokkan banyak file adalah membuat beberapa...",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat map wadah terpisah" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus semua file berharga" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama satu file" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong tanpa wadah" }
+                ],
+                correct: 0,
+                explanation: "Hebat! Membuat 'New Folder' untuk setiap kategori adalah cara terbaik menata data di komputer."
+            },
+
+            // ==================== KELOMPOK 4: RENAME ====================
+            {
+                q: "File tugasmu dari kamera namanya masih 'IMG_0024.jpg'. Guru meminta kamu menggantinya menjadi 'Tugas_TIK_Andi.jpg'. Fitur apa yang kamu gunakan?",
+                visual: { srcIcon: "🖼️", srcLabel: "IMG_0024.jpg", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas_TIK_Andi.jpg" },
+                audience: "Mengubah nama file tanpa menghapus isinya pakai fitur apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file sesuai petunjuk" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus file foto tugas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'Rename' digunakan untuk mengubah nama file tanpa merusak isi filenya."
+            },
+            {
+                q: "Sebuah folder tugas bernama 'Tugas1' ingin kamu ganti namanya menjadi 'Tugas_Selesai' agar lebih jelas. Fitur yang digunakan adalah...",
+                visual: { srcIcon: "📁", srcLabel: "Tugas1", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Tugas_Selesai" },
+                audience: "Mengubah nama folder sama seperti mengubah nama file, yaitu...",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama folder" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru lagi" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin folder" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder" }
+                ],
+                correct: 0,
+                explanation: "Benar! 'Rename' juga bisa digunakan pada folder untuk memperjelas nama folder tersebut."
+            },
+            {
+                q: "Kamu salah mengetik nama file tugas makalahmu ('Maklah_TIK.docx'). Supaya ejaannya benar menjadi 'Makalah_TIK.docx', kamu harus memilih...",
+                visual: { srcIcon: "📄", srcLabel: "Maklah_TIK.docx", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Makalah_TIK.docx" },
+                audience: "Memperbaiki ejaan judul file tugas menggunakan fitur apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Memperbaiki ejaan nama file" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan makalah" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus makalah" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
+                ],
+                correct: 0,
+                explanation: "Pintar! 'Rename' berfungsi memperbaiki susunan huruf atau ejaan nama file yang salah."
+            },
+            {
+                q: "Rekaman suaramu di komputer masih bernama 'Voice001.mp3'. Kamu ingin menggantinya menjadi 'Wawancara_Guru.mp3'. Perintah yang kamu klik adalah...",
+                visual: { srcIcon: "🎙️", srcLabel: "Voice001.mp3", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Wawancara_Guru.mp3" },
+                audience: "Mengubah nama rekaman audio yang belum jelas pakai apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Memberi judul rekaman yang jelas" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi rekaman" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus rekaman" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan rekaman" }
+                ],
+                correct: 0,
+                explanation: "Keren! 'Rename' mengganti nama rekaman audio agar mudah dicari di kemudian hari."
+            },
+            {
+                q: "Sebuah folder tugas bernama 'Belum_Revisi' sudah selesai kamu periksa. Sekarang kamu ingin mengganti namanya menjadi 'Sudah_Revisi'. Fitur yang tepat adalah...",
+                visual: { srcIcon: "📁", srcLabel: "Belum_Revisi", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Sudah_Revisi" },
+                audience: "Mengubah tulisan nama folder tugas pakai fitur apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama folder tugas" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong folder" }
+                ],
+                correct: 0,
+                explanation: "Luar biasa! 'Rename' memperbarui nama folder sesuai status tugas yang sudah selesai."
+            },
+            {
+                q: "Jika kamu hanya ingin mengubah tulisan nama pada file atau folder tanpa menghapus isi di dalamnya, kamu harus menggunakan fitur...",
+                visual: { srcIcon: "📄", srcLabel: "Nama Lama", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Nama Baru" },
+                audience: "Ganti nama tanpa merusak isi file adalah...",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah tulisan nama" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghilangkan berkas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi berkas" }
+                ],
+                correct: 0,
+                explanation: "Tepat! 'Rename' hanya mengganti label nama file/folder, isi berkas di dalamnya tetap aman."
+            },
+
+            // ==================== KELOMPOK 5: DELETE ====================
+            {
+                q: "Ada file virus berbahaya atau file rusak yang sudah tidak bisa dibuka dan membuat memori laptop penuh. Perintah untuk membuangnya adalah...",
+                visual: { srcIcon: "🦠", srcLabel: "Virus_Rusak.exe", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Bagaimana cara menyingkirkan file virus yang berbahaya ini?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang file ke tempat sampah" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah memperbanyak virus" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
+                ],
+                correct: 0,
+                explanation: "Pintar! Perintah 'Delete' berfungsi membuang file yang tidak diperlukan atau berbahaya ke tempat sampah."
+            },
+            {
+                q: "Kamu menemukan file duplikat yang rusak ('Data_Error.log') dan tidak bisa dibuka lagi. Fitur untuk menyingkirkannya adalah...",
+                visual: { srcIcon: "⚠️", srcLabel: "Data_Error.log", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "File error yang rusak disingkirkan pakai perintah apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menyingkirkan file yang rusak" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama file error" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan file error" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
+                ],
+                correct: 0,
+                explanation: "Benar! 'Delete' menyingkirkan file rusak agar tidak memenuhi ruang penyimpanan laptop."
+            },
+            {
+                q: "Ada folder kosong yang tidak terpakai dan membuat tampilan layarmu berantakan. Perintah untuk membuangnya adalah...",
+                visual: { srcIcon: "📁", srcLabel: "Folder Kosong Tak Terpakai", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Folder kosong tak terpakai dibuang pakai apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus folder kosong" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama" },
+                    { icon: "📁", title: "New Folder", subtitle: "Bikin folder baru lagi" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin folder" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! Folder yang tidak terpakai dapat disingkirkan menggunakan perintah 'Delete'."
+            },
+            {
+                q: "Ada file catatan tugas tahun lalu yang sudah tidak berguna dan ingin kamu bersihkan dari komputer. Gunakan fitur...",
+                visual: { srcIcon: "📄", srcLabel: "Catatan_Lama.txt", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Membersihkan berkas lama yang sudah tidak dipakai pakai apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang berkas ke tempat sampah" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan berkas" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama berkas" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi berkas" }
+                ],
+                correct: 0,
+                explanation: "Mantap! 'Delete' memindahkan file yang tidak diperlukan ke tempat sampah (Recycle Bin)."
+            },
+            {
+                q: "Ketika kita memilih perintah 'Delete' pada file di komputer, ke manakah file tersebut akan dibuang sementara waktu?",
+                visual: { srcIcon: "📄", srcLabel: "File Dihapus", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Wadah Penampung" },
+                audience: "Tempat penampungan file terhapus di Windows namanya apa?",
+                options: [
+                    { icon: "🗑️", title: "Recycle Bin (Tempat Sampah)", subtitle: "Wadah penampung berkas terhapus sementara" },
+                    { icon: "📁", title: "Folder Dokumen", subtitle: "Wadah dokumen aktif" },
+                    { icon: "🖥️", title: "Desktop", subtitle: "Layar beranda komputer" },
+                    { icon: "💾", title: "Flashdisk", subtitle: "Media simpan portabel" }
+                ],
+                correct: 0,
+                explanation: "Hebat! File yang ditekan 'Delete' masuk ke Recycle Bin sementara waktu dan bisa dipulihkan jika dibutuhkan."
+            },
+            {
+                q: "Kamu ingin membersihkan laptop dari file-file instalasi aplikasi lama yang sudah selesai dipasang. Perintah yang kamu gunakan adalah...",
+                visual: { srcIcon: "⚙️", srcLabel: "Setup_Lama.exe", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Membersihkan laptop dari file bekas instalasi pakai fitur apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membersihkan file bekas instalasi" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menyalin file instalasi" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengganti nama berkas" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah baru" }
+                ],
+                correct: 0,
+                explanation: "Sangat cerdas! 'Delete' membersihkan komputer dari file instalasi bekas yang tidak lagi dibutuhkan."
+            }
+        ];
+
+        // --- 3. State Management Permainan ---
+        let gameDuration = 120; // 120 detik default (2 menit)
+        let totalQuestionsConfig = 10; // 10 soal default
+        let activeQuestions = [];
+        let currentQuestionIndex = 0;
         let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
         let timerInterval = null;
         let timeLeft = 120;
+        let isAnsweringBlocked = false;
+        let sessionCount = 0;
+        let scoresHistory = [];
 
-        // --- Custom Time Controls ---
-        function setTimePreset(seconds, btnElement) {
-            gameDuration = seconds;
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            const minInput = document.getElementById('input-custom-minutes');
-            const secInput = document.getElementById('input-custom-seconds');
-            if (minInput) minInput.value = mins;
-            if (secInput) secInput.value = secs;
-            
-            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-            
-            updateSelectedTimeSummary();
-        }
-
-        function onCustomTimeChange() {
-            const minInput = document.getElementById('input-custom-minutes');
-            const secInput = document.getElementById('input-custom-seconds');
-            let mins = parseInt(minInput ? minInput.value : 2);
-            let secs = parseInt(secInput ? secInput.value : 0);
-            
-            if (isNaN(mins) || mins < 0) mins = 0;
-            if (isNaN(secs) || secs < 0) secs = 0;
-            if (secs >= 60) secs = 59;
-            
-            let total = (mins * 60) + secs;
-            if (total < 10) total = 10; // Minimal 10 detik
-            
-            gameDuration = total;
-            if (minInput) minInput.value = Math.floor(total / 60);
-            if (secInput) secInput.value = total % 60;
-
-            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-            const presetButtons = Array.from(document.querySelectorAll('.preset-btn'));
-            const matchingPreset = presetButtons.find(b => {
-                const clickAttr = b.getAttribute('onclick');
-                return clickAttr && clickAttr.includes(`setTimePreset(${total},`);
-            });
-            if (matchingPreset) matchingPreset.classList.add('active');
-
-            updateSelectedTimeSummary();
-        }
-
-        function updateSelectedTimeSummary() {
-            const summaryElem = document.getElementById('selected-time-summary');
-            if (!summaryElem) return;
-            const mins = Math.floor(gameDuration / 60);
-            const secs = gameDuration % 60;
-            let parts = [];
-            if (mins > 0) parts.push(`${mins} Menit`);
-            if (secs > 0 || mins === 0) parts.push(`${secs} Detik`);
-            summaryElem.innerText = `⏱️ Durasi Game: ${parts.join(' ')} (${gameDuration} Detik)`;
-        }
-
-        // --- Core Application Functions ---
+        // --- 4. Fungsi Layar & Navigasi ---
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(screenId);
@@ -606,81 +1527,360 @@
             if (screenId === 'screen-scoreboard') renderScoreboard();
         }
 
-        // --- Explorer State ---
-        let explorerFiles = [];
-        let clipboard = null; // { action: 'cut'|'copy', id: number }
-        let selectedFileId = null;
-        let contextTargetId = null; // ID of file right-clicked, or null for window
-        let idCounter = 1;
-        let currentActiveChallenge = null; // Pointer to current challenge data
+        // --- 5. Pengaturan Dasbor & Custom Time ---
+        function setTimePreset(seconds, btn) {
+            playSound('click');
+            gameDuration = seconds;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const minInput = document.getElementById('input-custom-minutes');
+            const secInput = document.getElementById('input-custom-seconds');
+            if (minInput) minInput.value = mins;
+            if (secInput) secInput.value = secs;
 
-        // --- Challenge Bank (50 Tantangan Bervariasi & Realistis) ---
-        const challengeBank = {
-            createFolder: [
-                { type: 'createFolder', q: 'Klik kanan area kosong ➔ New Folder ➔ Beri nama "Tugas TIK" ➔ Tekan Enter!', expectedName: 'Tugas TIK', initialFiles: [{name: 'Bahan.txt', isFolder: false}] },
-                { type: 'createFolder', q: 'Buat folder baru untuk menyimpan foto dokumentasi! Beri nama "Foto Liburan".', expectedName: 'Foto Liburan', initialFiles: [{name: 'Lagu.mp3', isFolder: false}] },
-                { type: 'createFolder', q: 'Rapikan file pelajaran sekolah! Buat folder baru dengan nama "Pelajaran".', expectedName: 'Pelajaran', initialFiles: [{name: 'Jadwal.pdf', isFolder: false}] },
-                { type: 'createFolder', q: 'Bikin folder baru bernama "Game Edukasi" di ruang kosong.', expectedName: 'Game Edukasi', initialFiles: [{name: 'Kuis.exe', isFolder: false}] },
-                { type: 'createFolder', q: 'Kita butuh tempat untuk video praktikum. Buat folder baru bernama "Video".', expectedName: 'Video', initialFiles: [{name: 'Vlog.mp4', isFolder: false}] },
-                { type: 'createFolder', q: 'Buat folder untuk kumpulan musik santai! Beri nama "Musik Favorit".', expectedName: 'Musik Favorit', initialFiles: [{name: 'Lagu1.mp3', isFolder: false}] },
-                { type: 'createFolder', q: 'Simpan dokumen penting di tempat khusus. Buat folder bernama "Dokumen Resmi".', expectedName: 'Dokumen Resmi', initialFiles: [{name: 'Surat.docx', isFolder: false}] },
-                { type: 'createFolder', q: 'Bikin folder baru bernama "Projek TIK" untuk tugas kelompok.', expectedName: 'Projek TIK', initialFiles: [{name: 'Ide.txt', isFolder: false}] },
-                { type: 'createFolder', q: 'Siapkan wadah cadangan file. Buat folder baru dengan nama "Cadangan".', expectedName: 'Cadangan', initialFiles: [{name: 'Catatan.txt', isFolder: false}] },
-                { type: 'createFolder', q: 'Buat folder baru bernama "Ekskul Komputer" untuk arsip kegiatan.', expectedName: 'Ekskul Komputer', initialFiles: [{name: 'Absensi.xls', isFolder: false}] }
-            ],
-            renameFile: [
-                { type: 'renameFile', q: 'Ubah nama "Draft.doc" menjadi "Laporan Akhir". (Klik kanan ➔ Rename)', targetFile: 'Draft.doc', expectedName: 'Laporan Akhir', initialFiles: [{name: 'Draft.doc', isFolder: false}, {name: 'Data', isFolder: true}] },
-                { type: 'renameFile', q: 'Folder "Tugas1" kurang jelas. Ubah namanya menjadi "Tugas TIK"!', targetFile: 'Tugas1', expectedName: 'Tugas TIK', initialFiles: [{name: 'Tugas1', isFolder: true}] },
-                { type: 'renameFile', q: 'Ganti nama file "kucing.jpg" menjadi "Hewan Peliharaan".', targetFile: 'kucing.jpg', expectedName: 'Hewan Peliharaan', initialFiles: [{name: 'kucing.jpg', isFolder: false}] },
-                { type: 'renameFile', q: 'File "lama.xls" sudah diperbarui. Rename menjadi "Data Baru".', targetFile: 'lama.xls', expectedName: 'Data Baru', initialFiles: [{name: 'lama.xls', isFolder: false}] },
-                { type: 'renameFile', q: 'Ubah nama folder rahasia "Rahasia" menjadi "Privasi".', targetFile: 'Rahasia', expectedName: 'Privasi', initialFiles: [{name: 'Rahasia', isFolder: true}] },
-                { type: 'renameFile', q: 'Ganti nama dokumen presentasi "slide.pptx" menjadi "Materi Bab 1".', targetFile: 'slide.pptx', expectedName: 'Materi Bab 1', initialFiles: [{name: 'slide.pptx', isFolder: false}] },
-                { type: 'renameFile', q: 'Ganti nama rekaman audio "voice001.mp3" menjadi "Wawancara".', targetFile: 'voice001.mp3', expectedName: 'Wawancara', initialFiles: [{name: 'voice001.mp3', isFolder: false}] },
-                { type: 'renameFile', q: 'Ubah nama folder tugas "Belum_Selesai" menjadi "Sudah_Revisi".', targetFile: 'Belum_Selesai', expectedName: 'Sudah_Revisi', initialFiles: [{name: 'Belum_Selesai', isFolder: true}] },
-                { type: 'renameFile', q: 'Rename file gambar "IMG_0001.png" menjadi "Logo Sekolah".', targetFile: 'IMG_0001.png', expectedName: 'Logo Sekolah', initialFiles: [{name: 'IMG_0001.png', isFolder: false}] },
-                { type: 'renameFile', q: 'Ubah nama file tabel nilai "rekap.xlsx" menjadi "Nilai Kelas 7".', targetFile: 'rekap.xlsx', expectedName: 'Nilai Kelas 7', initialFiles: [{name: 'rekap.xlsx', isFolder: false}] }
-            ],
-            moveFile: [
-                { type: 'moveFile', q: 'Pindahkan (Cut & Paste) "Foto.jpg" ke dalam folder "Liburan"!', fileToMove: 'Foto.jpg', targetFolder: 'Liburan', initialFiles: [{name: 'Foto.jpg', isFolder: false}, {name: 'Liburan', isFolder: true}] },
-                { type: 'moveFile', q: 'Rapikan file! Pindahkan (Cut & Paste) "Laporan.pdf" ke folder "Tugas".', fileToMove: 'Laporan.pdf', targetFolder: 'Tugas', initialFiles: [{name: 'Laporan.pdf', isFolder: false}, {name: 'Tugas', isFolder: true}] },
-                { type: 'moveFile', q: 'Geser "Catatan.txt" ke dalam folder "Penting" dengan cara Cut lalu Paste.', fileToMove: 'Catatan.txt', targetFolder: 'Penting', initialFiles: [{name: 'Catatan.txt', isFolder: false}, {name: 'Penting', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan "Video.mp4" ke folder "Media" agar meja kerja rapi.', fileToMove: 'Video.mp4', targetFolder: 'Media', initialFiles: [{name: 'Video.mp4', isFolder: false}, {name: 'Media', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan berkas pendaftaran "Formulir.pdf" ke dalam folder "Pendaftaran".', fileToMove: 'Formulir.pdf', targetFolder: 'Pendaftaran', initialFiles: [{name: 'Formulir.pdf', isFolder: false}, {name: 'Pendaftaran', isFolder: true}] },
-                { type: 'moveFile', q: 'Masukkan file rekaman "Mars_Sekolah.mp3" ke folder "Audio".', fileToMove: 'Mars_Sekolah.mp3', targetFolder: 'Audio', initialFiles: [{name: 'Mars_Sekolah.mp3', isFolder: false}, {name: 'Audio', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan naskah rangkuman "Bab1.docx" ke dalam folder "Materi".', fileToMove: 'Bab1.docx', targetFolder: 'Materi', initialFiles: [{name: 'Bab1.docx', isFolder: false}, {name: 'Materi', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan bahan presentasi "Slide_TIK.ppt" ke folder "Presentasi".', fileToMove: 'Slide_TIK.ppt', targetFolder: 'Presentasi', initialFiles: [{name: 'Slide_TIK.ppt', isFolder: false}, {name: 'Presentasi', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan cerita rakyat "Cerita.txt" ke folder "Bahasa".', fileToMove: 'Cerita.txt', targetFolder: 'Bahasa', initialFiles: [{name: 'Cerita.txt', isFolder: false}, {name: 'Bahasa', isFolder: true}] },
-                { type: 'moveFile', q: 'Pindahkan hasil download "Aplikasi.zip" ke dalam folder "Download".', fileToMove: 'Aplikasi.zip', targetFolder: 'Download', initialFiles: [{name: 'Aplikasi.zip', isFolder: false}, {name: 'Download', isFolder: true}] }
-            ],
-            copyFile: [
-                { type: 'copyFile', q: 'Salin (Copy & Paste) "Jadwal.pdf" ke dalam folder "Backup"!', fileToMove: 'Jadwal.pdf', targetFolder: 'Backup', initialFiles: [{name: 'Jadwal.pdf', isFolder: false}, {name: 'Backup', isFolder: true}] },
-                { type: 'copyFile', q: 'Gandakan file! Copy "Resep.doc" dan Paste ke folder "Keluarga".', fileToMove: 'Resep.doc', targetFolder: 'Keluarga', initialFiles: [{name: 'Resep.doc', isFolder: false}, {name: 'Keluarga', isFolder: true}] },
-                { type: 'copyFile', q: 'Buat salinan "Tugas.docx" ke folder "Flashdisk" menggunakan Copy.', fileToMove: 'Tugas.docx', targetFolder: 'Flashdisk', initialFiles: [{name: 'Tugas.docx', isFolder: false}, {name: 'Flashdisk', isFolder: true}] },
-                { type: 'copyFile', q: 'Gandakan "Foto_Bersama.jpg" ke dalam folder "Kenangan" (gunakan Copy).', fileToMove: 'Foto_Bersama.jpg', targetFolder: 'Kenangan', initialFiles: [{name: 'Foto_Bersama.jpg', isFolder: false}, {name: 'Kenangan', isFolder: true}] },
-                { type: 'copyFile', q: 'Salin lembar materi "Matematika.pdf" ke folder "Belajar" (Copy & Paste).', fileToMove: 'Matematika.pdf', targetFolder: 'Belajar', initialFiles: [{name: 'Matematika.pdf', isFolder: false}, {name: 'Belajar', isFolder: true}] },
-                { type: 'copyFile', q: 'Gandakan template lembar kerja "Format_Laporan.doc" ke folder "Tugas".', fileToMove: 'Format_Laporan.doc', targetFolder: 'Tugas', initialFiles: [{name: 'Format_Laporan.doc', isFolder: false}, {name: 'Tugas', isFolder: true}] },
-                { type: 'copyFile', q: 'Salin file lagu kebangsaan "Indonesia_Raya.mp3" ke folder "Upacara".', fileToMove: 'Indonesia_Raya.mp3', targetFolder: 'Upacara', initialFiles: [{name: 'Indonesia_Raya.mp3', isFolder: false}, {name: 'Upacara', isFolder: true}] },
-                { type: 'copyFile', q: 'Buat duplikat gambar "Desain_Poster.png" ke dalam folder "Publikasi".', fileToMove: 'Desain_Poster.png', targetFolder: 'Publikasi', initialFiles: [{name: 'Desain_Poster.png', isFolder: false}, {name: 'Publikasi', isFolder: true}] },
-                { type: 'copyFile', q: 'Salin ringkasan penting "Rangkuman.txt" ke folder "Ujian".', fileToMove: 'Rangkuman.txt', targetFolder: 'Ujian', initialFiles: [{name: 'Rangkuman.txt', isFolder: false}, {name: 'Ujian', isFolder: true}] },
-                { type: 'copyFile', q: 'Gandakan file tabel absensi "Kehadiran.xlsx" ke folder "Laporan".', fileToMove: 'Kehadiran.xlsx', targetFolder: 'Laporan', initialFiles: [{name: 'Kehadiran.xlsx', isFolder: false}, {name: 'Laporan', isFolder: true}] }
-            ],
-            deleteFile: [
-                { type: 'deleteFile', q: 'Hapus file sampah! Klik kanan "Virus.exe" ➔ Delete.', fileToDelete: 'Virus.exe', initialFiles: [{name: 'Penting.doc', isFolder: false}, {name: 'Virus.exe', isFolder: false}] },
-                { type: 'deleteFile', q: 'Bersihkan desktop! Hapus "File_Rusak.jpg". Jangan hapus file lain.', fileToDelete: 'File_Rusak.jpg', initialFiles: [{name: 'Keluarga.jpg', isFolder: false}, {name: 'File_Rusak.jpg', isFolder: false}] },
-                { type: 'deleteFile', q: 'Ada berkas error sistem. Hapus "Error.log" sekarang juga!', fileToDelete: 'Error.log', initialFiles: [{name: 'Sistem.dll', isFolder: false}, {name: 'Error.log', isFolder: false}] },
-                { type: 'deleteFile', q: 'Hapus folder kosong bernama "Temp" (Klik kanan ➔ Delete).', fileToDelete: 'Temp', initialFiles: [{name: 'Data', isFolder: true}, {name: 'Temp', isFolder: true}] },
-                { type: 'deleteFile', q: 'Buang file promosi tak penting "Spam.txt" ke tempat sampah.', fileToDelete: 'Spam.txt', initialFiles: [{name: 'Tugas.txt', isFolder: false}, {name: 'Spam.txt', isFolder: false}] },
-                { type: 'deleteFile', q: 'Hapus installer kadaluarsa "setup_lama.exe" agar hemat disk.', fileToDelete: 'setup_lama.exe', initialFiles: [{name: 'Aplikasi.docx', isFolder: false}, {name: 'setup_lama.exe', isFolder: false}] },
-                { type: 'deleteFile', q: 'Hapus gambar buram "Foto_Gagal.jpg" dari explorer.', fileToDelete: 'Foto_Gagal.jpg', initialFiles: [{name: 'Foto_Bagus.png', isFolder: false}, {name: 'Foto_Gagal.jpg', isFolder: false}] },
-                { type: 'deleteFile', q: 'Ada skrip malware mencurigakan! Hapus file "Trojan.bat"!', fileToDelete: 'Trojan.bat', initialFiles: [{name: 'Catatan_Sekolah.txt', isFolder: false}, {name: 'Trojan.bat', isFolder: false}] },
-                { type: 'deleteFile', q: 'Hapus folder sampah bernama "Unused_Folder"!', fileToDelete: 'Unused_Folder', initialFiles: [{name: 'Materi_TIK', isFolder: true}, {name: 'Unused_Folder', isFolder: true}] },
-                { type: 'deleteFile', q: 'Hapus file duplikat yang salah "Tugas_Salah.pdf".', fileToDelete: 'Tugas_Salah.pdf', initialFiles: [{name: 'Tugas_Benar.pdf', isFolder: false}, {name: 'Tugas_Salah.pdf', isFolder: false}] }
-            ]
-        };
+            document.querySelectorAll('.preset-group .chip-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            updateDashboardBadge();
+        }
 
-        // --- PWA Installation & Service Worker Handling ---
+        function onCustomTimeChange() {
+            const minInput = document.getElementById('input-custom-minutes');
+            const secInput = document.getElementById('input-custom-seconds');
+            let mins = parseInt(minInput ? minInput.value : 2);
+            let secs = parseInt(secInput ? secInput.value : 0);
+
+            if (isNaN(mins) || mins < 0) mins = 0;
+            if (isNaN(secs) || secs < 0) secs = 0;
+            if (secs >= 60) secs = 59;
+
+            let total = (mins * 60) + secs;
+            if (total < 10 && total !== 0) total = 10; // Minimal 10 detik kecuali mode santai (0)
+
+            gameDuration = total;
+            if (minInput) minInput.value = Math.floor(total / 60);
+            if (secInput) secInput.value = total % 60;
+
+            document.querySelectorAll('.preset-group .chip-btn').forEach(b => b.classList.remove('active'));
+            updateDashboardBadge();
+        }
+
+        function setQuestionCount(count, btn) {
+            playSound('click');
+            totalQuestionsConfig = count;
+            document.querySelectorAll('.question-count-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            updateDashboardBadge();
+        }
+
+        function updateDashboardBadge() {
+            const badge = document.getElementById('dashboard-summary-badge');
+            if (!badge) return;
+            if (gameDuration === 0) {
+                badge.innerHTML = `♾️ Mode Santai (Tanpa Batas Waktu) &nbsp;|&nbsp; 📋 Jumlah: ${totalQuestionsConfig} Soal`;
+            } else {
+                const mins = Math.floor(gameDuration / 60);
+                const secs = gameDuration % 60;
+                let parts = [];
+                if (mins > 0) parts.push(`${mins} Menit`);
+                if (secs > 0 || mins === 0) parts.push(`${secs} Detik`);
+                badge.innerHTML = `⏱️ Waktu: ${parts.join(' ')} (${gameDuration} Detik) &nbsp;|&nbsp; 📋 Jumlah: ${totalQuestionsConfig} Soal`;
+            }
+        }
+
+        // --- 6. Mulai Permainan ---
+        function startGame() {
+            playSound('click');
+            sessionCount++;
+            score = 0;
+            streak = 0;
+            maxStreak = 0;
+            currentQuestionIndex = 0;
+            isAnsweringBlocked = false;
+
+            // Acak bank soal dan ambil sesuai totalQuestionsConfig (maksimal 30 soal)
+            const shuffled = [...ALL_CHALLENGES].sort(() => Math.random() - 0.5);
+            activeQuestions = shuffled.slice(0, Math.min(totalQuestionsConfig, shuffled.length));
+
+            showScreen('screen-game');
+            loadCurrentQuestion();
+
+            // Mulai Timer
+            startTimer();
+        }
+
+        function loadCurrentQuestion() {
+            if (currentQuestionIndex >= activeQuestions.length) {
+                finishGame();
+                return;
+            }
+
+            isAnsweringBlocked = false;
+            const qData = activeQuestions[currentQuestionIndex];
+
+            // Update HUD
+            document.getElementById('hud-mission-counter').innerText = `${currentQuestionIndex + 1} / ${activeQuestions.length}`;
+            document.getElementById('hud-score').innerText = score;
+
+            // Update Streak Indicator
+            const streakElem = document.getElementById('streak-container');
+            const streakCountElem = document.getElementById('hud-streak-count');
+            if (streak >= 2) {
+                streakElem.style.display = 'inline-flex';
+                streakCountElem.innerText = streak;
+            } else {
+                streakElem.style.display = 'none';
+            }
+
+            // Update Audience Banner
+            document.getElementById('audience-text').innerText = qData.audience || "Ayo diskusikan jawabannya dari bangku!";
+
+            // Update Question & Category (TANPA BOCORAN JAWABAN DI ATAS SOAL)
+            document.getElementById('mission-category').innerText = `📁 TANTANGAN #${currentQuestionIndex + 1} DARI ${activeQuestions.length}`;
+            document.getElementById('mission-question').innerText = qData.q;
+
+            // Update Visual Card (PANAH JUGA TANPA BOCORAN JAWABAN)
+            const vis = qData.visual || { srcIcon: "📁", srcLabel: "Berkas", arrow: "➔ [ ? ]", tgtIcon: "📂", tgtLabel: "Tujuan" };
+            document.getElementById('vis-source-icon').innerText = vis.srcIcon;
+            document.getElementById('vis-source-label').innerText = vis.srcLabel;
+            document.getElementById('vis-arrow').innerText = vis.arrow || "➔ [ ? ]";
+            document.getElementById('vis-target-icon').innerText = vis.tgtIcon;
+            document.getElementById('vis-target-label').innerText = vis.tgtLabel;
+
+            // Sembunyikan Feedback Banner
+            const fbBanner = document.getElementById('feedback-banner');
+            fbBanner.classList.remove('show', 'is-correct', 'is-wrong');
+
+            // Render 4 Clickable Jumbo Buttons
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+
+            const letters = ['A', 'B', 'C', 'D'];
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn-option';
+                btn.id = `option-btn-${idx}`;
+                btn.innerHTML = `
+                    <div class="option-letter">${letters[idx]}</div>
+                    <div class="option-icon">${opt.icon}</div>
+                    <div class="option-content">
+                        <div class="option-title">${opt.title}</div>
+                        <div class="option-subtitle">${opt.subtitle}</div>
+                    </div>
+                `;
+                btn.onclick = () => handleAnswerSelect(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        // --- 7. Penanganan Klik Jawaban ---
+        function handleAnswerSelect(selectedIndex) {
+            if (isAnsweringBlocked) return;
+            isAnsweringBlocked = true;
+
+            const qData = activeQuestions[currentQuestionIndex];
+            const isCorrect = (selectedIndex === qData.correct);
+
+            const selectedBtn = document.getElementById(`option-btn-${selectedIndex}`);
+            const correctBtn = document.getElementById(`option-btn-${qData.correct}`);
+
+            // Nonaktifkan semua tombol agar tidak di-klik ganda
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.add('disabled'));
+
+            const fbBanner = document.getElementById('feedback-banner');
+            const fbIcon = document.getElementById('fb-icon');
+            const fbTitle = document.getElementById('fb-title');
+            const fbText = document.getElementById('fb-text');
+
+            if (isCorrect) {
+                score++;
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+
+                if (selectedBtn) selectedBtn.classList.add('correct');
+
+                fbBanner.className = 'feedback-banner show is-correct';
+                fbIcon.innerText = '✅';
+                fbTitle.innerText = streak >= 3 ? `Luar Biasa! (${streak}x Beruntun! 🔥)` : 'Hebat, Jawabanmu Benar!';
+                fbText.innerText = qData.explanation;
+
+                if (streak >= 3) playSound('streak');
+                else playSound('correct');
+            } else {
+                streak = 0;
+                if (selectedBtn) selectedBtn.classList.add('wrong');
+                if (correctBtn) correctBtn.classList.add('correct'); // Tunjukkan yang benar agar belajar
+
+                fbBanner.className = 'feedback-banner show is-wrong';
+                fbIcon.innerText = '💡';
+                fbTitle.innerText = 'Ups, Kurang Tepat!';
+                fbText.innerText = `Jawaban yang tepat adalah "${qData.options[qData.correct].title}". ${qData.explanation}`;
+
+                playSound('wrong');
+            }
+
+            // Update skor live di bar
+            document.getElementById('hud-score').innerText = score;
+
+            // Otomatis lanjut setelah 2.2 detik jika tombol manual tidak diklik
+            window.nextQuestionTimeout = setTimeout(() => {
+                nextChallengeNow();
+            }, 2300);
+        }
+
+        function nextChallengeNow() {
+            if (window.nextQuestionTimeout) clearTimeout(window.nextQuestionTimeout);
+            currentQuestionIndex++;
+            loadCurrentQuestion();
+        }
+
+        // --- 8. Timer Engine ---
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            const timerElem = document.getElementById('hud-timer');
+            timerElem.classList.remove('warning');
+
+            if (gameDuration === 0) {
+                // Mode Tanpa Batas Waktu
+                timeLeft = 0;
+                timerElem.innerText = '♾️ Santai';
+                return;
+            }
+
+            timeLeft = gameDuration;
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft <= 15 && timeLeft > 0) {
+                    timerElem.classList.add('warning');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishGame(true); // Selesai karena waktu habis
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            if (gameDuration === 0) return;
+            const timerElem = document.getElementById('hud-timer');
+            const mins = Math.floor(Math.max(0, timeLeft) / 60);
+            const secs = Math.max(0, timeLeft) % 60;
+            timerElem.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // --- Fungsi Konfirmasi Akhiri Permainan (Modal In-App Handal) ---
+        function confirmEndGame() {
+            playSound('click');
+            const modal = document.getElementById('modal-confirm-exit');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeConfirmExit() {
+            playSound('click');
+            const modal = document.getElementById('modal-confirm-exit');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function executeEndGame() {
+            playSound('click');
+            closeConfirmExit();
+            finishGame(false);
+        }
+
+        // --- 9. Selesai Permainan & Layar Hasil ---
+        function finishGame(isTimeout = false) {
+            if (timerInterval) clearInterval(timerInterval);
+            if (window.nextQuestionTimeout) clearTimeout(window.nextQuestionTimeout);
+
+            const timeSpent = gameDuration === 0 ? 0 : Math.max(0, gameDuration - timeLeft);
+            const accuracy = activeQuestions.length > 0 ? Math.round((score / activeQuestions.length) * 100) : 0;
+
+            // Predikat Detektif
+            let badgeText = "Detektif Pemula Cerdas 👍";
+            let trophy = "🌟";
+            if (accuracy === 100) {
+                badgeText = "Detektif Data Legendaris 🏆";
+                trophy = "🏆";
+            } else if (accuracy >= 80) {
+                badgeText = "Detektif Data Handal ⭐";
+                trophy = "⭐";
+            } else if (accuracy >= 60) {
+                badgeText = "Detektif Data Terampil 🔍";
+                trophy = "🔍";
+            }
+
+            // Simpan ke Riwayat Skor (format Sesi #)
+            scoresHistory.push({
+                session: `Sesi #${sessionCount}`,
+                score: score,
+                total: activeQuestions.length,
+                accuracy: accuracy,
+                timeSpent: timeSpent,
+                badge: badgeText
+            });
+
+            // Tampilkan Data di Layar Hasil
+            document.getElementById('res-trophy').innerText = trophy;
+            document.getElementById('res-badge').innerText = badgeText;
+            document.getElementById('res-score-display').innerText = `${score} / ${activeQuestions.length}`;
+            document.getElementById('res-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('res-max-streak').innerText = `${maxStreak}x 🔥`;
+
+            const minsUsed = Math.floor(timeSpent / 60);
+            const secsUsed = timeSpent % 60;
+            document.getElementById('res-time-spent').innerText = gameDuration === 0 ? 'Mode Santai' : `${minsUsed.toString().padStart(2, '0')}:${secsUsed.toString().padStart(2, '0')}`;
+
+            playSound('victory');
+            showScreen('screen-result');
+        }
+
+        // --- 10. Scoreboard Sesi ---
+        function renderScoreboard() {
+            const tbody = document.getElementById('score-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (scoresHistory.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">Belum ada riwayat permainan. Klik tombol "Main Lagi" untuk mulai bermain!</td></tr>`;
+                return;
+            }
+
+            scoresHistory.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #e2e8f0';
+                tr.style.textAlign = 'center';
+
+                const mins = Math.floor(item.timeSpent / 60);
+                const secs = item.timeSpent % 60;
+                const timeStr = item.timeSpent === 0 ? 'Mode Santai' : `${mins}m ${secs}s`;
+
+                tr.innerHTML = `
+                    <td style="padding: 12px;">${idx + 1}</td>
+                    <td style="padding: 12px; font-weight: 700; color: var(--primary);">${item.session}</td>
+                    <td style="padding: 12px; font-size: 1.25rem; font-weight: 800;">${item.score} / ${item.total}</td>
+                    <td style="padding: 12px; font-weight: 700; color: ${item.accuracy >= 80 ? 'var(--success-dark)' : 'inherit'};">${item.accuracy}%</td>
+                    <td style="padding: 12px;">${timeStr}</td>
+                    <td style="padding: 12px; font-weight: 700;">${item.badge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearScores() {
+            if (confirm("Hapus semua riwayat skor permainan?")) {
+                scoresHistory = [];
+                renderScoreboard();
+            }
+        }
+
+        // --- 11. PWA Support (Offline Service Worker) ---
         let deferredPrompt = null;
-
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -688,22 +1888,10 @@
             if (btn) btn.style.display = 'inline-flex';
         });
 
-        window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
-            console.log('PWA berhasil terpasang!');
-            const btn = document.getElementById('btn-install-pwa');
-            if (btn) btn.innerText = '✅ Aplikasi Terpasang';
-        });
-
         function installPWA() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User menginstal aplikasi PWA');
-                    }
-                    deferredPrompt = null;
-                });
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
             } else {
                 const modal = document.getElementById('modal-install-guide');
                 if (modal) modal.style.display = 'flex';
@@ -715,459 +1903,14 @@
             if (modal) modal.style.display = 'none';
         }
 
-        // Register Service Worker for Offline Play
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then((reg) => {
-                    console.log('PWA Service Worker aktif:', reg.scope);
-                }).catch((err) => {
-                    console.warn('PWA Service Worker error:', err);
-                });
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
             });
         }
 
-        // --- Game Flow (Langsung Mulai Tanpa Nama) ---
-        function startGame() {
-            roundCount++;
-            setupGame();
-            showScreen('screen-game');
-            startTimer();
-        }
-
-        // Alias for backward compatibility
-        function startRandomTurn() {
-            startGame();
-        }
-
-        function setupGame() {
-            score = 0; currentChallengeIndex = 0; clipboard = null;
-            
-            // Kombinasi 50 soal bervariasi dari 5 kategori
-            currentChallenges = [];
-            const categories = ['createFolder', 'renameFile', 'moveFile', 'copyFile', 'deleteFile'];
-            
-            // Shuffle soal di setiap kategori
-            const pool = {};
-            categories.forEach(cat => {
-                pool[cat] = [...challengeBank[cat]].sort(() => Math.random() - 0.5);
-            });
-
-            // Rotasi berurutan dari 5 kategori (10 putaran x 5 kategori = 50 soal)
-            for (let round = 0; round < 10; round++) {
-                categories.forEach(cat => {
-                    if (pool[cat] && pool[cat][round]) {
-                        currentChallenges.push(pool[cat][round]);
-                    }
-                });
-            }
-            
-            loadChallenge();
-        }
-
-        function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-        function loadChallenge() {
-            if (currentChallengeIndex >= currentChallenges.length) { endTurn(false); return; }
-
-            document.getElementById('challenge-counter').innerText = `${currentChallengeIndex + 1}/${currentChallenges.length}`;
-            currentActiveChallenge = currentChallenges[currentChallengeIndex];
-            document.getElementById('challenge-title').innerText = currentActiveChallenge.q;
-            
-            document.getElementById('audience-question').innerText = getAudienceQuestion(currentActiveChallenge);
-            
-            // Initialize Explorer State
-            idCounter = 1;
-            explorerFiles = currentActiveChallenge.initialFiles.map(f => ({
-                id: idCounter++, name: f.name, isFolder: f.isFolder, isRenaming: false
-            }));
-            clipboard = null;
-            selectedFileId = null;
-            
-            renderExplorer();
-        }
-
-        function getAudienceQuestion(chal) {
-            if (chal.type === 'createFolder') return `Ingat ejaannya! Coba sebutkan huruf per huruf: ${chal.expectedName}`;
-            if (chal.type === 'renameFile') return `Ketik apa ya? Coba tuliskan "${chal.expectedName}" di udara!`;
-            if (chal.type === 'moveFile') return `Ayo tebak, harus pilih CUT atau COPY? (Jawaban: CUT)`;
-            if (chal.type === 'copyFile') return `Ayo tebak, harus pilih CUT atau COPY? (Jawaban: COPY)`;
-            if (chal.type === 'deleteFile') return `Jangan sampai salah klik! Tunjuk file mana yang harus dihapus!`;
-            return "Perhatikan temanmu di depan!";
-        }
-
-        // --- Explorer UI & Context Menu Engine ---
-        function renderExplorer() {
-            const win = document.getElementById('explorer-window');
-            win.innerHTML = '';
-            hideContextMenu();
-
-            explorerFiles.forEach(f => {
-                const item = document.createElement('div');
-                item.className = 'explorer-item' + (selectedFileId === f.id ? ' selected' : '');
-                if (clipboard && clipboard.action === 'cut' && clipboard.id === f.id) {
-                    item.style.opacity = '0.5';
-                }
-
-                item.innerHTML = `<div class="icon">${f.isFolder ? '📁' : '📄'}</div>`;
-                
-                if (f.isRenaming) {
-                    const inp = document.createElement('input');
-                    inp.type = 'text'; inp.value = f.name; inp.id = `rename-inp-${f.id}`;
-                    inp.autocomplete = 'off';
-                    inp.onclick = (e) => e.stopPropagation(); // prevent select
-                    inp.onkeydown = (e) => {
-                        if (e.key === 'Enter') finishRename(f.id, inp.value);
-                    };
-                    inp.onblur = () => finishRename(f.id, inp.value);
-                    item.appendChild(inp);
-                    setTimeout(() => { inp.focus(); inp.select(); }, 50);
-                } else {
-                    const nameDiv = document.createElement('div');
-                    nameDiv.className = 'name';
-                    nameDiv.innerText = f.name;
-                    item.appendChild(nameDiv);
-                }
-
-                // Left click selection
-                item.onmousedown = (e) => {
-                    if (e.button === 0) { // Left click
-                        selectedFileId = f.id;
-                        renderExplorer();
-                        e.stopPropagation();
-                    }
-                };
-
-                // Right click context menu
-                item.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectedFileId = f.id;
-                    contextTargetId = f.id;
-                    showContextMenu(e, true, f.isFolder);
-                };
-
-                win.appendChild(item);
-            });
-
-            // Window empty space click
-            win.onmousedown = (e) => {
-                if (e.target.tagName === 'INPUT') return;
-                if (e.button === 0 && (e.target === win || e.target.id === 'explorer-window')) {
-                    const renamingFile = explorerFiles.find(f => f.isRenaming);
-                    if (renamingFile) {
-                        const inp = document.getElementById(`rename-inp-${renamingFile.id}`);
-                        if (inp) finishRename(renamingFile.id, inp.value);
-                    } else {
-                        selectedFileId = null;
-                        hideContextMenu();
-                        renderExplorer();
-                    }
-                }
-            };
-            
-            win.oncontextmenu = (e) => {
-                if (e.target === win || e.target.id === 'explorer-window') {
-                    e.preventDefault();
-                    contextTargetId = null;
-                    selectedFileId = null;
-                    renderExplorer(); // update selection visuals, clears menu
-                    showContextMenu(e, false, false); // show menu AFTER render
-                }
-            };
-        }
-
-        function showContextMenu(e, onFile, isFolder) {
-            const menu = document.getElementById('custom-context-menu');
-            menu.style.display = 'flex';
-            
-            // Show/Hide appropriate options FIRST so height is correct
-            document.getElementById('menu-new-folder').style.display = onFile ? 'none' : 'flex';
-            document.getElementById('menu-cut').style.display = onFile ? 'flex' : 'none';
-            document.getElementById('menu-copy').style.display = onFile ? 'flex' : 'none';
-            
-            const pasteMenu = document.getElementById('menu-paste');
-            if (onFile) pasteMenu.style.display = isFolder ? 'flex' : 'none';
-            else pasteMenu.style.display = 'flex';
-            
-            if (!clipboard) pasteMenu.classList.add('disabled');
-            else pasteMenu.classList.remove('disabled');
-
-            document.getElementById('menu-rename').style.display = onFile ? 'flex' : 'none';
-            document.getElementById('menu-delete').style.display = onFile ? 'flex' : 'none';
-            
-            document.getElementById('menu-div-1').style.display = onFile ? 'none' : 'flex';
-            document.getElementById('menu-div-2').style.display = onFile ? 'flex' : 'none';
-
-            // Boundary checks
-            const winWidth = window.innerWidth;
-            const winHeight = window.innerHeight;
-            
-            let x = e.pageX;
-            let y = e.pageY;
-            
-            const viewX = e.clientX;
-            const viewY = e.clientY;
-            
-            const menuWidth = menu.offsetWidth || 200;
-            const menuHeight = menu.offsetHeight || 250;
-            
-            if (viewX + menuWidth > winWidth) x = x - menuWidth;
-            if (viewY + menuHeight > winHeight) y = y - menuHeight;
-            
-            menu.style.left = x + 'px';
-            menu.style.top = y + 'px';
-        }
-
-        function hideContextMenu() {
-            document.getElementById('custom-context-menu').style.display = 'none';
-        }
-
-        // Close context menu on global click
-        document.addEventListener('mousedown', (e) => {
-            const menu = document.getElementById('custom-context-menu');
-            if (!menu.contains(e.target)) hideContextMenu();
-        });
-
-        // --- OS Action Handlers ---
-        function handleMenu(action) {
-            const menu = document.getElementById('custom-context-menu');
-            if (action === 'paste' && document.getElementById('menu-paste').classList.contains('disabled')) return;
-            hideContextMenu();
-
-            if (action === 'new-folder') {
-                const newId = idCounter++;
-                explorerFiles.push({ id: newId, name: 'New folder', isFolder: true, isRenaming: true });
-                renderExplorer();
-            } 
-            else if (action === 'cut' || action === 'copy') {
-                if (contextTargetId) {
-                    clipboard = { action: action, id: contextTargetId };
-                    renderExplorer();
-                }
-            }
-            else if (action === 'paste') {
-                if (clipboard) {
-                    // Simulating paste. In this game, if we paste into a folder, the file "disappears" into it.
-                    // If pasted on window, it just appears.
-                    const fileToPaste = explorerFiles.find(f => f.id === clipboard.id);
-                    if (fileToPaste) {
-                        if (contextTargetId) {
-                            // Pasted INTO a folder.
-                            const targetFolder = explorerFiles.find(f => f.id === contextTargetId);
-                            if (targetFolder && targetFolder.isFolder) {
-                                const actionUsed = clipboard.action;
-                                // Cut logic: remove from explorer
-                                if (clipboard.action === 'cut') {
-                                    explorerFiles = explorerFiles.filter(f => f.id !== clipboard.id);
-                                }
-                                clipboard = null;
-                                renderExplorer();
-                                checkMoveWinCondition(fileToPaste.name, targetFolder.name, actionUsed);
-                            }
-                        } else {
-                            // Pasted onto window. For simplicity in this game, we don't fully implement real copy if not needed by challenges.
-                            clipboard = null;
-                            renderExplorer();
-                        }
-                    }
-                }
-            }
-            else if (action === 'rename') {
-                if (contextTargetId) {
-                    const f = explorerFiles.find(x => x.id === contextTargetId);
-                    if (f) { f.isRenaming = true; renderExplorer(); }
-                }
-            }
-            else if (action === 'delete') {
-                if (contextTargetId) {
-                    const f = explorerFiles.find(x => x.id === contextTargetId);
-                    explorerFiles = explorerFiles.filter(x => x.id !== contextTargetId);
-                    if (clipboard && clipboard.id === contextTargetId) clipboard = null;
-                    renderExplorer();
-                    checkDeleteWinCondition(f.name);
-                }
-            }
-        }
-
-        function finishRename(id, newName) {
-            const f = explorerFiles.find(x => x.id === id);
-            if (f && f.isRenaming) {
-                f.name = newName.trim() || 'New folder';
-                f.isRenaming = false;
-                renderExplorer();
-                
-                // Check win condition after rename
-                checkRenameOrCreateWinCondition(f.name, f.isFolder);
-            }
-        }
-
-        // --- Challenge Checkers ---
-        function checkRenameOrCreateWinCondition(typedName, isFolder) {
-            const chal = currentActiveChallenge;
-            if (!chal) return;
-            const typedLow = typedName.toLowerCase();
-            const expectLow = chal.expectedName ? chal.expectedName.toLowerCase() : '';
-
-            if (chal.type === 'createFolder' && isFolder) {
-                if (typedLow === expectLow) checkAnswer(true);
-                else checkAnswer(false, `Harusnya bernama: ${chal.expectedName}`);
-            }
-            else if (chal.type === 'renameFile') {
-                // Must rename the correct target file
-                // In a perfect sim we'd track original names, but here checking the final name string matches expected is enough since they can't create random files.
-                if (typedLow === expectLow) checkAnswer(true);
-                else checkAnswer(false, `Ejaan salah. Harusnya: ${chal.expectedName}`);
-            }
-        }
-
-        function checkMoveWinCondition(fileName, folderName, actionUsed) {
-            const chal = currentActiveChallenge;
-            if (chal && (chal.type === 'moveFile' || chal.type === 'copyFile')) {
-                if (fileName === chal.fileToMove && folderName === chal.targetFolder) {
-                    if (chal.type === 'moveFile' && actionUsed !== 'cut') {
-                        checkAnswer(false, 'Harusnya pilih CUT (memindah), bukan COPY!');
-                    }
-                    else if (chal.type === 'copyFile' && actionUsed !== 'copy') {
-                        checkAnswer(false, 'Harusnya pilih COPY (menyalin), bukan CUT!');
-                    }
-                    else {
-                        checkAnswer(true);
-                    }
-                } else {
-                    checkAnswer(false, `Kamu memasukkan ke tempat yang salah!`);
-                }
-            }
-        }
-
-        function checkDeleteWinCondition(deletedFileName) {
-            const chal = currentActiveChallenge;
-            if (chal && chal.type === 'deleteFile') {
-                if (deletedFileName === chal.fileToDelete) {
-                    checkAnswer(true);
-                } else {
-                    checkAnswer(false, `Kamu malah menghapus file penting!`);
-                }
-            }
-        }
-
-
-        // --- Win/Lose Flow ---
-        function checkAnswer(isCorrect, errorHint = '') {
-            // Prevent multiple triggers
-            if (document.getElementById('feedback-overlay').classList.contains('show')) return;
-            
-            if (isCorrect) score++;
-            showFeedback(isCorrect, errorHint);
-            
-            setTimeout(() => {
-                document.getElementById('feedback-overlay').classList.remove('show');
-                currentChallengeIndex++;
-                loadChallenge();
-            }, 2500); // Wait a bit so they can see the result
-        }
-
-        function showFeedback(isCorrect, hint) {
-            const overlay = document.getElementById('feedback-overlay');
-            const icon = document.getElementById('feedback-icon');
-            const text = document.getElementById('feedback-text');
-            
-            overlay.classList.add('show');
-            if (isCorrect) {
-                icon.innerText = '✅'; icon.className = 'feedback-icon feedback-correct';
-                text.innerText = 'Benar Sekali!'; text.className = 'feedback-text feedback-correct';
-                text.innerHTML += `<div style="font-size:1.5rem; margin-top:10px;">Luar biasa!</div>`;
-            } else {
-                icon.innerText = '❌'; icon.className = 'feedback-icon feedback-wrong';
-                text.innerText = 'Ups, Kurang Tepat!'; text.className = 'feedback-text feedback-wrong';
-                text.innerHTML += `<div style="font-size:1.5rem; margin-top:10px;">${hint}</div>`;
-            }
-        }
-
-        // --- Timer Logic ---
-        function startTimer() {
-            timeLeft = gameDuration;
-            updateTimerDisplay();
-            const timerElem = document.getElementById('timer-display');
-            if (timerElem) timerElem.classList.remove('warning');
-            
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                if (timeLeft <= 15 && timerElem) timerElem.classList.add('warning');
-                if (timeLeft <= 0) endTurn(true);
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            const timerElem = document.getElementById('timer-display');
-            if (timerElem) {
-                timerElem.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-        }
-
-        function endTurn(isSkippedOrTimeout = false) {
-            if (timerInterval) clearInterval(timerInterval);
-            
-            const timeUsed = Math.max(0, gameDuration - timeLeft);
-            
-            scores.push({
-                session: `Sesi #${roundCount}`,
-                score: score,
-                total: currentChallenges.length,
-                timeLeft: timeLeft,
-                duration: gameDuration,
-                timeUsed: timeUsed
-            });
-            
-            const minsLeft = Math.floor(Math.max(0, timeLeft) / 60);
-            const secsLeft = Math.max(0, timeLeft) % 60;
-            const strLeft = timeLeft > 0 ? `${minsLeft.toString().padStart(2, '0')}:${secsLeft.toString().padStart(2, '0')}` : '00:00 (Habis)';
-            
-            const minsUsed = Math.floor(timeUsed / 60);
-            const secsUsed = timeUsed % 60;
-            const strUsed = `${minsUsed.toString().padStart(2, '0')}:${secsUsed.toString().padStart(2, '0')}`;
-            
-            const resScore = document.getElementById('result-score');
-            const resTimeLeft = document.getElementById('result-time-left');
-            const resTimeUsed = document.getElementById('result-time-used');
-            
-            if (resScore) resScore.innerText = `${score} / ${currentChallenges.length}`;
-            if (resTimeLeft) resTimeLeft.innerText = strLeft;
-            if (resTimeUsed) resTimeUsed.innerText = strUsed;
-            
-            showScreen('screen-result');
-        }
-
-        // --- Scoreboard ---
-        function renderScoreboard() {
-            const tbody = document.getElementById('score-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            
-            if (scores.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="padding:25px; text-align:center; color:#64748b;">Belum ada riwayat permainan. Klik tombol "Mulai Game" untuk mulai bermain!</td></tr>`;
-                return;
-            }
-
-            scores.forEach((s, index) => {
-                const tr = document.createElement('tr');
-                const timeString = s.timeLeft > 0 ? `${Math.floor(s.timeLeft/60)}m ${s.timeLeft%60}s` : 'Waktu Habis';
-                const durString = `${Math.floor(s.duration/60)}m ${s.duration%60}s`;
-                tr.innerHTML = `<td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${index + 1}</td>
-                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;"><strong>${s.session}</strong></td>
-                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center; color: ${s.score === s.total ? 'var(--success)' : 'inherit'}; font-weight: bold; font-size: 1.3rem;">${s.score} / ${s.total}</td>
-                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${durString}</td>
-                                <td style="padding:12px; border:1px solid #cbd5e1; text-align:center;">${timeString}</td>`;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Init setup
-        updateSelectedTimeSummary();
-
+        // Init Setup
+        updateDashboardBadge();
     </script>
 </body>
 </html>
