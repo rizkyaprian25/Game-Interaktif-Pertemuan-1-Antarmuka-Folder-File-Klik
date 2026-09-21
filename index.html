@@ -716,8 +716,8 @@
                     <span style="font-weight: 700; color: #475569;">Pilih Jumlah Soal:</span>
                     <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(5, this)">5 Soal</button>
                     <button type="button" class="chip-btn question-count-btn active" onclick="setQuestionCount(10, this)">10 Soal</button>
-                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(15, this)">15 Soal</button>
-                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(30, this)">Semua (30 Soal)</button>
+                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(25, this)">25 Soal</button>
+                    <button type="button" class="chip-btn question-count-btn" onclick="setQuestionCount(50, this)">Semua (50 Soal)</button>
                 </div>
 
                 <div class="badge-status" id="dashboard-summary-badge">
@@ -1102,7 +1102,7 @@
             }
         }
 
-        // --- 2. Bank Soal Skenario Interaktif (Tepat 30 Soal Tanpa Bocoran Jawaban) ---
+        // --- 2. Bank Soal Skenario Interaktif (Tepat 50 Soal Tanpa Bocoran Jawaban) ---
         const ALL_CHALLENGES = [
             // ==================== KELOMPOK 1: COPY ====================
             {
@@ -1182,6 +1182,58 @@
                 ],
                 correct: 2,
                 explanation: "Benar sekali! Dengan 'Copy', satu gambar bisa kita gandakan ke beberapa folder yang berbeda."
+            },
+            {
+                q: "Kamu ingin membagikan foto catatan guru di papan tulis ke grup belajar teman sekelasmu tanpa menghapus foto aslinya di HP/laptopmu. Fitur apa yang harus kamu gunakan?",
+                visual: { srcIcon: "📸", srcLabel: "Catatan_Guru.jpg", arrow: "➔ [ ? ]", tgtIcon: "👥", tgtLabel: "Grup Belajar" },
+                audience: "Membagikan foto ke teman tapi di galeri sendiri tetap aman, pilih apa ya?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Membuat salinan baru untuk dibagikan" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "File di galerimu akan ikut hilang" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang foto catatan" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! Dengan 'Copy', kamu membagikan salinan foto sementara foto aslimu tetap tersimpan rapi."
+            },
+            {
+                q: "Saat membuat slide presentasi tugas, kamu ingin menggunakan gambar logo sekolah yang tersimpan di folder lain tanpa merusak file aslinya. Perintah yang tepat adalah...",
+                visual: { srcIcon: "🏫", srcLabel: "Logo_Sekolah.png", arrow: "➔ [ ? ]", tgtIcon: "📊", tgtLabel: "Slide Presentasi" },
+                audience: "Mengambil gambar untuk dipakai lagi di tempat lain tanpa merusak aslinya, pilih apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus logo sekolah" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menggandakan logo ke slide presentasi" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Logo di folder asal akan hilang" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" }
+                ],
+                correct: 1,
+                explanation: "Hebat! 'Copy' menduplikasi logo sekolah ke dalam presentasimu tanpa memindahkan berkas aslinya."
+            },
+            {
+                q: "Kamu ingin mencoba mengedit video rekaman tugas kelompok, tetapi takut hasilnya gagal dan merusak video asli. Langkah pencegahan yang paling tepat adalah...",
+                visual: { srcIcon: "🎬", srcLabel: "Video_Asli.mp4", arrow: "➔ [ ? ]", tgtIcon: "🎞️", tgtLabel: "Salinan_Edit.mp4" },
+                audience: "Supaya video asli tidak rusak saat diedit coba-coba, harus diapakan dulu?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi video untuk bahan uji coba" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama video" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Video tetap hanya ada 1 file" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus video rekaman" }
+                ],
+                correct: 0,
+                explanation: "Pintar! Membuat salinan dengan 'Copy' adalah cara paling aman sebelum melakukan uji coba edit file."
+            },
+            {
+                q: "Kombinasi tombol pintas (shortcut) pada keyboard komputer yang digunakan untuk menggandakan berkas (Copy) secara cepat adalah...",
+                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "📄", tgtLabel: "Aksi Copy" },
+                audience: "Kombinasi tombol keyboard untuk Copy adalah...",
+                options: [
+                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy (Salin)" },
+                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut (Pindah)" },
+                    { icon: "📋", title: "Ctrl + V", subtitle: "Tombol pintas untuk Paste (Tempel)" },
+                    { icon: "↩️", title: "Ctrl + Z", subtitle: "Tombol pintas untuk Undo (Batal)" }
+                ],
+                correct: 0,
+                explanation: "Luar biasa! 'Ctrl + C' adalah tombol pintas universal di keyboard komputer untuk fungsi Copy."
             },
 
             // ==================== KELOMPOK 2: CUT ====================
@@ -1263,6 +1315,58 @@
                 correct: 1,
                 explanation: "Tepat! 'Cut' memindahkan formulir ke laptop sekaligus mengosongkannya dari flashdisk."
             },
+            {
+                q: "Folder 'Downloads' di komputermu sudah penuh sesak. Kamu ingin memindahkan file modul PDF ke dalam folder 'Buku Pelajaran' agar folder Downloads bersih kembali. Pilihlah...",
+                visual: { srcIcon: "📑", srcLabel: "Modul di Downloads", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Buku Pelajaran" },
+                audience: "Supaya folder Downloads bersih, file modul dipindahkan pakai apa?",
+                options: [
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "File di Downloads masih menumpuk" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan modul & mengosongkan Downloads" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama modul" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat map baru" }
+                ],
+                correct: 1,
+                explanation: "Benar sekali! 'Cut' memindahkan modul ke folder tujuan dan membuat folder Downloads bersih kembali."
+            },
+            {
+                q: "Kombinasi tombol pintas (shortcut) pada keyboard komputer yang digunakan untuk memotong atau memindahkan berkas (Cut) adalah...",
+                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "✂️", tgtLabel: "Aksi Cut" },
+                audience: "Tombol shortcut keyboard untuk perintah Cut adalah...",
+                options: [
+                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy" },
+                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut (Potong/Pindah)" },
+                    { icon: "💾", title: "Ctrl + S", subtitle: "Tombol pintas untuk Save (Simpan)" },
+                    { icon: "🖨️", title: "Ctrl + P", subtitle: "Tombol pintas untuk Print (Cetak)" }
+                ],
+                correct: 1,
+                explanation: "Tepat! Tombol 'Ctrl + X' (gambar menyerupai gunting) adalah shortcut keyboard untuk memotong (Cut) berkas."
+            },
+            {
+                q: "Penyimpanan Local Disk (C:) di laptop hampir penuh berwarna merah. Kamu ingin memindahkan semua video ke Flashdisk (E:) agar kapasitas laptop kembali lega. Perintah yang paling tepat adalah...",
+                visual: { srcIcon: "💽", srcLabel: "Disk C: Penuh Merah", arrow: "➔ [ ? ]", tgtIcon: "💾", tgtLabel: "Flashdisk E:" },
+                audience: "Supaya kapasitas laptop lega dan tidak penuh merah lagi, file dipindah dengan...",
+                options: [
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan video & melegakan laptop" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Disk C laptop tetap penuh sesak" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama video" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru di C" }
+                ],
+                correct: 0,
+                explanation: "Mantap! Menggunakan 'Cut' memindahkan berkas secara total sehingga memori laptop menjadi lega kembali."
+            },
+            {
+                q: "File tugas kelompok tidak sengaja tersimpan di folder akun adikmu. Kamu ingin memindahkannya ke foldermu sendiri dan menghilangkannya dari folder adik. Fitur yang kamu gunakan adalah...",
+                visual: { srcIcon: "📄", srcLabel: "Tugas di Folder Adik", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Pribadimu" },
+                audience: "Keluarkan file dari folder adik dan masukkan ke foldermu, pilih apa ya?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus tugas tanpa disimpan" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama file tugas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan tugas ke foldermu" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Tugas di folder adik masih tertinggal" }
+                ],
+                correct: 2,
+                explanation: "Sangat cerdas! 'Cut' memindahkan file tugas ke tempat yang semestinya tanpa meninggalkan berkas di folder adik."
+            },
 
             // ==================== KELOMPOK 3: NEW FOLDER ====================
             {
@@ -1342,6 +1446,58 @@
                 ],
                 correct: 0,
                 explanation: "Hebat! Membuat 'New Folder' untuk setiap kategori adalah cara terbaik menata data di komputer."
+            },
+            {
+                q: "Untuk menyambut semester baru, kamu ingin membuat tempat penyimpanan terpisah agar file tugas semester 1 dan semester 2 tidak tercampur aduk. Fitur yang kamu gunakan adalah...",
+                visual: { srcIcon: "📁", srcLabel: "Semester 1", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Semester 2" },
+                audience: "Bikin tempat baru untuk memisahkan tugas semester 1 dan 2, apa ya?",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah baru untuk semester 2" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama semester 1" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus data semester 1" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong berkas" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'New Folder' membuat wadah map baru agar tugas tiap semester tersimpan rapi dan teratur."
+            },
+            {
+                q: "Di flashdisk ada ratusan foto kegiatan study tour. Supaya mudah ditemukan, kamu ingin membuat wadah-wadah bernama 'Hari_1', 'Hari_2', dan 'Hari_3'. Perintah apa yang kamu gunakan?",
+                visual: { srcIcon: "📸", srcLabel: "Ratusan Foto", arrow: "➔ [ ? ]", tgtIcon: "📁📁📁", tgtLabel: "Hari 1, 2, 3" },
+                audience: "Membuat wadah-wadah untuk membagi foto study tour tiap hari, pilih apa?",
+                options: [
+                    { icon: "📁", title: "New Folder (Folder Baru)", subtitle: "Membuat wadah penampung tiap hari" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Hanya memindahkan satu foto" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengubah nama foto" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi foto" }
+                ],
+                correct: 0,
+                explanation: "Hebat! 'New Folder' mempermudah pengelompokan dokumentasi foto berdasarkan hari kegiatan."
+            },
+            {
+                q: "Kombinasi tombol cepat di keyboard laptop Windows untuk membuat folder baru (New Folder) secara instan adalah...",
+                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "📁", tgtLabel: "Folder Baru" },
+                audience: "Tombol keyboard rahasia untuk membuat New Folder instan adalah...",
+                options: [
+                    { icon: "📁", title: "Ctrl + Shift + N", subtitle: "Tombol cepat membuat folder baru" },
+                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol pintas untuk Copy" },
+                    { icon: "✂️", title: "Ctrl + X", subtitle: "Tombol pintas untuk Cut" },
+                    { icon: "🖨️", title: "Ctrl + P", subtitle: "Tombol pintas untuk Print" }
+                ],
+                correct: 0,
+                explanation: "Pintar! 'Ctrl + Shift + N' adalah shortcut keyboard paling cepat untuk membuat New Folder di Windows."
+            },
+            {
+                q: "Apa manfaat utama dari membuat folder-folder di dalam media penyimpanan komputer?",
+                visual: { srcIcon: "📁", srcLabel: "Struktur Folder", arrow: "➔ [ ? ]", tgtIcon: "✨", tgtLabel: "Manfaat Komputer" },
+                audience: "Menurut kalian, fungsi utama membuat folder adalah...",
+                options: [
+                    { icon: "📁", title: "Merapikan dan mengelompokkan berkas", subtitle: "Agar data terstruktur dan mudah dicari" },
+                    { icon: "🗑️", title: "Menghapus virus secara otomatis", subtitle: "Bukan fungsi dari folder" },
+                    { icon: "🌐", title: "Mempercepat koneksi internet", subtitle: "Folder tidak berhubungan dengan internet" },
+                    { icon: "🔋", title: "Menghemat daya baterai laptop", subtitle: "Folder tidak berpengaruh pada baterai" }
+                ],
+                correct: 0,
+                explanation: "Luar biasa! Manfaat utama folder adalah mengelompokkan file secara rapi agar mudah ditemukan saat dibutuhkan."
             },
 
             // ==================== KELOMPOK 4: RENAME ====================
@@ -1423,6 +1579,58 @@
                 correct: 0,
                 explanation: "Tepat! 'Rename' hanya mengganti label nama file/folder, isi berkas di dalamnya tetap aman."
             },
+            {
+                q: "Kamu baru saja mengetik dokumen tugas dengan nama bawaan 'Untitled.docx'. Guru meminta agar nama berkas diganti dengan 'Tugas1_NamaSiswa.docx'. Perintah apa yang kamu gunakan?",
+                visual: { srcIcon: "📄", srcLabel: "Untitled.docx", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas1_NamaSiswa.docx" },
+                audience: "Mengubah nama file dari 'Untitled' menjadi nama tugas yang benar, pakai apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah nama dokumen menjadi jelas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan dokumen" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus dokumen tugas" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat wadah map" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'Rename' memberi identitas nama yang jelas pada dokumen yang baru dibuat."
+            },
+            {
+                q: "Tombol fungsi pada baris atas keyboard (F1 sampai F12) yang paling cepat untuk mengganti nama (Rename) file yang dipilih adalah...",
+                visual: { srcIcon: "⌨️", srcLabel: "Tombol F1-F12", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Aksi Rename" },
+                audience: "Tombol fungsi F di keyboard yang dipakai untuk Rename cepat adalah...",
+                options: [
+                    { icon: "📝", title: "F2", subtitle: "Tombol cepat Rename file di Windows" },
+                    { icon: "🔄", title: "F5", subtitle: "Tombol untuk Refresh layar" },
+                    { icon: "❓", title: "F1", subtitle: "Tombol untuk menu Bantuan (Help)" },
+                    { icon: "💾", title: "F12", subtitle: "Tombol untuk Save As" }
+                ],
+                correct: 0,
+                explanation: "Benar! Tombol 'F2' pada keyboard adalah shortcut tercepat untuk mengubah nama (Rename) file atau folder."
+            },
+            {
+                q: "Setelah hasil ulangan dinilai oleh guru, kamu ingin menambahkan kata '_Nilai_100' pada nama file tugasmu. Fitur yang digunakan adalah...",
+                visual: { srcIcon: "📄", srcLabel: "Tugas_Informatika", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Tugas_Informatika_Nilai_100" },
+                audience: "Menambahkan kata baru pada nama file tugas, gunakan apa?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Menambahkan tulisan pada nama file" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi file tugas" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus file tugas" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memotong file tugas" }
+                ],
+                correct: 0,
+                explanation: "Hebat! 'Rename' dapat digunakan untuk memperbarui atau menambahkan informasi pada nama file yang sudah ada."
+            },
+            {
+                q: "Ada foto piagam penghargaan yang namanya masih berupa angka acak 'IMG_982341.jpg'. Agar mudah dicari saat mendaftar lomba, fitur apa yang kamu gunakan?",
+                visual: { srcIcon: "🖼️", srcLabel: "IMG_982341.jpg", arrow: "➔ [ ? ]", tgtIcon: "📝", tgtLabel: "Piagam_Lomba_Sains.jpg" },
+                audience: "Mengubah angka acak foto piagam menjadi nama yang mudah dicari, pakai apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Menghapus foto piagam berharga" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Mengubah judul foto menjadi jelas" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat folder baru" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan foto" }
+                ],
+                correct: 1,
+                explanation: "Mantap! 'Rename' mengganti kode nomor acak kamera menjadi nama yang mudah dikenali."
+            },
 
             // ==================== KELOMPOK 5: DELETE ====================
             {
@@ -1502,6 +1710,58 @@
                 ],
                 correct: 0,
                 explanation: "Sangat cerdas! 'Delete' membersihkan komputer dari file instalasi bekas yang tidak lagi dibutuhkan."
+            },
+            {
+                q: "Ada file foto selfie yang buram dan matanya tertutup saat difoto bersama teman. Karena tidak bagus dan memakan ruang memori, perintah untuk menyingkirkannya adalah...",
+                visual: { srcIcon: "📷", srcLabel: "Foto_Buram.jpg", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Foto buram yang jelek mau disingkirkan dari laptop, gunakan apa?",
+                options: [
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang foto buram yang tidak dipakai" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Malah menggandakan foto buram" },
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama foto" },
+                    { icon: "📁", title: "New Folder", subtitle: "Membuat map baru" }
+                ],
+                correct: 0,
+                explanation: "Tepat sekali! 'Delete' membuang foto-foto buram atau gagal agar memori laptop tidak cepat penuh."
+            },
+            {
+                q: "Kombinasi tombol keyboard di Windows yang digunakan untuk menghapus file secara permanen tanpa masuk ke Recycle Bin terlebih dahulu adalah...",
+                visual: { srcIcon: "⌨️", srcLabel: "Papan Keyboard", arrow: "➔ [ ? ]", tgtIcon: "💥", tgtLabel: "Hapus Permanen" },
+                audience: "Tombol keyboard untuk menghapus file secara langsung dan permanen adalah...",
+                options: [
+                    { icon: "🗑️", title: "Shift + Delete", subtitle: "Menghapus langsung tanpa ke tempat sampah" },
+                    { icon: "📄", title: "Ctrl + C", subtitle: "Tombol untuk Copy" },
+                    { icon: "🔄", title: "Ctrl + Z", subtitle: "Tombol untuk Undo" },
+                    { icon: "💾", title: "Ctrl + S", subtitle: "Tombol untuk Save" }
+                ],
+                correct: 0,
+                explanation: "Pintar! Tombol 'Shift + Delete' menghapus berkas secara permanen tanpa menyimpannya di Recycle Bin."
+            },
+            {
+                q: "Kamu membuat beberapa folder latihan saat mencoba-coba di kelas, dan kini folder-folder tersebut sudah kosong dan tidak dibutuhkan lagi. Kamu sebaiknya memilih...",
+                visual: { srcIcon: "📁", srcLabel: "Folder_Latihan_Kosong", arrow: "➔ [ ? ]", tgtIcon: "🗑️", tgtLabel: "Tempat Sampah" },
+                audience: "Menyingkirkan folder uji coba yang sudah kosong dan tidak terpakai, apa ya?",
+                options: [
+                    { icon: "📝", title: "Rename (Ganti Nama)", subtitle: "Hanya mengganti nama folder" },
+                    { icon: "✂️", title: "Cut (Pindah)", subtitle: "Memindahkan folder kosong" },
+                    { icon: "🗑️", title: "Delete (Hapus)", subtitle: "Membuang folder kosong agar rapi" },
+                    { icon: "📄", title: "Copy (Salin)", subtitle: "Menduplikasi folder kosong" }
+                ],
+                correct: 2,
+                explanation: "Benar! 'Delete' membersihkan folder-folder kosong tak terpakai agar tampilan komputermu tetap rapi."
+            },
+            {
+                q: "Jika kamu tidak sengaja menekan tombol 'Delete' pada file tugas penting dan masuk ke Recycle Bin, cara mengembalikannya ke tempat semula adalah...",
+                visual: { srcIcon: "🗑️", srcLabel: "Di Recycle Bin", arrow: "➔ [ ? ]", tgtIcon: "📂", tgtLabel: "Kembali Semula" },
+                audience: "Mengembalikan file yang terlanjur terhapus ke Recycle Bin caranya bagaimana?",
+                options: [
+                    { icon: "♻️", title: "Buka Recycle Bin lalu klik 'Restore'", subtitle: "Memulihkan berkas ke posisi semula" },
+                    { icon: "📁", title: "Membuat New Folder baru", subtitle: "Tidak memulihkan file yang terhapus" },
+                    { icon: "📝", title: "Menekan tombol Rename", subtitle: "Tidak bisa mengembalikan file" },
+                    { icon: "✂️", title: "Mematikan laptop secara paksa", subtitle: "Malah berisiko merusak laptop" }
+                ],
+                correct: 0,
+                explanation: "Luar biasa! Fitur 'Restore' di Recycle Bin berfungsi mengembalikan file yang tak sengaja terhapus ke lokasi awalnya."
             }
         ];
 
@@ -1587,6 +1847,16 @@
             }
         }
 
+        // --- Algoritma Acak Soal Fisher-Yates (Urutan Acak Murni) ---
+        function shuffleQuestions(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
         // --- 6. Mulai Permainan ---
         function startGame() {
             playSound('click');
@@ -1597,8 +1867,8 @@
             currentQuestionIndex = 0;
             isAnsweringBlocked = false;
 
-            // Acak bank soal dan ambil sesuai totalQuestionsConfig (maksimal 30 soal)
-            const shuffled = [...ALL_CHALLENGES].sort(() => Math.random() - 0.5);
+            // Acak seluruh bank 50 soal secara murni dengan Fisher-Yates
+            const shuffled = shuffleQuestions(ALL_CHALLENGES);
             activeQuestions = shuffled.slice(0, Math.min(totalQuestionsConfig, shuffled.length));
 
             showScreen('screen-game');

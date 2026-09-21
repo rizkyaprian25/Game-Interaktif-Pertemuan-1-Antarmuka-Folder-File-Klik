@@ -20,7 +20,8 @@ Game ini mengasah pemahaman siswa terhadap 5 operasi file mendasar pada sistem o
 ## ✨ Fitur Unggulan
 
 - **🎮 Kontrol 1-Klik Cepat:** Tombol pilihan jawaban berukuran jumbo (A, B, C, D) dengan ikon visual yang jelas.
-- **📚 30 Bank Soal Skenario Praktis:** Bahasa soal ramah, santun, dan sangat mudah dipahami oleh siswa kelas 7 SMP.
+- **📚 50 Bank Soal Skenario Praktis:** Masing-masing 10 soal untuk 5 operasi file (Copy, Cut, New Folder, Rename, Delete).
+- **🎲 Pengacakan Urutan Soal (Random):** Menggunakan algoritma Fisher-Yates shuffle sehingga urutan soal selalu acak dan segar di setiap sesi permainan.
 - **🛡️ Bebas Bocoran:** Soal dan ilustrasi tidak membocorkan jawaban agar siswa berpikir kritis.
 - **⏱️ Pengaturan Waktu Fleksibel:**
   - Preset Cepat: 1 Menit, 2 Menit, 3 Menit, 5 Menit, atau Mode Santai.

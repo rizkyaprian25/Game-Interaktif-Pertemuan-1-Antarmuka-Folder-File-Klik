@@ -1,4 +1,4 @@
-const CACHE_NAME = 'detektif-data-pwa-v5';
+const CACHE_NAME = 'detektif-data-pwa-v6';
 const ASSETS_TO_CACHE = [
   './',
   './game_detektif_data.html',
